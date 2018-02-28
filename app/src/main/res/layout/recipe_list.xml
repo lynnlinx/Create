@@ -10,26 +10,34 @@
         android:background="#d4d3d3"
         android:padding="3pt">
 
-        <android.support.v7.widget.Toolbar
-
-            android:id="@+id/toolbar2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?attr/colorPrimary"
-            android:minHeight="?attr/actionBarSize"
-            android:theme="?attr/actionBarTheme" />
-
-        <ListView
-            android:id="@+id/recilist"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_alignParentStart="true"
-            android:layout_alignTop="@+id/toolbar2"
-            android:layout_weight="1"
-            android:background="#d4d3d3"
-            android:dividerHeight="9dp">
+            android:orientation="vertical">
 
-        </ListView>
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                android:background="?attr/colorPrimary"
+                android:minHeight="?attr/actionBarSize"
+                android:theme="?attr/actionBarTheme" />
+
+            <ListView
+
+                android:id="@+id/recilist"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentStart="true"
+                android:layout_alignTop="@+id/toolbar2"
+                android:layout_weight="1"
+                android:background="#d4d3d3"
+                android:dividerHeight="9dp">
+
+            </ListView>
+
+        </LinearLayout>
 
     </RelativeLayout>
 
