@@ -27,12 +27,6 @@ public class IngredientActivity extends AppCompatActivity implements View.OnClic
         buttonSearch = (Button) findViewById(R.id.btn_search_recipe);
         buttonSearch.setOnClickListener(this);
 
-
-/*        String[] fake = new String[5];
-        for (int i = 0; i < 5; i++) {
-            fake[i] = "123";
-        }*/
-        // Set the listview to display
         ListView listView = (ListView)findViewById(R.id.recipe_list);
 
         SimpleAdapter adapter = new SimpleAdapter(this, getData(),
@@ -55,19 +49,19 @@ public class IngredientActivity extends AppCompatActivity implements View.OnClic
         map = new HashMap<String, Object>();
         map.put("title", "Title1");
         map.put("info", "infoinfo1");
-        map.put("image", android.R.mipmap.ic_ingredient);
+        map.put("image", R.drawable.ic_filter);
         list.add(map);
 
         map = new HashMap<String, Object>();
         map.put("title", "Title2");
         map.put("info", "infoinfo2");
-        map.put("image", R.drawable.ic_ingredient);
+        map.put("image", R.drawable.ic_filter);
         list.add(map);
 
         map = new HashMap<String, Object>();
         map.put("title", "Title3");
         map.put("info", "infoinfo3");
-        map.put("image", R.drawable.ic_ingredient);
+        map.put("image", R.drawable.ic_filter);
         list.add(map);
 
         return list;
