@@ -14,6 +14,7 @@ import android.widget.ListView;
 
 public class IngredientActivity extends AppCompatActivity implements View.OnClickListener{
     private Button buttonSearch;
+    private static final String TAG = "IngredientActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
