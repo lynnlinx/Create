@@ -33,7 +33,6 @@ public class RegisterActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.d(TAG, "on: enter");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.register);
         myAuth = myAuth.getInstance();
@@ -52,8 +51,8 @@ public class RegisterActivity extends AppCompatActivity {
     public class myListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {
-            Log.d(TAG, "onClick: enter");
-            registerUser();
+            Log.d(TAG, "llllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllll");
+            //registerUser();
         }
     }
 
