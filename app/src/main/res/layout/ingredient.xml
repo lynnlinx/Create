@@ -54,7 +54,6 @@
                 </android.support.v7.widget.Toolbar>
 
                 <ListView
-                    android:listSelector="@drawable/ingredient_list_selector"
                     android:id="@+id/recipe_list"
                     android:layout_width="fill_parent"
                     android:layout_height="match_parent"
