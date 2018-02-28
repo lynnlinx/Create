@@ -34,6 +34,7 @@ public class IngredientActivity extends AppCompatActivity implements View.OnClic
                 new String[] { "title", "info", "image" },
                 new int[] { R.id.title, R.id.info, R.id.image });
 
+        listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
         listView.setAdapter(adapter);
     }
     @Override

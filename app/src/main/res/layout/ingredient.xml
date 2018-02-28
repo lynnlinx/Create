@@ -39,9 +39,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginStart="30dp"
+                    android:layout_marginStart="50dp"
                     android:iconifiedByDefault="false"
-                    android:queryHint="Add Ingredient" />
+                    android:queryHint="Add Ingredient"
+
+                    android:theme="@style/SearchViewTheme" />
 
                 <ImageButton
                     android:layout_width="wrap_content"
@@ -49,16 +51,16 @@
                     android:src="@drawable/ic_filter"
                     android:background="@color/colorPrimary"
                     android:tint="@color/white"
-                    android:layout_marginLeft="10dp"/>
+                    android:layout_marginLeft="20dp"
+                    android:scaleType="center" />
 
                 </android.support.v7.widget.Toolbar>
 
                 <ListView
-                    android:listSelector="@drawable/ingredient_list_selector"
                     android:id="@+id/recipe_list"
                     android:layout_width="fill_parent"
                     android:layout_height="match_parent"
-                    android:choiceMode="singleChoice"
+                    android:choiceMode="multipleChoice"
                     android:layout_marginTop="5dip"
                     android:layout_weight="1" />
 
