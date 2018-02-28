@@ -1,31 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/my_toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:background="?attr/colorPrimary"
-        android:theme="@style/ThemeOverlay.AppCompat.ActionBar" />
-    <!--
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
         android:orientation="vertical">
 
-
-
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/toolbar_home" />
     </LinearLayout>
-    -->
 
-    <SearchView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/my_toolbar"
-        android:layout_alignParentStart="true" />
-</RelativeLayout>
+    <FrameLayout
+        android:id="@+id/content_frame"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            xmlns:android="http://schemas.android.com/apk/res/android">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/my_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorPrimary"
+            android:theme="@style/Toolbar.MyStyle">
+
+            <SearchView
+                android:id="@+id/searchView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginStart="30dp"
+                android:iconifiedByDefault="false"
+                android:queryHint="Add Ingredient" />
+
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_filter"
+                android:background="@color/colorPrimary"
+                android:tint="@color/white"
+                android:layout_marginLeft="10dp"/>
+
+        </android.support.v7.widget.Toolbar>
+
+            <ListView
+                android:id="@+id/recipe_list"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_marginTop="5dip" />
+            
+        </LinearLayout>
+
+    </FrameLayout>
+
+
+
+
+</android.support.v4.widget.DrawerLayout>

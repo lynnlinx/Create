@@ -1,6 +1,6 @@
 package com.example.linxing.create;
 
-import android.support.v7.app.AppCompatActivity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +10,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import android.support.v7.app.AppCompatActivity;
+
 
 public class MainActivity extends AppCompatActivity {
     //adapter class
