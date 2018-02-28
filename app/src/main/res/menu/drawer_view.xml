@@ -2,14 +2,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
         <group android:checkableBehavior="single">
             <item
-                android:id="@+id/nav_first_fragment"
-                android:title="First" />
+                android:id="@+id/nav_Settings"
+                android:title="@string/setting" />
             <item
-                android:id="@+id/nav_second_fragment"
-                android:title="Second" />
+                android:id="@+id/nav_payment"
+                android:title="@string/pay_his" />
             <item
-                android:id="@+id/nav_third_fragment"
-                android:title="Third" />
+                android:id="@+id/nav_logout"
+                android:title="@string/logout" />
         </group>
 
 </menu>
