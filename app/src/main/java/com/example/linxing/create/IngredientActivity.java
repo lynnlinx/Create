@@ -33,6 +33,7 @@ public class IngredientActivity extends AppCompatActivity implements View.OnClic
         ListView listView = (ListView)findViewById(R.id.recipe_list);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                //R.layout.ingredient_list_item,
                 android.R.layout.simple_list_item_1,
                 android.R.id.text1,
                 fake);
