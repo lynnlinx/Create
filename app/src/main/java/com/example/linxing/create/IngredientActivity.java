@@ -4,10 +4,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.ArrayAdapter;
+import android.widget.SimpleAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-
+import java.util.Map;
+import java.util.HashMap;
+import java.util.List;
+import java.util.ArrayList;
 /**
  * Created by jiana on 2018/2/27.
  */
@@ -25,18 +28,17 @@ public class IngredientActivity extends AppCompatActivity implements View.OnClic
         buttonSearch.setOnClickListener(this);
 
 
-        String[] fake = new String[5];
+/*        String[] fake = new String[5];
         for (int i = 0; i < 5; i++) {
             fake[i] = "123";
-        }
-        // Set the listview to display all questions
+        }*/
+        // Set the listview to display
         ListView listView = (ListView)findViewById(R.id.recipe_list);
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                //R.layout.ingredient_list_item,
-                android.R.layout.simple_list_item_1,
-                android.R.id.text1,
-                fake);
+        SimpleAdapter adapter = new SimpleAdapter(this, getData(),
+                R.layout.ingredient_list_item,
+                new String[] { "title", "info", "image" },
+                new int[] { R.id.title, R.id.info, R.id.image });
 
         listView.setAdapter(adapter);
     }
@@ -44,5 +46,30 @@ public class IngredientActivity extends AppCompatActivity implements View.OnClic
     public void onClick(View v) {
         finish();
         startActivity(new Intent(this, RecipelistActivity.class));
+    }
+    private List<Map<String, Object>> getData() {
+        List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
+
+        Map<String, Object> map;
+
+        map = new HashMap<String, Object>();
+        map.put("title", "Title1");
+        map.put("info", "infoinfo1");
+        map.put("image", android.R.mipmap.ic_ingredient);
+        list.add(map);
+
+        map = new HashMap<String, Object>();
+        map.put("title", "Title2");
+        map.put("info", "infoinfo2");
+        map.put("image", R.drawable.ic_ingredient);
+        list.add(map);
+
+        map = new HashMap<String, Object>();
+        map.put("title", "Title3");
+        map.put("info", "infoinfo3");
+        map.put("image", R.drawable.ic_ingredient);
+        list.add(map);
+
+        return list;
     }
 }
