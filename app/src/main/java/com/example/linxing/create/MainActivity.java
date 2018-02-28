@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.recipe_list);
 
         ListView recilist = (ListView)findViewById(R.id.recilist);
 
@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
             final RecipelistAdapater s = listnewsDataAdpater.get(position);
 
             TextView relistID=( TextView)myView.findViewById(R.id.relistID);
-            relistID.setText(s.ID);
+            relistID.setText("ID:"+s.ID);
 
             TextView relistDesc=( TextView)myView.findViewById(R.id.reciDesc);
             relistDesc.setText(s.Description);
