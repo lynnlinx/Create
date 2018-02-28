@@ -3,6 +3,7 @@ package com.example.linxing.create;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +11,6 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.support.v7.widget.Toolbar;
 
 import java.util.ArrayList;
 
@@ -29,24 +29,27 @@ public class RecipelistActivity extends AppCompatActivity {
 
         //add data and view it
         listnewsData.add(new RecipelistAdapater(R.drawable.enchilada,"developer","develop apps"));
-        listnewsData.add(new RecipelistAdapater(2,"tester","develop apps"));
+        listnewsData.add(new RecipelistAdapater(R.drawable.enchilada,"tester","develop apps"));
 
         myadapter=new MyCustomAdapter(listnewsData);
         recilist.setAdapter(myadapter);
 
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setTitle("Recipes");
 
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new         Intent(getApplicationContext(),MainActivity.class));
-            }
-        });
+        if(getSupportActionBar() != null){
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+            getSupportActionBar().setTitle("Recipes");
+
+            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                }
+            });
+        }
+
 
     }
 
