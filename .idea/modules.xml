@@ -3,10 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Create.iml" filepath="$PROJECT_DIR$/Create.iml" />
-      <module fileurl="file://F:\cmu\08781\Create\Create.iml" filepath="F:\cmu\08781\Create\Create.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Create.iml" filepath="$PROJECT_DIR$/Create.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://F:\cmu\08781\Create\app\app.iml" filepath="F:\cmu\08781\Create\app\app.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
