@@ -47,11 +47,11 @@
                 android:background="@color/colorPrimary"
                 android:tint="@color/white"
                 android:layout_marginLeft="10dp"/>
-            
+
         </android.support.v7.widget.Toolbar>
 
             <ListView
-                android:id="@+id/messages"
+                android:id="@+id/recipe_list"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:layout_marginTop="5dip" />
