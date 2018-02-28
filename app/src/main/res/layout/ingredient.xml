@@ -53,14 +53,20 @@
 
                 </android.support.v7.widget.Toolbar>
 
-                <ListView
+<!--                <ListView
+                    android:id="@+id/recipe_list"
+                    android:layout_width="fill_parent"
+                    android:layout_height="match_parent"
+                    android:choiceMode="multipleChoice"
+                    android:layout_marginTop="5dip"
+                    android:layout_weight="1" />-->
+                <com.example.linxing.create.SideslipListView
                     android:id="@+id/recipe_list"
                     android:layout_width="fill_parent"
                     android:layout_height="match_parent"
                     android:choiceMode="multipleChoice"
                     android:layout_marginTop="5dip"
                     android:layout_weight="1" />
-
             </LinearLayout>
 
                 <Button

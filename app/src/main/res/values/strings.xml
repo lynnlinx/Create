@@ -8,4 +8,5 @@
     <string name="pay_his">Payment History</string>
     <string name="logout">Log Out</string>
     <string name="search_recipe">Search Recipe</string>
+    <string name="delete">DELETE</string>
 </resources>
