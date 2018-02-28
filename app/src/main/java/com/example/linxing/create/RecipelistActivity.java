@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -25,7 +26,7 @@ public class RecipelistActivity extends AppCompatActivity {
         ListView recilist = (ListView)findViewById(R.id.recilist);
 
         //add data and view it
-        listnewsData.add(new RecipelistAdapater(1,"developer","develop apps"));
+        listnewsData.add(new RecipelistAdapater(R.drawable.enchilada,"developer","develop apps"));
         listnewsData.add(new RecipelistAdapater(2,"tester","develop apps"));
 
         myadapter=new MyCustomAdapter(listnewsData);
@@ -63,8 +64,8 @@ public class RecipelistActivity extends AppCompatActivity {
 
             final RecipelistAdapater s = listnewsDataAdpater.get(position);
 
-            TextView relistID=( TextView)myView.findViewById(R.id.relistID);
-            relistID.setText("ID:" + s.ID);
+            ImageView ivImage=(ImageView) myView.findViewById(R.id.ivImage);
+            ivImage.setImageResource(s.ID);
 
             TextView relistDesc=( TextView)myView.findViewById(R.id.reciDesc);
             relistDesc.setText(s.Description);
