@@ -27,6 +27,7 @@ public class IngredientActivity extends AppCompatActivity {
                 android.R.id.text1,
                 fake);
 
+        
         listView.setAdapter(adapter);
     }
 }
