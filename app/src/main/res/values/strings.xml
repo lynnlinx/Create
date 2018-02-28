@@ -7,4 +7,5 @@
     <string name="setting">Settings</string>
     <string name="pay_his">Payment History</string>
     <string name="logout">Log Out</string>
+    <string name="search_recipe">Search Recipe</string>
 </resources>
