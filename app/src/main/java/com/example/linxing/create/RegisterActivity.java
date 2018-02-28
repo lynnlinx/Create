@@ -1,6 +1,5 @@
 package com.example.linxing.create;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -26,7 +25,6 @@ public class RegisterActivity extends AppCompatActivity {
     private Button buttonRegister;
     private EditText editTextEmail;
     private EditText editTextPassword;
-    private ProgressDialog progressDialog;
     private static final String TAG = "RegisterActivity";
 
 
@@ -50,7 +48,6 @@ public class RegisterActivity extends AppCompatActivity {
     public class myListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {
-            //Log.d(TAG, "llllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllll");
             registerUser();
         }
     }
@@ -59,24 +56,18 @@ public class RegisterActivity extends AppCompatActivity {
         String email = editTextEmail.getText().toString().trim();
         String password = editTextPassword.getText().toString().trim();
 
-        if(TextUtils.isEmpty(email)){
+        if(TextUtils.isEmpty(email)) {
             //email is empty
             Toast.makeText(this, "Please enter email", Toast.LENGTH_SHORT).show();
             //stopping the function execution further
             return;
         }
-
         if(TextUtils.isEmpty(password)){
             //password is empty
             Toast.makeText(this, "Please enter password", Toast.LENGTH_SHORT).show();
             //stopping the function execution further
             return;
         }
-
-        //if validation are good
-        //we will first show a progress dialog
-        progressDialog.setMessage("Registering Please Wait...");
-        progressDialog.show();
 
         myAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -92,7 +83,6 @@ public class RegisterActivity extends AppCompatActivity {
                         }else {
                             Toast.makeText(RegisterActivity.this, "Could not register, please try again", Toast.LENGTH_SHORT).show();
                         }
-                        progressDialog.dismiss();
                     }
                 });
     }
