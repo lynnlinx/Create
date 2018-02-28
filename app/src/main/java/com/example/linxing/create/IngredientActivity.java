@@ -50,7 +50,7 @@ public class IngredientActivity extends AppCompatActivity implements View.OnClic
         map = new HashMap<String, Object>();
         map.put("title", "Title1");
         map.put("info", "infoinfo1");
-        map.put("image", R.drawable.ic_filter);
+        map.put("image", R.mipmap.ic_launcher);
         list.add(map);
 
         map = new HashMap<String, Object>();
