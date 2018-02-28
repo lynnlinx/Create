@@ -38,7 +38,6 @@
                 android:iconifiedByDefault="false"
                 android:queryHint="Add Ingredient" />
 
-
         </android.support.v7.widget.Toolbar>
     </FrameLayout>
 
