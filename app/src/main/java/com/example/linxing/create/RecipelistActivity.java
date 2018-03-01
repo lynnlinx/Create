@@ -28,8 +28,16 @@ public class RecipelistActivity extends AppCompatActivity {
         ListView recilist = (ListView)findViewById(R.id.recilist);
 
         //add data and view it
-        listnewsData.add(new RecipelistAdapater(R.drawable.enchilada,"developer","develop apps"));
-        listnewsData.add(new RecipelistAdapater(R.drawable.enchilada,"tester","develop apps"));
+        listnewsData.add(new RecipelistAdapater(R.drawable.spaghetti,"chicken spaghetti",
+                "Needs: tomatoes,spaghetti..."));
+        listnewsData.add(new RecipelistAdapater(R.drawable.casseroles,"chicken casseroles",
+                "Needs: chicken,cheese..."));
+        listnewsData.add(new RecipelistAdapater(R.drawable.quinoa,"creamy quinoa",
+                "Needs: "));
+        listnewsData.add(new RecipelistAdapater(R.drawable.lasagne,"lasagne",
+                "Needs:"));
+        listnewsData.add(new RecipelistAdapater(R.drawable.enchilada,"enchilada",
+                "Needs:"));
 
         myadapter=new MyCustomAdapter(listnewsData);
         recilist.setAdapter(myadapter);
