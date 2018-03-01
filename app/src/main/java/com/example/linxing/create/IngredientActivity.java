@@ -27,7 +27,7 @@ public class IngredientActivity extends AppCompatActivity implements View.OnClic
         buttonSearch = (Button) findViewById(R.id.btn_search_recipe);
         buttonSearch.setOnClickListener(this);
 
-        ListView listView = findViewById(R.id.recipe_list);
+        SideslipListView listView = findViewById(R.id.recipe_list);
         SimpleAdapter adapter = new SimpleAdapter(this, getData(),
                 R.layout.ingredient_list_item,
                 new String[] { "title", "info", "image" },

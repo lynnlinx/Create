@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:padding="5dip"
     android:background="@drawable/ingredient_list_selector"
     >
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="5dip"
+        >
         <!--  Picture -->
         <LinearLayout android:id="@+id/thumbnail"
             android:layout_width="wrap_content"
@@ -48,3 +54,13 @@
             android:text="" />
 
     </RelativeLayout>
+    <TextView
+        android:id="@+id/txtv_delete"
+        android:layout_width="96dp"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:textSize="18sp"
+        android:background="@color/red"
+        android:textColor="@color/white"
+        android:text="Delete" />
+</LinearLayout>
