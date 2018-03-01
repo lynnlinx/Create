@@ -7,8 +7,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#d4d3d3"
-        android:padding="3pt">
+        android:background="#d4d3d3">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -20,11 +19,20 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="0"
-                android:background="@color/lime"
+                android:background="@color/colorPrimary"
                 android:minHeight="?attr/actionBarSize"
-
-                android:theme="@style/GalaxyZooThemeToolbarDarkOverflow"
-                app:popupTheme="@style/Theme.AppCompat.NoActionBar"/>
+                android:theme="@style/Toolbar.MyStyle">
+                <TextView
+                    android:layout_height="match_parent"
+                    android:layout_width="match_parent"
+                    android:text="@string/recipes"
+                    android:gravity="center"
+                    android:layout_marginRight="80dp"
+                    android:textSize="20dp"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    />
+            </android.support.v7.widget.Toolbar>
 
             <ListView
 
