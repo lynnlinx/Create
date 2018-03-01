@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            xmlns:android="http://schemas.android.com/apk/res/android">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <android.support.v7.widget.Toolbar
+                    android:id="@+id/my_toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/colorPrimary"
+                    android:theme="@style/Toolbar.MyStyle">
+                </android.support.v7.widget.Toolbar>
+                <ScrollView
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    >
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        >
+                    <ImageView
+                        android:id="@+id/recipe_image"
+                        android:layout_width="match_parent"
+                        android:layout_height="257dp"
+                        android:layout_gravity="center"
+                        android:layout_margin="10dp"
+                        android:layout_marginBottom="50dp"
+                        android:background="@drawable/enchilada" />
+                    <TextView
+                        android:id="@+id/recipe_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:text="Enchilada"
+                        android:textSize="30sp"
+                        android:gravity="center"
+                        android:textStyle="bold"
+                        android:textColor="@color/black"
+                        />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="30sp"
+                        android:text="Nutrition"
+                        android:textSize="20sp"
+                        android:gravity="left"
+                        android:textStyle="bold"
+                        android:layout_marginLeft="20dp"
+                        android:textColor="@color/black"
+                        />
+                    <TextView
+                        android:id="@+id/recipe_nutrition"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Protein:1g    Carb:3g    Fat:100g"
+                        android:textSize="20sp"
+                        android:gravity="left"
+                        android:layout_marginLeft="20dp"
+                        android:textColor="@color/black"
+                        />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="30sp"
+                        android:text="Ingridients"
+                        android:textSize="20sp"
+                        android:gravity="left"
+                        android:textStyle="bold"
+                        android:layout_marginLeft="20dp"
+                        android:textColor="@color/black"
+                        />
+                    <TextView
+                        android:id="@+id/recipe_ingridients"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Egg:1     Chicken Breast:100g"
+                        android:textSize="20sp"
+                        android:gravity="left"
+                        android:layout_marginLeft="20dp"
+                        android:textColor="@color/black"
+                        />
+                    <Button
+                        android:text="@string/buy"
+                        android:layout_width="100sp"
+                        android:layout_height="45sp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:background="@color/colorPrimary"
+                        android:textColor="@color/white"
+                        android:textSize="20sp"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="30sp"
+                        android:text="How To Cook"
+                        android:textSize="20sp"
+                        android:gravity="left"
+                        android:textStyle="bold"
+                        android:layout_marginLeft="20dp"
+                        android:textColor="@color/black"
+                        />
+                    <TextView
+                        android:id="@+id/recipe_detail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="1st stp"
+                        android:textSize="20sp"
+                        android:gravity="left"
+                        android:layout_marginLeft="20dp"
+                        android:textColor="@color/black"
+                        android:layout_marginBottom="50dp"
+                        />
+                    </LinearLayout>
+                </ScrollView>
+            </LinearLayout>
+
+        </RelativeLayout>
+
+</LinearLayout>
