@@ -44,7 +44,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginStart="50dp"
+                    android:layout_marginStart="30dp"
                     android:iconifiedByDefault="false"
                     android:queryHint="Add Ingredient"
                     android:theme="@style/SearchViewTheme" />
@@ -55,8 +55,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/ic_barcode"
+                        android:tint="@color/white"
                         android:background="@color/colorPrimary"
-                        android:layout_marginStart="10dp"
+                        android:layout_marginStart="0dp"
                         android:scaleType="center" />
 
 
@@ -66,7 +67,7 @@
                     android:src="@drawable/ic_filter"
                     android:background="@color/colorPrimary"
                     android:tint="@color/white"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginLeft="40dp"
                     android:scaleType="center" />
 
                 </android.support.v7.widget.Toolbar>
