@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
@@ -40,11 +39,7 @@ public class RecipelistActivity extends AppCompatActivity {
             @Override
             public View getView (int position, View convertView, ViewGroup parent) {
                 View view = super.getView(position, convertView, parent);
-                LinearLayout rl = (LinearLayout) findViewById(R.id.recipe_item);
-                if (null == rl) {
-                    view = View.inflate(RecipelistActivity.this, R.layout.recipe_list, null);
-                }
-                rl.setOnClickListener(new View.OnClickListener() {
+                view.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         finish();
