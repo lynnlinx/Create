@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
@@ -40,11 +39,7 @@ public class RecipelistActivity extends AppCompatActivity {
             @Override
             public View getView (int position, View convertView, ViewGroup parent) {
                 View view = super.getView(position, convertView, parent);
-                LinearLayout rl = (LinearLayout) findViewById(R.id.recipe_item);
-                if (null == rl) {
-                    view = View.inflate(RecipelistActivity.this, R.layout.recipe_list, null);
-                }
-                rl.setOnClickListener(new View.OnClickListener() {
+                view.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         finish();
@@ -79,36 +74,36 @@ public class RecipelistActivity extends AppCompatActivity {
             Map<String, Object> map;
 
             map = new HashMap<String, Object>();
-            map.put("title", "chicken spaghetti");
-            map.put("info_nutrition", "Protein:37g    Carb:0g    Fat:4g");
+            map.put("title", "Chicken Spaghetti");
+            map.put("info_nutrition", "Protein:37g    Carb:20g    Fat:24g");
             map.put("image", R.drawable.spaghetti);
             map.put("info_ingredient", "Cheese, chicken...");
             list.add(map);
 
             map = new HashMap<String, Object>();
-            map.put("title", "chicken casseroles");
-            map.put("info_nutrition", "Protein:1g    Carb:3g    Fat:0g");
+            map.put("title", "Chicken Casseroles");
+            map.put("info_nutrition", "Protein:41g    Carb:23g    Fat:30g");
             map.put("image", R.drawable.casseroles);
             map.put("info_ingredient", "Cheese, chicken...");
             list.add(map);
 
             map = new HashMap<String, Object>();
-            map.put("title", "creamy quinoa");
-            map.put("info_nutrition", "Protein:6g    Carb:1g    Fat:9g");
+            map.put("title", "Creamy Quinoa");
+            map.put("info_nutrition", "Protein:36g    Carb:21g    Fat:39g");
             map.put("image", R.drawable.quinoa);
             map.put("info_ingredient", "Cheese, chicken...");
             list.add(map);
 
             map = new HashMap<String, Object>();
-            map.put("title", "lasagne");
-            map.put("info_nutrition", "Protein:6g    Carb:0g    Fat:5g");
+            map.put("title", "Lasagne");
+            map.put("info_nutrition", "Protein:36g    Carb:20g    Fat:55g");
             map.put("image", R.drawable.lasagne);
             map.put("info_ingredient", "Cheese, chicken...");
             list.add(map);
 
             map = new HashMap<String, Object>();
-            map.put("title", "enchilada");
-            map.put("info_nutrition", "Protein:8g    Carb:12g    Fat:2g");
+            map.put("title", "Enchilada");
+            map.put("info_nutrition", "Protein:28g    Carb:32g    Fat:42g");
             map.put("image", R.drawable.enchilada);
             map.put("info_ingredient", "Cheese, chicken...");
             list.add(map);
