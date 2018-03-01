@@ -3,43 +3,75 @@ package com.example.linxing.create;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
-import android.widget.SimpleAdapter;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
-import java.util.Map;
+import android.widget.SimpleAdapter;
+import android.widget.TextView;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.ArrayList;
+import java.util.Map;
+
+
 /**
  * Created by jiana on 2018/2/27.
  */
 
 public class IngredientActivity extends AppCompatActivity implements View.OnClickListener{
     private Button buttonSearch;
+    private TextView buttonDelete;
     private static final String TAG = "IngredientActivity";
+    private List<Map<String, Object>> mData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ingredient);
 
+        SideslipListView listView = findViewById(R.id.recipe_list);
         buttonSearch = (Button) findViewById(R.id.btn_search_recipe);
         buttonSearch.setOnClickListener(this);
+        mData = getData();
 
-        SideslipListView listView = findViewById(R.id.recipe_list);
-        SimpleAdapter adapter = new SimpleAdapter(this, getData(),
+        Log.d(TAG, "onCreate: pleaseeeeeeeeeeeeeeeeee");
+        SimpleAdapter adapter = new SimpleAdapter(this, mData,
                 R.layout.ingredient_list_item,
                 new String[] { "title", "info", "image" },
-                new int[] { R.id.title, R.id.info, R.id.image });
+                new int[] { R.id.title, R.id.info, R.id.image }) {
+
+            @Override
+            public View getView (int position, View convertView, ViewGroup parent) {
+                View view = super.getView(position, convertView, parent);
+                buttonDelete = (TextView) view.findViewById(R.id.txtv_delete);
+                if (null == view) {
+                    view = View.inflate(IngredientActivity.this, R.layout.ingredient, null);
+                }
+                final int pos = position;
+                buttonDelete.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mData.remove(pos);
+                        notifyDataSetChanged();
+                    }
+                });
+                return view;
+            }
+
+        };
 
         listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
         listView.setAdapter(adapter);
     }
     @Override
     public void onClick(View v) {
-        finish();
-        startActivity(new Intent(this, RecipelistActivity.class));
+        if (v == buttonSearch) {
+            finish();
+            startActivity(new Intent(this, RecipelistActivity.class));
+        }
     }
     private List<Map<String, Object>> getData() {
         List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
@@ -96,4 +128,5 @@ public class IngredientActivity extends AppCompatActivity implements View.OnClic
 
         return list;
     }
+
 }
