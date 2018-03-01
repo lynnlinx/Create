@@ -47,21 +47,51 @@ public class IngredientActivity extends AppCompatActivity implements View.OnClic
         Map<String, Object> map;
 
         map = new HashMap<String, Object>();
-        map.put("title", "Title1");
-        map.put("info", "infoinfo1");
-        map.put("image", R.mipmap.ic_launcher);
+        map.put("title", "Chicken Breast");
+        map.put("info", "Protein:37g    Carb:0g    Fat:4g");
+        map.put("image", R.mipmap.ic_chickenbreast);
         list.add(map);
 
         map = new HashMap<String, Object>();
-        map.put("title", "Title2");
-        map.put("info", "infoinfo2");
-        map.put("image", R.drawable.ic_filter);
+        map.put("title", "Broccoli");
+        map.put("info", "Protein:1g    Carb:3g    Fat:0g");
+        map.put("image", R.mipmap.ic_broccoli);
         list.add(map);
 
         map = new HashMap<String, Object>();
-        map.put("title", "Title3");
-        map.put("info", "infoinfo3");
-        map.put("image", R.drawable.ic_filter);
+        map.put("title", "Cheese");
+        map.put("info", "Protein:6g    Carb:1g    Fat:9g");
+        map.put("image", R.mipmap.ic_cheese);
+        list.add(map);
+
+        map = new HashMap<String, Object>();
+        map.put("title", "Egg");
+        map.put("info", "Protein:6g    Carb:0g    Fat:5g");
+        map.put("image", R.mipmap.ic_egg);
+        list.add(map);
+
+        map = new HashMap<String, Object>();
+        map.put("title", "Milk");
+        map.put("info", "Protein:8g    Carb:12g    Fat:2g");
+        map.put("image", R.mipmap.ic_milk);
+        list.add(map);
+
+        map = new HashMap<String, Object>();
+        map.put("title", "Noodle");
+        map.put("info", "Protein:7g    Carb:38g    Fat:1g");
+        map.put("image", R.mipmap.ic_noodle);
+        list.add(map);
+
+        map = new HashMap<String, Object>();
+        map.put("title", "Onion");
+        map.put("info", "Protein:1g    Carb:10g    Fat:0g");
+        map.put("image", R.mipmap.ic_onion);
+        list.add(map);
+
+        map = new HashMap<String, Object>();
+        map.put("title", "Tomato");
+        map.put("info", "Protein:1g    Carb:5g    Fat:0g");
+        map.put("image", R.mipmap.ic_tomato);
         list.add(map);
 
         return list;

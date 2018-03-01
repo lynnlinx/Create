@@ -26,7 +26,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:layout_above="@id/btn_search_recipe">
                 <android.support.v7.widget.Toolbar
                     android:id="@+id/my_toolbar"
                     android:layout_width="match_parent"
@@ -63,7 +64,8 @@
                     android:choiceMode="multipleChoice"
                     android:layout_marginTop="5dip"
                     android:layout_weight="1" />
-<!--                <com.example.linxing.create.SideslipListView
+ <!--              <com.example.linxing.create.SideslipListView
+
                     android:id="@+id/recipe_list"
                     android:layout_width="fill_parent"
                     android:layout_height="match_parent"
@@ -81,7 +83,8 @@
                     android:background="@color/colorBtn"
                     android:text="@string/search_recipe"
                     android:textColor="#fff"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:layout_weight="0"/>
 
         </RelativeLayout>
 
