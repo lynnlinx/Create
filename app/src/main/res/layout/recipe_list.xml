@@ -37,11 +37,9 @@
             <ListView
 
                 android:id="@+id/recilist"
-                android:layout_width="match_parent"
+                android:layout_width="fill_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="#d4d3d3"
-                android:dividerHeight="9dp">
+                android:layout_weight="1">
 
             </ListView>
 
