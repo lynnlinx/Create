@@ -36,7 +36,7 @@
             android:layout_alignTop="@+id/thumbnail"
             android:layout_toRightOf="@+id/thumbnail"
             android:text=""
-            android:textColor="#040404"
+            android:textColor="@color/black"
             android:typeface="sans"
             android:textSize="15dip"
             android:textStyle="bold"/>
@@ -47,7 +47,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/title"
-            android:textColor="#343434"
+            android:textColor="@color/black"
             android:textSize="10dip"
             android:layout_marginTop="1dip"
             android:layout_toRightOf="@+id/thumbnail"

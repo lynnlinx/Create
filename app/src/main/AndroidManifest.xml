@@ -20,6 +20,7 @@
         <activity android:name=".RecipelistActivity" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".IngredientActivity" />
+        <activity android:name=".DetailRecipeActivity" />
     </application>
 
 </manifest>
