@@ -3,7 +3,6 @@ package com.example.linxing.create;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -37,7 +36,6 @@ public class IngredientActivity extends AppCompatActivity implements View.OnClic
         buttonSearch.setOnClickListener(this);
         mData = getData();
 
-        Log.d(TAG, "onCreate: pleaseeeeeeeeeeeeeeeeee");
         SimpleAdapter adapter = new SimpleAdapter(this, mData,
                 R.layout.ingredient_list_item,
                 new String[] { "title", "info", "image" },
