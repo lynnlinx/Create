@@ -38,7 +38,8 @@
                     android:layout_alignParentTop="true"
                     android:theme="@style/Toolbar.MyStyle">
 
-                <SearchView
+
+                    <SearchView
                     android:id="@+id/searchView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -48,13 +49,24 @@
                     android:queryHint="Add Ingredient"
                     android:theme="@style/SearchViewTheme" />
 
-                <ImageButton
+
+                    <ImageButton
+                        android:id="@+id/barcode"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_barcode"
+                        android:background="@color/colorPrimary"
+                        android:layout_marginStart="10dp"
+                        android:scaleType="center" />
+
+
+                    <ImageButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_filter"
                     android:background="@color/colorPrimary"
                     android:tint="@color/white"
-                    android:layout_marginLeft="20dp"
+                    android:layout_marginLeft="10dp"
                     android:scaleType="center" />
 
                 </android.support.v7.widget.Toolbar>
