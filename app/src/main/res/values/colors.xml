@@ -7,5 +7,6 @@
     <color name="colorBtn">#448AFF</color>
     <color name="colorSelected">#e8eff1</color>
     <color name="red">#e53935</color>
-    <color name='black'>#121111</color>
+    <color name="lime">#CDDC39</color>
+    <color name="black">#000</color>
 </resources>
