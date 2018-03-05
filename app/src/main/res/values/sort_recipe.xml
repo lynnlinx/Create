@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="sort_nutrition">
+        <item>by protein</item>
+        <item>by carb</item>
+        <item>by calorie</item>
+    </string-array>
+    <string-array name="sort_cuision">
+        <item>American</item>
+        <item>Chinese</item>
+        <item>Korean</item>
+    </string-array>
+    <string-array name="age">
+        <item>below 20</item>
+        <item>20 to 40</item>
+        <item>over 40</item>
+    </string-array>
+    <string-array name="weight">
+        <item>50</item>
+        <item>60</item>
+        <item>70</item>
+    </string-array>
+</resources>
