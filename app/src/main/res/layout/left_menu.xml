@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.widget.LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white"
+    android:divider="@color/black"
+    android:showDividers="middle">
+    <com.example.linxing.create.ShapedImageView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/photo"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_gravity="center"
+        android:layout_margin="10dp"
+        android:layout_marginBottom="50dp"
+        android:background="@mipmap/ic_photo_profile"
+        app:shape_mode="circle"/>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Setting"
+        android:background="@color/white"/>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/logout"
+        android:background="@color/white"
+        android:id="@+id/btn_logout"/>
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="155dp"
+        android:layout_height="149dp"
+        android:layout_gravity="center"
+        android:layout_margin="10dp"
+        android:layout_marginBottom="50dp"
+        android:background="@mipmap/ic_launcher" />
+</android.widget.LinearLayout>

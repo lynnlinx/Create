@@ -1,16 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-<!--
-        <include
-            android:id="@+id/toolbar"
-            layout="@layout/toolbar_home" />-->
-    </LinearLayout>
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/drawer_layout">
 
     <FrameLayout
         android:id="@+id/content_frame"
@@ -38,16 +30,25 @@
                     android:layout_alignParentTop="true"
                     android:theme="@style/Toolbar.MyStyle">
 
+                    <ImageButton
+                        android:id="@+id/btn_menu"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_action_name"
+                        android:tint="@color/white"
+                        android:background="@color/colorPrimary"
+                        android:layout_marginStart="0dp"
+                        android:scaleType="center" />
 
                     <SearchView
-                    android:id="@+id/searchView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginStart="30dp"
-                    android:iconifiedByDefault="false"
-                    android:queryHint="Add Ingredient"
-                    android:theme="@style/SearchViewTheme" />
+                        android:id="@+id/searchView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginStart="15dp"
+                        android:iconifiedByDefault="false"
+                        android:queryHint="Add Ingredient"
+                        android:theme="@style/SearchViewTheme" />
 
 
                     <ImageButton
@@ -62,13 +63,13 @@
 
 
                     <ImageButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_filter"
-                    android:background="@color/colorPrimary"
-                    android:tint="@color/white"
-                    android:layout_marginLeft="40dp"
-                    android:scaleType="center" />
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_filter"
+                        android:background="@color/colorPrimary"
+                        android:tint="@color/white"
+                        android:layout_marginLeft="20dp"
+                        android:scaleType="center" />
 
                 </android.support.v7.widget.Toolbar>
 
@@ -89,20 +90,23 @@
                     android:layout_weight="1" />-->
             </LinearLayout>
 
-                <Button
-                    android:id="@+id/btn_search_recipe"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:layout_gravity="center_horizontal|bottom"
-                    android:background="@color/colorBtn"
-                    android:text="@string/search_recipe"
-                    android:textColor="#fff"
-                    android:textStyle="bold"
-                    android:layout_weight="0"/>
+            <Button
+                android:id="@+id/btn_search_recipe"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_gravity="center_horizontal|bottom"
+                android:background="@color/colorBtn"
+                android:text="@string/search_recipe"
+                android:textColor="#fff"
+                android:textStyle="bold"
+                android:layout_weight="0"/>
 
         </RelativeLayout>
-
     </FrameLayout>
-
+    <include
+        android:layout_width="200dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="left"
+        layout="@layout/left_menu" />
 </android.support.v4.widget.DrawerLayout>

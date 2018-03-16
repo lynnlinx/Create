@@ -17,7 +17,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.444"
-        tools:layout_editor_absoluteX="29dp">
+        tools:layout_editor_absoluteX="29dp"
+        android:id="@+id/linearLayout">
 
         <TextView
             android:id="@+id/CreateAccount"
@@ -101,7 +102,16 @@
             android:text="Register"
             android:textColor="#fff"
             android:textStyle="bold" />
-
-
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/btn_login"
+        android:layout_width="wrap_content"
+        android:layout_height="23dp"
+        android:layout_below="@+id/linearLayout"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        android:text="or Login"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
 </RelativeLayout>
