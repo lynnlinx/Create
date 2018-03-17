@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -20,13 +21,13 @@ import com.google.firebase.auth.FirebaseUser;
  * Created by jiana on 2018/2/27.
  */
 
-public class RegisterActivity extends AppCompatActivity {
+public class RegisterActivity extends AppCompatActivity implements View.OnClickListener {
     private FirebaseAuth myAuth;
     private Button buttonRegister;
     private EditText editTextEmail;
     private EditText editTextPassword;
     private static final String TAG = "RegisterActivity";
-
+    private TextView login;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,12 +44,19 @@ public class RegisterActivity extends AppCompatActivity {
         editTextEmail = (EditText) findViewById(R.id.txt_email);
         editTextPassword = (EditText) findViewById(R.id.txt_password);
 
-        buttonRegister.setOnClickListener(new myListener());
+        login = (TextView) findViewById(R.id.btn_login);
+        login.setOnClickListener(this);
+        buttonRegister.setOnClickListener(this);
     }
-    public class myListener implements View.OnClickListener {
-        @Override
-        public void onClick(View v) {
+
+    @Override
+    public void onClick(View v) {
+        if (v == buttonRegister) {
             registerUser();
+        }
+        if (v == login) {
+            finish();
+            startActivity(new Intent(getApplicationContext(), LoginActivity.class));
         }
     }
 

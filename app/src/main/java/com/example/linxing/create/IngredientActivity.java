@@ -2,20 +2,23 @@ package com.example.linxing.create;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
+
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-
 /**
  * Created by jiana on 2018/2/27.
  */
@@ -23,6 +26,9 @@ import java.util.Map;
 public class IngredientActivity extends AppCompatActivity implements View.OnClickListener{
     private Button buttonSearch;
     private TextView buttonDelete;
+    private ImageButton buttonLeftMenu;
+    private DrawerLayout drawerLayout;
+    private Button buttonLogout;
     private static final String TAG = "IngredientActivity";
     private List<Map<String, Object>> mData;
 
@@ -30,6 +36,12 @@ public class IngredientActivity extends AppCompatActivity implements View.OnClic
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ingredient);
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        buttonLeftMenu = (ImageButton) findViewById(R.id.btn_menu);
+        buttonLeftMenu.setOnClickListener(this);
+
+        buttonLogout = (Button) findViewById(R.id.btn_logout);
+        buttonLogout.setOnClickListener(this);
 
         SideslipListView listView = findViewById(R.id.recipe_list);
         buttonSearch = (Button) findViewById(R.id.btn_search_recipe);
@@ -45,9 +57,9 @@ public class IngredientActivity extends AppCompatActivity implements View.OnClic
             public View getView (int position, View convertView, ViewGroup parent) {
                 View view = super.getView(position, convertView, parent);
                 buttonDelete = (TextView) view.findViewById(R.id.txtv_delete);
-                if (null == view) {
+                /*if (null == view) {
                     view = View.inflate(IngredientActivity.this, R.layout.ingredient, null);
-                }
+                }*/
                 final int pos = position;
                 buttonDelete.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -69,6 +81,14 @@ public class IngredientActivity extends AppCompatActivity implements View.OnClic
         if (v == buttonSearch) {
             finish();
             startActivity(new Intent(this, RecipelistActivity.class));
+        }
+        if (v == buttonLeftMenu) {
+            drawerLayout.openDrawer(Gravity.LEFT);
+        }
+        if (v == buttonLogout) {
+            finish();
+            startActivity(new Intent(this, LoginActivity.class));
+            FirebaseAuth.getInstance().signOut();
         }
     }
     private List<Map<String, Object>> getData() {
@@ -126,5 +146,4 @@ public class IngredientActivity extends AppCompatActivity implements View.OnClic
 
         return list;
     }
-
 }
