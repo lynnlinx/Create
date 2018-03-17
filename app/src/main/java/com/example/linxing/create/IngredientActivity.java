@@ -4,8 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Gravity;
-import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -26,7 +26,8 @@ import java.util.Map;
  * Powered by Nutritionix API
  */
 
-public class IngredientActivity extends AppCompatActivity implements View.OnClickListener{
+public class IngredientActivity extends AppCompatActivity implements View.OnClickListener,
+                                        IngredientJsonData.OnDataAvailable {
     private Button buttonSearch;
     private TextView buttonDelete;
     private ImageButton buttonLeftMenu;
@@ -52,6 +53,10 @@ public class IngredientActivity extends AppCompatActivity implements View.OnClic
         buttonSearch = (Button) findViewById(R.id.btn_search_recipe);
         buttonSearch.setOnClickListener(this);
         mData = getData();
+
+        mSearchView = (SearchView) findViewById(R.id.searchView);
+        mSearchView.setIconifiedByDefault(false);
+        mSearchView.onActionViewExpanded();
 
         SimpleAdapter adapter = new SimpleAdapter(this, mData,
                 R.layout.ingredient_list_item,
@@ -80,23 +85,18 @@ public class IngredientActivity extends AppCompatActivity implements View.OnClic
 
         listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
         listView.setAdapter(adapter);
-    }
 
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        mSearchView = (SearchView) findViewById(R.id.searchView);
-        mSearchView.setIconifiedByDefault(false);
-        mSearchView.onActionViewExpanded();
-
-        // listen to searchView text changes
         mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
 
             private static final String TAG = "IngredientActivity";
 
             @Override
             public boolean onQueryTextSubmit(String query) {
-                return false;
+                if (query.length() > 1) {
+                    loadData(query);
+                }
+                return true;
             }
 
             @Override
@@ -105,11 +105,37 @@ public class IngredientActivity extends AppCompatActivity implements View.OnClic
                 return false;
             }
         });
-        return super.onCreateOptionsMenu(menu);
+
+        mSearchView.setOnCloseListener(new SearchView.OnCloseListener() {
+            @Override
+            public boolean onClose() {
+                finish();
+                return false;
+            }
+        });
     }
 
+    /*
+    @Override
+    protected void onResume() {
+        super.onResume();
+        IngredientJsonData ingredientJsonData = new IngredientJsonData(this, "https://trackapi.nutritionix.com/v2/search/instant", true);
+        Log.d(TAG, "onResume: " + ingredientJsonData);
+        //ingredientJsonData.execute(mData);
+    }
+*/
 
 
+    @Override
+    public void onDataAvailable(List<Ingredient> data, DownloadStatus status) {
+        if (status == DownloadStatus.OK) {
+            //mFlickrRecyclerViewAdapter.loadNewData(data);
+            Log.d(TAG, "onDataAvailable: data is" + data);
+        } else {
+            // download or processing failed
+            Log.e(TAG, "onDataAvailable: failed with status" + status );
+        }
+    }
 
     @Override
     public void onClick(View v) {
@@ -126,6 +152,13 @@ public class IngredientActivity extends AppCompatActivity implements View.OnClic
             FirebaseAuth.getInstance().signOut();
         }
     }
+
+    private void loadData(String s) {
+        IngredientJsonData ingredientJsonData = new IngredientJsonData(this, "https://trackapi.nutritionix.com/v2/search/instant", true);
+        ingredientJsonData.execute(s);
+    }
+
+
     private List<Map<String, Object>> getData() {
         List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
 
@@ -181,4 +214,5 @@ public class IngredientActivity extends AppCompatActivity implements View.OnClic
 
         return list;
     }
+
 }
