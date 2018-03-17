@@ -5,11 +5,13 @@ import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
@@ -21,6 +23,7 @@ import java.util.List;
 import java.util.Map;
 /**
  * Created by jiana on 2018/2/27.
+ * Powered by Nutritionix API
  */
 
 public class IngredientActivity extends AppCompatActivity implements View.OnClickListener{
@@ -29,8 +32,10 @@ public class IngredientActivity extends AppCompatActivity implements View.OnClic
     private ImageButton buttonLeftMenu;
     private DrawerLayout drawerLayout;
     private Button buttonLogout;
+    private SearchView mSearchView;
     private static final String TAG = "IngredientActivity";
     private List<Map<String, Object>> mData;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +81,37 @@ public class IngredientActivity extends AppCompatActivity implements View.OnClic
         listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
         listView.setAdapter(adapter);
     }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        mSearchView = (SearchView) findViewById(R.id.searchView);
+        mSearchView.setIconifiedByDefault(false);
+        mSearchView.onActionViewExpanded();
+
+        // listen to searchView text changes
+        mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+
+            private static final String TAG = "IngredientActivity";
+
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                //Cursor cursor = TextUtils.isEmpty(newText) ? null : queryData(newText);
+                return false;
+            }
+        });
+        return super.onCreateOptionsMenu(menu);
+    }
+
+
+
+
+
     @Override
     public void onClick(View v) {
         if (v == buttonSearch) {
