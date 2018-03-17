@@ -17,6 +17,7 @@ android {
         }
         buildTypes.each {
             it.buildConfigField 'String', 'NUTRITIONIX_API_KEY', YourApiKey
+            it.buildConfigField 'String', 'NUTRITIONIX_API_ID', YourApiID
         }
     }
 
