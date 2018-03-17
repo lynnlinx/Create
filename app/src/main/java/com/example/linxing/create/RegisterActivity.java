@@ -16,7 +16,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 /**
  * Created by jiana on 2018/2/27.
  */
@@ -25,6 +26,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private FirebaseAuth myAuth;
     private Button buttonRegister;
     private EditText editTextEmail;
+    private EditText editTextUsername;
     private EditText editTextPassword;
     private static final String TAG = "RegisterActivity";
     private TextView login;
@@ -43,6 +45,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         buttonRegister = (Button) findViewById(R.id.btn_register);
         editTextEmail = (EditText) findViewById(R.id.txt_email);
         editTextPassword = (EditText) findViewById(R.id.txt_password);
+        editTextUsername = (EditText) findViewById(R.id.txt_username);
 
         login = (TextView) findViewById(R.id.btn_login);
         login.setOnClickListener(this);
@@ -76,7 +79,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             //stopping the function execution further
             return;
         }
-
         myAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -85,7 +87,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                             //save the user information in the firebase
                             saveUserInfo();
                             //user is successful registered and logged in
-                            //we will start the search(main) activity
+                            //we will start the ingredient activity
                             finish();
                             startActivity(new Intent(getApplicationContext(), IngredientActivity.class));
                         }else {
@@ -95,15 +97,19 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 });
     }
     private void saveUserInfo(){
-        String email = editTextEmail.getText().toString().trim();
+        String username = editTextUsername.getText().toString().trim();
 
-        UserProfile userInformation = new UserProfile(email);
+        UserProfile userInformation = new UserProfile(username);
+
         FirebaseUser user = myAuth.getCurrentUser();
 
         // set other infomation
-        //databaseReference.child(user.getUid()).setValue(userInformation);
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference();
+        myRef.child("profile").child(user.getUid()).setValue(userInformation);
 
         Toast.makeText(this, "Information Saved", Toast.LENGTH_SHORT).show();
+
     }
 
 }
