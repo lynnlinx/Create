@@ -111,7 +111,6 @@ public class IngredientActivity extends AppCompatActivity implements View.OnClic
 
 
 
-
     @Override
     public void onClick(View v) {
         if (v == buttonSearch) {
