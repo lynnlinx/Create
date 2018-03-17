@@ -54,6 +54,7 @@ public class RecipelistActivity extends AppCompatActivity {
 
         if(getSupportActionBar() != null){
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setIcon(R.drawable.ic_barcode);
 
             toolbar.setNavigationOnClickListener(new View.OnClickListener() {
                 @Override
