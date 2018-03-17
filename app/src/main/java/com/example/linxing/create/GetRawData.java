@@ -69,6 +69,8 @@ class GetRawData extends AsyncTask<String, Void, String> {
 
             connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
+            connection.setRequestProperty("x-app-id", BuildConfig.NUTRITIONIX_API_ID);
+            connection.setRequestProperty("x-app-key", BuildConfig.NUTRITIONIX_API_KEY);
             connection.connect();
             int response = connection.getResponseCode();
             Log.d(TAG, "doInBackground: The response code was" + response);
