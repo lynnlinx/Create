@@ -14,8 +14,7 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.*;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 /**
@@ -28,6 +27,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private EditText editTextEmail;
     private EditText editTextUsername;
     private EditText editTextPassword;
+    private EditText editTextConfirmPassword;
     private static final String TAG = "RegisterActivity";
     private TextView login;
 
@@ -46,6 +46,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         editTextEmail = (EditText) findViewById(R.id.txt_email);
         editTextPassword = (EditText) findViewById(R.id.txt_password);
         editTextUsername = (EditText) findViewById(R.id.txt_username);
+        editTextConfirmPassword  = (EditText) findViewById(R.id.txt_confirm_password);
 
         login = (TextView) findViewById(R.id.btn_login);
         login.setOnClickListener(this);
@@ -66,6 +67,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private void registerUser(){
         String email = editTextEmail.getText().toString().trim();
         String password = editTextPassword.getText().toString().trim();
+        String passwordConfirm = editTextConfirmPassword.getText().toString().trim();
+        String username = editTextUsername.getText().toString().trim();
 
         if(TextUtils.isEmpty(email)) {
             //email is empty
@@ -73,9 +76,25 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             //stopping the function execution further
             return;
         }
+        if(TextUtils.isEmpty(username)){
+            Toast.makeText(this, "Please enter username", Toast.LENGTH_SHORT).show();
+            //stopping the function execution further
+            return;
+        }
         if(TextUtils.isEmpty(password)){
             //password is empty
             Toast.makeText(this, "Please enter password", Toast.LENGTH_SHORT).show();
+            //stopping the function execution further
+            return;
+        }
+        if(TextUtils.isEmpty(passwordConfirm)){
+            //password is empty
+            Toast.makeText(this, "Please confirm password", Toast.LENGTH_SHORT).show();
+            //stopping the function execution further
+            return;
+        }
+        if (!TextUtils.equals(password, passwordConfirm)) {
+            Toast.makeText(this, "Password should match", Toast.LENGTH_SHORT).show();
             //stopping the function execution further
             return;
         }
@@ -91,7 +110,19 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                             finish();
                             startActivity(new Intent(getApplicationContext(), IngredientActivity.class));
                         }else {
-                            Toast.makeText(RegisterActivity.this, "Could not register, please try again", Toast.LENGTH_SHORT).show();
+                            String error;
+                            try {
+                                throw task.getException();
+                            } catch(FirebaseAuthWeakPasswordException e) {
+                                error = "Password too weak";
+                            } catch(FirebaseAuthInvalidCredentialsException e) {
+                                error = "Invalid Email";
+                            } catch(FirebaseAuthUserCollisionException e) {
+                                error = "Already registered";
+                            } catch(Exception e) {
+                                error = "Can not register";
+                            }
+                            Toast.makeText(RegisterActivity.this, error, Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
