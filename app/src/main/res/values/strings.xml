@@ -11,4 +11,5 @@
     <string name="delete">DELETE</string>
     <string name="buy">Buy!</string>
     <string name="recipes">Recipes</string>
+    <string name="AddIngredient">Add Ingredient</string>
 </resources>
