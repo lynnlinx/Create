@@ -5,8 +5,28 @@ package com.example.linxing.create;
  */
 
 public class UserProfile {
-    public String email;
-    public UserProfile(String email){
-        this.email = email;
+    private String username_profile;
+    private int age_profile;
+    private int height_profile;
+    public UserProfile(String username) {
+        this.username_profile = username;
+    }
+    public void setAge_profile(int age) {
+        this.age_profile = age;
+    }
+    public void setHeight_profile(int height) {
+        this.height_profile = height;
+    }
+
+    public int getAge_profile() {
+        return age_profile;
+    }
+
+    public int getHeight_profile() {
+        return height_profile;
+    }
+
+    public String getUsername_profile() {
+        return username_profile;
     }
 }
