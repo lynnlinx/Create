@@ -86,11 +86,22 @@ class IngredientJsonData extends AsyncTask<String, Void, List<Ingredient>> imple
             }
         }
         if (runningOnSameThread && mCallBack != null) {
-            // now inform yhe caller that the processing is done-possibly returning null if error
+            // now inform the caller that the processing is done-possibly returning null if error
             mCallBack.onDataAvailable(mIngredient, status);
         }
         Log.d(TAG, "onDownloadComplete: ends");
     }
+
+    @Override
+    protected void onPostExecute(List<Ingredient> ingredients) {
+        Log.d(TAG, "onPostExecute: starts");
+
+        if (mCallBack != null) {
+            mCallBack.onDataAvailable(mIngredient, DownloadStatus.OK);
+        }
+        Log.d(TAG, "onPostExecute: ends");
+    }
+
 
     @Override
     protected List<Ingredient> doInBackground(String... params) {

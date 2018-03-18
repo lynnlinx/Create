@@ -7,12 +7,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.SearchView;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -35,7 +33,8 @@ public class IngredientActivity extends AppCompatActivity implements View.OnClic
     private Button buttonLogout;
     private SearchView mSearchView;
     private static final String TAG = "IngredientActivity";
-    private List<Map<String, Object>> mData;
+    private List<Ingredient> mIngredientList;
+    private IngredientListViewAdapter adapter;
 
 
     @Override
@@ -49,15 +48,20 @@ public class IngredientActivity extends AppCompatActivity implements View.OnClic
         buttonLogout = (Button) findViewById(R.id.btn_logout);
         buttonLogout.setOnClickListener(this);
 
-        SideslipListView listView = findViewById(R.id.recipe_list);
         buttonSearch = (Button) findViewById(R.id.btn_search_recipe);
         buttonSearch.setOnClickListener(this);
-        mData = getData();
 
         mSearchView = (SearchView) findViewById(R.id.searchView);
         mSearchView.setIconifiedByDefault(false);
         mSearchView.onActionViewExpanded();
 
+        mIngredientList = new ArrayList<Ingredient>();
+        adapter = new IngredientListViewAdapter(this, mIngredientList);
+        SideslipListView listView = findViewById(R.id.ingredient_list);
+        listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+        listView.setAdapter(adapter);
+        Log.d(TAG, "onCreate: here create adapter!!!!" + listView.getAdapter());
+        /*
         SimpleAdapter adapter = new SimpleAdapter(this, mData,
                 R.layout.ingredient_list_item,
                 new String[] { "title", "info", "image" },
@@ -67,9 +71,6 @@ public class IngredientActivity extends AppCompatActivity implements View.OnClic
             public View getView (int position, View convertView, ViewGroup parent) {
                 View view = super.getView(position, convertView, parent);
                 buttonDelete = (TextView) view.findViewById(R.id.txtv_delete);
-                /*if (null == view) {
-                    view = View.inflate(IngredientActivity.this, R.layout.ingredient, null);
-                }*/
                 final int pos = position;
                 buttonDelete.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -82,20 +83,21 @@ public class IngredientActivity extends AppCompatActivity implements View.OnClic
             }
 
         };
+*/
 
-        listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
-        listView.setAdapter(adapter);
+
 
 
         mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
 
             private static final String TAG = "IngredientActivity";
-
             @Override
             public boolean onQueryTextSubmit(String query) {
                 if (query.length() > 1) {
                     loadData(query);
                 }
+                mSearchView.clearFocus();
+                //finish();
                 return true;
             }
 
@@ -115,13 +117,13 @@ public class IngredientActivity extends AppCompatActivity implements View.OnClic
         });
     }
 
-    /*
+/*
     @Override
     protected void onResume() {
         super.onResume();
         IngredientJsonData ingredientJsonData = new IngredientJsonData(this, "https://trackapi.nutritionix.com/v2/search/instant", true);
         Log.d(TAG, "onResume: " + ingredientJsonData);
-        //ingredientJsonData.execute(mData);
+        ingredientJsonData.execute(mIngredientList);
     }
 */
 
@@ -129,7 +131,7 @@ public class IngredientActivity extends AppCompatActivity implements View.OnClic
     @Override
     public void onDataAvailable(List<Ingredient> data, DownloadStatus status) {
         if (status == DownloadStatus.OK) {
-            //mFlickrRecyclerViewAdapter.loadNewData(data);
+            adapter.loadNewData(data);
             Log.d(TAG, "onDataAvailable: data is" + data);
         } else {
             // download or processing failed
