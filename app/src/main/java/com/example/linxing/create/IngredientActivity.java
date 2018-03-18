@@ -86,7 +86,7 @@ public class IngredientActivity extends AppCompatActivity implements View.OnClic
 
         mIngredientList = new ArrayList<Ingredient>();
         int autoCompleteTextViewID = mSearchView.getResources().getIdentifier("android:id/search_src_text", null, null);
-        AutoCompleteTextView mAutoCompleteTextView = (AutoCompleteTextView) mSearchView.findViewById(autoCompleteTextViewID);
+        final AutoCompleteTextView mAutoCompleteTextView = (AutoCompleteTextView) mSearchView.findViewById(autoCompleteTextViewID);
         mAutoCompleteTextView.setThreshold(0);
         ingredientAdapter = new IngredientListViewAdapter(this, android.R.layout.simple_dropdown_item_1line, mIngredientList);
         mAutoCompleteTextView.setAdapter(ingredientAdapter);
@@ -96,10 +96,11 @@ public class IngredientActivity extends AppCompatActivity implements View.OnClic
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Ingredient ingredient = (Ingredient) parent.getItemAtPosition(position);
                 adapter.loadNewIngredient(ingredient);
+                mSearchView.setQuery("",false);
                 Log.d(TAG, "onItemClick: ingre" + realIngredientList);
             }
         });
-        
+
 
         //userinfo
         myAuth = myAuth.getInstance();
@@ -126,17 +127,13 @@ public class IngredientActivity extends AppCompatActivity implements View.OnClic
             private static final String TAG = "IngredientActivity";
             @Override
             public boolean onQueryTextSubmit(String newText) {
-                //if (newText.length() > 1) {
-                //    loadData(newText);
-                //}
-                //mSearchView.clearFocus();
-                //finish();
-                return false;
+                mSearchView.setQuery("",false);
+                mSearchView.clearFocus();
+                return true;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                //Cursor cursor = TextUtils.isEmpty(newText) ? null : queryData(newText);
                 if (newText.length() > 1) {
                     loadData(newText);
                 }

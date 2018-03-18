@@ -85,10 +85,10 @@ class IngredientListViewAdapter extends ArrayAdapter<Ingredient> {
     @Nullable
     @Override
     public Ingredient getItem(int position) {
-        if (mIngredientList != null) {
+        if (mIngredientList != null && mIngredientList.size() > position) {
             return mIngredientList.get(position);
         }
-        return super.getItem(position);
+        return null;
     }
 
     void loadNewData(List<Ingredient> newIngredient) {
