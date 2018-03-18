@@ -7,7 +7,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -88,11 +87,11 @@ public class IngredientActivity extends AppCompatActivity implements View.OnClic
         AutoCompleteTextView mAutoCompleteTextView = (AutoCompleteTextView) mSearchView.findViewById(autoCompleteTextViewID);
         mAutoCompleteTextView.setThreshold(0);
 
-        mAutoCompleteTextView.setAdapter(new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,testStrings));
+        //mAutoCompleteTextView.setAdapter(new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,testStrings));
 
         Log.d(TAG, "onCreate: whos is null " + mIngredientList);
-        //ingredientAdapter = new IngredientListViewAdapter(this, android.R.layout.simple_dropdown_item_1line, mIngredientList);
-        //mAutoCompleteTextView.setAdapter(ingredientAdapter);
+        ingredientAdapter = new IngredientListViewAdapter(this, android.R.layout.simple_dropdown_item_1line, mIngredientList);
+        mAutoCompleteTextView.setAdapter(ingredientAdapter);
 
 
         /*
@@ -189,7 +188,7 @@ public class IngredientActivity extends AppCompatActivity implements View.OnClic
     public void onDataAvailable(List<Ingredient> data, DownloadStatus status) {
         if (status == DownloadStatus.OK) {
             //adapter.loadNewData(data);
-            //ingredientAdapter.loadNewData(data);
+            ingredientAdapter.loadNewData(data);
             Log.d(TAG, "onDataAvailable: data is" + data);
         } else {
             // download or processing failed

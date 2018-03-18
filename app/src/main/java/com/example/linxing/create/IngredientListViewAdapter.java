@@ -1,6 +1,7 @@
 package com.example.linxing.create;
 
 import android.content.Context;
+import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -71,6 +72,12 @@ class IngredientListViewAdapter extends ArrayAdapter<Ingredient> {
     @Override
     public int getCount() {
         return ((mIngredientList != null) && (mIngredientList.size() != 0) ? mIngredientList.size() : 1);
+    }
+
+    @Nullable
+    @Override
+    public Ingredient getItem(int position) {
+        return mIngredientList.get(position);
     }
 
     void loadNewData(List<Ingredient> newIngredient) {
