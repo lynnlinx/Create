@@ -72,13 +72,15 @@
 
 
         <Spinner
-            android:id="@+id/spinner_height"
+            android:id="@+id/spinner_age"
             android:layout_width="338dp"
             android:layout_height="42dp"
             android:layout_gravity="center"
             android:layout_margin="8dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
+            android:prompt="@string/age"
+            android:spinnerMode="dialog"
             android:entries="@array/age"/>
 
         <Spinner
@@ -89,6 +91,8 @@
             android:layout_margin="8dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
+            android:prompt="@string/weight"
+            android:spinnerMode="dialog"
             android:entries="@array/weight"/>
 
 

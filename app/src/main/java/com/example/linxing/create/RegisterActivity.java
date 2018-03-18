@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,8 +29,11 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private EditText editTextUsername;
     private EditText editTextPassword;
     private EditText editTextConfirmPassword;
-    private static final String TAG = "RegisterActivity";
     private TextView login;
+    private Spinner spinnerAge;
+    private Spinner spinnerWeight;
+    //Test Tag
+    private static final String TAG = "RegisterActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +51,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         editTextPassword = (EditText) findViewById(R.id.txt_password);
         editTextUsername = (EditText) findViewById(R.id.txt_username);
         editTextConfirmPassword  = (EditText) findViewById(R.id.txt_confirm_password);
+        spinnerAge = (Spinner) findViewById(R.id.spinner_age);
+        spinnerWeight = (Spinner) findViewById(R.id.spinner_weight);
 
         login = (TextView) findViewById(R.id.btn_login);
         login.setOnClickListener(this);
@@ -129,9 +135,12 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     }
     private void saveUserInfo(){
         String username = editTextUsername.getText().toString().trim();
-
+        String age = spinnerAge.getSelectedItem().toString();
+        String weight = spinnerWeight.getSelectedItem().toString();
+        // To complete
         UserProfile userInformation = new UserProfile(username);
-
+        userInformation.setAge_profile(age);
+        userInformation.setWeight_profile(weight);
         FirebaseUser user = myAuth.getCurrentUser();
 
         // set other infomation

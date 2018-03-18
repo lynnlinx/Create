@@ -12,4 +12,6 @@
     <string name="buy">Buy!</string>
     <string name="recipes">Recipes</string>
     <string name="AddIngredient">Add Ingredient</string>
+    <string name="age">AGE</string>
+    <string name="weight">WEIGHT</string>
 </resources>
