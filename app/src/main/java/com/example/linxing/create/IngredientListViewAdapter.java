@@ -10,6 +10,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.List;
 
 /**
@@ -45,6 +47,7 @@ class IngredientListViewAdapter extends ArrayAdapter<Ingredient> {
             viewHolder = new ViewHolder();
             viewHolder.name = (TextView) convertView.findViewById(R.id.title);
             viewHolder.nutrition = (TextView) convertView.findViewById(R.id.info);
+            viewHolder.image = (ImageView) convertView.findViewById(R.id.image);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
@@ -54,6 +57,11 @@ class IngredientListViewAdapter extends ArrayAdapter<Ingredient> {
             Ingredient ingredient = mIngredientList.get(position);
             viewHolder.name.setText(ingredient.getFood_name());
             viewHolder.nutrition.setText(ingredient.getNf_calories());
+            //viewHolder.image.setImageResource(ingredient.getImage());
+            Picasso.with(mContext).load(ingredient.getImage())
+                    .error(R.drawable.ic_filter)
+                    .placeholder(R.drawable.ic_filter)
+                    .into(viewHolder.image);
         }
 
 
@@ -77,7 +85,10 @@ class IngredientListViewAdapter extends ArrayAdapter<Ingredient> {
     @Nullable
     @Override
     public Ingredient getItem(int position) {
-        return mIngredientList.get(position);
+        if (mIngredientList != null) {
+            return mIngredientList.get(position);
+        }
+        return super.getItem(position);
     }
 
     void loadNewData(List<Ingredient> newIngredient) {

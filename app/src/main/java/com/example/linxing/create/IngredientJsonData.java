@@ -66,14 +66,15 @@ class IngredientJsonData extends AsyncTask<String, Void, List<Ingredient>> imple
                 for (int i = 0; i < itemsArray.length(); i++) {
                     JSONObject jsonIngredient = itemsArray.getJSONObject(i);
                     String food_name = jsonIngredient.getString("food_name");
-                    String imageUrl = jsonIngredient.getString("photo");
+                    JSONObject image = jsonIngredient.getJSONObject("photo");
+                    String imageUrl = image.getString("thumb");
                     String serving_unit = jsonIngredient.getString("serving_unit");
                     String brand_name_item_name = jsonIngredient.getString("brand_name_item_name");
                     String nf_calories = jsonIngredient.getString("nf_calories");
                     String brand_name = jsonIngredient.getString("brand_name");
 
                     //String link = imageUrl.replaceFirst("_m.", "_b.");
-
+                    
                     Ingredient ingredientObject = new Ingredient(food_name, imageUrl, serving_unit, brand_name_item_name, nf_calories, brand_name);
                     mIngredient.add(ingredientObject);
 
