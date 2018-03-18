@@ -14,10 +14,12 @@
         <item>below 20</item>
         <item>20 to 40</item>
         <item>over 40</item>
+        <item>don't want to say</item>
     </string-array>
     <string-array name="weight">
         <item>50</item>
         <item>60</item>
         <item>70</item>
+        <item>don't want to say</item>
     </string-array>
 </resources>

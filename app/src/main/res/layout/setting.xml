@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        xmlns:android="http://schemas.android.com/apk/res/android">
+        <ScrollView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <android.support.v7.widget.Toolbar
+                    android:id="@+id/my_toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/colorPrimary"
+                    android:theme="@style/Toolbar.MyStyle">
+                    <TextView
+                        android:layout_height="match_parent"
+                        android:layout_width="match_parent"
+                        android:text="@string/setting"
+                        android:gravity="center"
+                        android:textSize="20dp"
+                        android:layout_marginRight="20dp"
+                        android:textColor="@color/white"
+                        android:textStyle="bold" />
+                </android.support.v7.widget.Toolbar>
+                <com.example.linxing.create.ShapedImageView
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/photo"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_gravity="center"
+                    android:layout_margin="10dp"
+                    android:layout_marginBottom="50dp"
+                    android:background="@mipmap/ic_photo_profile"
+                    app:shape_mode="circle"/>
+                <Button
+                    android:id="@+id/change_photo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Change photo"
+                    android:layout_gravity="center"/>
+
+                <EditText
+                    android:id="@+id/txt_username"
+                    android:layout_width="232dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="8dp"
+                    android:hint="Username"
+                    android:singleLine="true" />
+
+                <Spinner
+                    android:id="@+id/spinner_age"
+                    android:layout_width="232dp"
+                    android:layout_height="42dp"
+                    android:layout_gravity="center"
+                    android:layout_margin="8dp"
+                    android:entries="@array/age"
+                    android:prompt="@string/age"
+                    android:spinnerMode="dialog" />
+
+                <Spinner
+                    android:id="@+id/spinner_weight"
+                    android:layout_width="231dp"
+                    android:layout_height="42dp"
+                    android:layout_gravity="center"
+                    android:layout_margin="8dp"
+                    android:entries="@array/weight"
+                    android:prompt="@string/weight"
+                    android:spinnerMode="dialog" />
+
+            </LinearLayout>
+        </ScrollView>
+        <Button
+            android:id="@+id/btn_save_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="center_horizontal|bottom"
+            android:background="@color/colorBtn"
+            android:text="SAVE"
+            android:textColor="#fff"
+            android:textStyle="bold"
+            android:layout_weight="0"/>
+    </RelativeLayout>
+
+</LinearLayout>

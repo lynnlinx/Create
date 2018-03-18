@@ -14,6 +14,12 @@ import android.widget.SearchView;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -31,11 +37,17 @@ public class IngredientActivity extends AppCompatActivity implements View.OnClic
     private ImageButton buttonLeftMenu;
     private DrawerLayout drawerLayout;
     private Button buttonLogout;
+    private Button buttonSetting;
     private SearchView mSearchView;
+    private TextView textUsername;
     private static final String TAG = "IngredientActivity";
     private List<Ingredient> mIngredientList;
     private IngredientListViewAdapter adapter;
-
+    private FirebaseAuth myAuth;
+    UserProfile userInformation;
+    FirebaseUser user;
+    FirebaseDatabase database;
+    DatabaseReference myRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +59,9 @@ public class IngredientActivity extends AppCompatActivity implements View.OnClic
 
         buttonLogout = (Button) findViewById(R.id.btn_logout);
         buttonLogout.setOnClickListener(this);
+        
+        buttonSetting = (Button) findViewById(R.id.btn_setting);
+        buttonSetting.setOnClickListener(this);
 
         buttonSearch = (Button) findViewById(R.id.btn_search_recipe);
         buttonSearch.setOnClickListener(this);
@@ -86,6 +101,25 @@ public class IngredientActivity extends AppCompatActivity implements View.OnClic
 */
 
 
+
+        //userinfo
+        myAuth = myAuth.getInstance();
+        user = myAuth.getCurrentUser();
+        database = FirebaseDatabase.getInstance();
+        myRef = database.getReference(("profile/" + user.getUid()));
+        textUsername = findViewById(R.id.txt_username);
+        ValueEventListener postListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                userInformation = dataSnapshot.getValue(UserProfile.class);
+                textUsername.setText(userInformation.getUsername_profile());
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        };
+        myRef.addListenerForSingleValueEvent(postListener);
 
 
         mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -152,6 +186,10 @@ public class IngredientActivity extends AppCompatActivity implements View.OnClic
             finish();
             startActivity(new Intent(this, LoginActivity.class));
             FirebaseAuth.getInstance().signOut();
+        }
+        if (v == buttonSetting) {
+            finish();
+            startActivity(new Intent(this, SettingActivity.class));
         }
     }
 
