@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -43,18 +44,18 @@ public class IngredientActivity extends AppCompatActivity implements View.OnClic
     private TextView textUsername;
     private static final String TAG = "IngredientActivity";
     private List<Ingredient> mIngredientList;
+    private List<Ingredient> realIngredientList;
     private IngredientListViewAdapter adapter;
     private ArrayAdapterSearchView.SearchAutoComplete mSearchAutoComplete;
+    private IngredientListViewAdapter ingredientAdapter;
+    private ArrayAdapterSearchView mAutoCompleteTextView;
     private FirebaseAuth myAuth;
     UserProfile userInformation;
     FirebaseUser user;
     FirebaseDatabase database;
     DatabaseReference myRef;
 
-    //private ;
-    private IngredientListViewAdapter ingredientAdapter;
-    private ArrayAdapterSearchView mAutoCompleteTextView;
-    private String [] testStrings = {"Java","kotlin","C","C++","C#","Python","PHP","JavaScript"};
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,48 +78,28 @@ public class IngredientActivity extends AppCompatActivity implements View.OnClic
         mSearchView.setIconifiedByDefault(false);
         mSearchView.onActionViewExpanded();
 
-        mIngredientList = new ArrayList<Ingredient>();
-        //adapter = new IngredientListViewAdapter(this, mIngredientList);
-        SideslipListView listView = findViewById(R.id.ingredient_list);
+        realIngredientList = new ArrayList<Ingredient>();
+        adapter = new IngredientListViewAdapter(this, realIngredientList);
+        final SideslipListView listView = findViewById(R.id.ingredient_list);
         listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
-        //listView.setAdapter(adapter);
+        listView.setAdapter(adapter);
 
+        mIngredientList = new ArrayList<Ingredient>();
         int autoCompleteTextViewID = mSearchView.getResources().getIdentifier("android:id/search_src_text", null, null);
         AutoCompleteTextView mAutoCompleteTextView = (AutoCompleteTextView) mSearchView.findViewById(autoCompleteTextViewID);
         mAutoCompleteTextView.setThreshold(0);
-
-        //mAutoCompleteTextView.setAdapter(new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,testStrings));
-
-        Log.d(TAG, "onCreate: whos is null " + mIngredientList);
         ingredientAdapter = new IngredientListViewAdapter(this, android.R.layout.simple_dropdown_item_1line, mIngredientList);
         mAutoCompleteTextView.setAdapter(ingredientAdapter);
-
-
-        /*
-        SimpleAdapter adapter = new SimpleAdapter(this, mData,
-                R.layout.ingredient_list_item,
-                new String[] { "title", "info", "image" },
-                new int[] { R.id.title, R.id.info, R.id.image }) {
+        mAutoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
-            public View getView (int position, View convertView, ViewGroup parent) {
-                View view = super.getView(position, convertView, parent);
-                buttonDelete = (TextView) view.findViewById(R.id.txtv_delete);
-                final int pos = position;
-                buttonDelete.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        mData.remove(pos);
-                        notifyDataSetChanged();
-                    }
-                });
-                return view;
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Ingredient ingredient = (Ingredient) parent.getItemAtPosition(position);
+                adapter.loadNewIngredient(ingredient);
+                Log.d(TAG, "onItemClick: ingre" + realIngredientList);
             }
-
-        };
-*/
-
-
+        });
+        
 
         //userinfo
         myAuth = myAuth.getInstance();
@@ -150,7 +131,7 @@ public class IngredientActivity extends AppCompatActivity implements View.OnClic
                 //}
                 //mSearchView.clearFocus();
                 //finish();
-                return true;
+                return false;
             }
 
             @Override
@@ -172,16 +153,6 @@ public class IngredientActivity extends AppCompatActivity implements View.OnClic
             }
         });
     }
-
-/*
-    @Override
-    protected void onResume() {
-        super.onResume();
-        IngredientJsonData ingredientJsonData = new IngredientJsonData(this, "https://trackapi.nutritionix.com/v2/search/instant", true);
-        Log.d(TAG, "onResume: " + ingredientJsonData);
-        ingredientJsonData.execute(mIngredientList);
-    }
-*/
 
 
     @Override

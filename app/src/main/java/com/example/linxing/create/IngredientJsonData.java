@@ -74,7 +74,7 @@ class IngredientJsonData extends AsyncTask<String, Void, List<Ingredient>> imple
                     String brand_name = jsonIngredient.getString("brand_name");
 
                     //String link = imageUrl.replaceFirst("_m.", "_b.");
-                    
+
                     Ingredient ingredientObject = new Ingredient(food_name, imageUrl, serving_unit, brand_name_item_name, nf_calories, brand_name);
                     mIngredient.add(ingredientObject);
 

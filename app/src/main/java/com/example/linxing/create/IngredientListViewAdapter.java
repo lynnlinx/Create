@@ -96,6 +96,11 @@ class IngredientListViewAdapter extends ArrayAdapter<Ingredient> {
         notifyDataSetChanged();
     }
 
+    void loadNewIngredient(Ingredient newIngredient) {
+        mIngredientList.add(newIngredient);
+        notifyDataSetChanged();
+    }
+
     private static class ViewHolder {
         TextView name;
         TextView nutrition;
