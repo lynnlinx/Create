@@ -23,11 +23,15 @@ class IngredientListViewAdapter extends ArrayAdapter<Ingredient> {
 
     public IngredientListViewAdapter(Context context, List<Ingredient> ingredientList) {
         super(context, R.layout.ingredient, ingredientList);
-        Log.d(TAG, "IngredientListViewAdapter: inside!!!!");
         mContext = context;
         mIngredientList = ingredientList;
     }
 
+    public IngredientListViewAdapter(Context context, int resource, List<Ingredient> ingredientList) {
+        super(context, resource, ingredientList);
+        mIngredientList = ingredientList;
+        mContext = context;
+    }
 
     @Override
     public View getView (int position, View convertView, ViewGroup parent) {
@@ -36,7 +40,6 @@ class IngredientListViewAdapter extends ArrayAdapter<Ingredient> {
 
         ViewHolder viewHolder;
         if (null == convertView) {
-            Log.d(TAG, "getView: view is null!!!!!");
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.ingredient_list_item, parent, false);
             viewHolder = new ViewHolder();
             viewHolder.name = (TextView) convertView.findViewById(R.id.title);

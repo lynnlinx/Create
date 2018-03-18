@@ -40,6 +40,21 @@
                         android:layout_marginStart="0dp"
                         android:scaleType="center" />
 
+                    <!--
+                    <AutoCompleteTextView
+                        android:id="@+id/searchView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_weight="6.78"
+                        android:hint="@string/AddIngredient"
+                        android:padding="10dp"
+                        android:paddingLeft="15dp" >
+
+                        <requestFocus />
+                    </AutoCompleteTextView>
+                    -->
+
                     <SearchView
                         android:id="@+id/searchView"
                         android:layout_width="wrap_content"

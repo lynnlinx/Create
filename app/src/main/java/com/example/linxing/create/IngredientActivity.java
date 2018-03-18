@@ -7,6 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -22,9 +24,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
+//import android.widget.SearchView;
 /**
  * Created by jiana on 2018/2/27.
  * Powered by Nutritionix API
@@ -43,11 +45,17 @@ public class IngredientActivity extends AppCompatActivity implements View.OnClic
     private static final String TAG = "IngredientActivity";
     private List<Ingredient> mIngredientList;
     private IngredientListViewAdapter adapter;
+    private ArrayAdapterSearchView.SearchAutoComplete mSearchAutoComplete;
     private FirebaseAuth myAuth;
     UserProfile userInformation;
     FirebaseUser user;
     FirebaseDatabase database;
     DatabaseReference myRef;
+
+    //private ;
+    private IngredientListViewAdapter ingredientAdapter;
+    private ArrayAdapterSearchView mAutoCompleteTextView;
+    private String [] testStrings = {"Java","kotlin","C","C++","C#","Python","PHP","JavaScript"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +67,7 @@ public class IngredientActivity extends AppCompatActivity implements View.OnClic
 
         buttonLogout = (Button) findViewById(R.id.btn_logout);
         buttonLogout.setOnClickListener(this);
-        
+
         buttonSetting = (Button) findViewById(R.id.btn_setting);
         buttonSetting.setOnClickListener(this);
 
@@ -71,11 +79,22 @@ public class IngredientActivity extends AppCompatActivity implements View.OnClic
         mSearchView.onActionViewExpanded();
 
         mIngredientList = new ArrayList<Ingredient>();
-        adapter = new IngredientListViewAdapter(this, mIngredientList);
+        //adapter = new IngredientListViewAdapter(this, mIngredientList);
         SideslipListView listView = findViewById(R.id.ingredient_list);
         listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
-        listView.setAdapter(adapter);
-        Log.d(TAG, "onCreate: here create adapter!!!!" + listView.getAdapter());
+        //listView.setAdapter(adapter);
+
+        int autoCompleteTextViewID = mSearchView.getResources().getIdentifier("android:id/search_src_text", null, null);
+        AutoCompleteTextView mAutoCompleteTextView = (AutoCompleteTextView) mSearchView.findViewById(autoCompleteTextViewID);
+        mAutoCompleteTextView.setThreshold(0);
+
+        mAutoCompleteTextView.setAdapter(new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,testStrings));
+
+        Log.d(TAG, "onCreate: whos is null " + mIngredientList);
+        //ingredientAdapter = new IngredientListViewAdapter(this, android.R.layout.simple_dropdown_item_1line, mIngredientList);
+        //mAutoCompleteTextView.setAdapter(ingredientAdapter);
+
+
         /*
         SimpleAdapter adapter = new SimpleAdapter(this, mData,
                 R.layout.ingredient_list_item,
@@ -126,11 +145,11 @@ public class IngredientActivity extends AppCompatActivity implements View.OnClic
 
             private static final String TAG = "IngredientActivity";
             @Override
-            public boolean onQueryTextSubmit(String query) {
-                if (query.length() > 1) {
-                    loadData(query);
-                }
-                mSearchView.clearFocus();
+            public boolean onQueryTextSubmit(String newText) {
+                //if (newText.length() > 1) {
+                //    loadData(newText);
+                //}
+                //mSearchView.clearFocus();
                 //finish();
                 return true;
             }
@@ -138,7 +157,11 @@ public class IngredientActivity extends AppCompatActivity implements View.OnClic
             @Override
             public boolean onQueryTextChange(String newText) {
                 //Cursor cursor = TextUtils.isEmpty(newText) ? null : queryData(newText);
-                return false;
+                if (newText.length() > 1) {
+                    loadData(newText);
+                }
+                //mSearchView.clearFocus();
+                return true;
             }
         });
 
@@ -165,7 +188,8 @@ public class IngredientActivity extends AppCompatActivity implements View.OnClic
     @Override
     public void onDataAvailable(List<Ingredient> data, DownloadStatus status) {
         if (status == DownloadStatus.OK) {
-            adapter.loadNewData(data);
+            //adapter.loadNewData(data);
+            //ingredientAdapter.loadNewData(data);
             Log.d(TAG, "onDataAvailable: data is" + data);
         } else {
             // download or processing failed
@@ -199,60 +223,5 @@ public class IngredientActivity extends AppCompatActivity implements View.OnClic
     }
 
 
-    private List<Map<String, Object>> getData() {
-        List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
-
-        Map<String, Object> map;
-
-        map = new HashMap<String, Object>();
-        map.put("title", "Chicken Breast");
-        map.put("info", "Protein:37g    Carb:0g    Fat:4g");
-        map.put("image", R.mipmap.ic_chickenbreast);
-        list.add(map);
-
-        map = new HashMap<String, Object>();
-        map.put("title", "Broccoli");
-        map.put("info", "Protein:1g    Carb:3g    Fat:0g");
-        map.put("image", R.mipmap.ic_broccoli);
-        list.add(map);
-
-        map = new HashMap<String, Object>();
-        map.put("title", "Cheese");
-        map.put("info", "Protein:6g    Carb:1g    Fat:9g");
-        map.put("image", R.mipmap.ic_cheese);
-        list.add(map);
-
-        map = new HashMap<String, Object>();
-        map.put("title", "Egg");
-        map.put("info", "Protein:6g    Carb:0g    Fat:5g");
-        map.put("image", R.mipmap.ic_egg);
-        list.add(map);
-
-        map = new HashMap<String, Object>();
-        map.put("title", "Milk");
-        map.put("info", "Protein:8g    Carb:12g    Fat:2g");
-        map.put("image", R.mipmap.ic_milk);
-        list.add(map);
-
-        map = new HashMap<String, Object>();
-        map.put("title", "Noodle");
-        map.put("info", "Protein:7g    Carb:38g    Fat:1g");
-        map.put("image", R.mipmap.ic_noodle);
-        list.add(map);
-
-        map = new HashMap<String, Object>();
-        map.put("title", "Onion");
-        map.put("info", "Protein:1g    Carb:10g    Fat:0g");
-        map.put("image", R.mipmap.ic_onion);
-        list.add(map);
-
-        map = new HashMap<String, Object>();
-        map.put("title", "Tomato");
-        map.put("info", "Protein:1g    Carb:5g    Fat:0g");
-        map.put("image", R.mipmap.ic_tomato);
-        list.add(map);
-
-        return list;
-    }
 
 }
