@@ -10,7 +10,6 @@ import android.util.Log;
 import android.util.SparseArray;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
-import android.view.View;
 import android.widget.TextView;
 
 import com.google.android.gms.vision.CameraSource;
@@ -24,7 +23,7 @@ import java.io.IOException;
  * Created by linxing on 3/19/18.
  */
 
-public class ScannerActivity extends AppCompatActivity implements View.OnClickListener{
+public class ScannerActivity extends AppCompatActivity {
 
     private static final String TAG = "ScannerActivity";
     private static final int PERMISSION_REQUEST = 1;
@@ -36,7 +35,7 @@ public class ScannerActivity extends AppCompatActivity implements View.OnClickLi
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        setContentView(R.layout.camera);
 
         cameraView = (SurfaceView) findViewById(R.id.surface_view);
         barcodeValue = (TextView) findViewById(R.id.barcode_value);
@@ -44,11 +43,12 @@ public class ScannerActivity extends AppCompatActivity implements View.OnClickLi
                 .setBarcodeFormats(Barcode.ALL_FORMATS)
                 .build();
         if(!barcodeDetector.isOperational()){
-            Log.d(TAG, "onCreate: erroooooooooooo");
+            Log.w(TAG, "Detector dependencies are not yet available.");
             return;
         }
 
         cameraSource = new CameraSource.Builder(this, barcodeDetector)
+                .setFacing(CameraSource.CAMERA_FACING_BACK)
                 .setRequestedPreviewSize(1600, 1024)
                 .setAutoFocusEnabled(true) //you should add this feature
                 .build();
@@ -104,8 +104,4 @@ public class ScannerActivity extends AppCompatActivity implements View.OnClickLi
         barcodeDetector.release();
     }
 
-    @Override
-    public void onClick(View v) {
-
-    }
 }
