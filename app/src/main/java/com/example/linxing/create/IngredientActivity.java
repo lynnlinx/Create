@@ -48,7 +48,7 @@ public class IngredientActivity extends AppCompatActivity implements View.OnClic
     private IngredientListViewAdapter adapter;
     private IngredientListSearchViewAdapter adapterSearch;
     private ArrayAdapterSearchView.SearchAutoComplete mSearchAutoComplete;
-    private IngredientListViewAdapter ingredientAdapter;
+    private IngredientListSearchViewAdapter ingredientAdapter;
     private ArrayAdapterSearchView mAutoCompleteTextView;
     private FirebaseAuth myAuth;
     UserProfile userInformation;
@@ -113,7 +113,7 @@ public class IngredientActivity extends AppCompatActivity implements View.OnClic
         int autoCompleteTextViewID = mSearchView.getResources().getIdentifier("android:id/search_src_text", null, null);
         final AutoCompleteTextView mAutoCompleteTextView = (AutoCompleteTextView) mSearchView.findViewById(autoCompleteTextViewID);
         mAutoCompleteTextView.setThreshold(0);
-        ingredientAdapter = new IngredientListViewAdapter(this, android.R.layout.simple_dropdown_item_1line, mIngredientList);
+        ingredientAdapter = new IngredientListSearchViewAdapter(this, android.R.layout.simple_dropdown_item_1line, mIngredientList);
         mAutoCompleteTextView.setAdapter(ingredientAdapter);
         mAutoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 

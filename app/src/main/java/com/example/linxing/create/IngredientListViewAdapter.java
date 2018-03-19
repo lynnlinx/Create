@@ -48,11 +48,11 @@ class IngredientListViewAdapter extends ArrayAdapter<Ingredient> {
             viewHolder.name = (TextView) convertView.findViewById(R.id.title);
             viewHolder.nutrition = (TextView) convertView.findViewById(R.id.info);
             viewHolder.image = (ImageView) convertView.findViewById(R.id.image);
+            viewHolder.txtv_delete = (TextView) convertView.findViewById(R.id.txtv_delete);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        final int pos = position;
         if (mIngredientList.size() > 0) {
             Ingredient ingredient = mIngredientList.get(position);
             viewHolder.name.setText(ingredient.getFood_name());
@@ -63,14 +63,15 @@ class IngredientListViewAdapter extends ArrayAdapter<Ingredient> {
                     .placeholder(R.drawable.ic_filter)
                     .into(viewHolder.image);
         }
-
-
-        buttonDelete = (TextView) convertView.findViewById(R.id.txtv_delete);
-        buttonDelete.setOnClickListener(new View.OnClickListener() {
+        final int pos = position;
+        viewHolder.txtv_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mIngredientList.remove(pos);
+/*                Toast.makeText(MainActivity.this, mDataList.get(pos) + "被删除了",
+                        Toast.LENGTH_SHORT).show();
+                mDataList.remove(pos);
                 notifyDataSetChanged();
+                mSideslipListView.turnNormal();*/
             }
         });
 
@@ -105,5 +106,6 @@ class IngredientListViewAdapter extends ArrayAdapter<Ingredient> {
         TextView name;
         TextView nutrition;
         ImageView image;
+        TextView txtv_delete;
     }
 }
