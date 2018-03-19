@@ -14,4 +14,6 @@
     <string name="AddIngredient">Add Ingredient</string>
     <string name="age">AGE</string>
     <string name="weight">WEIGHT</string>
+    <string name="scanner">Barcode Scanner</string>
+    <string name="cancelScanning">Return</string>
 </resources>

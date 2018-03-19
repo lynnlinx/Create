@@ -13,6 +13,8 @@ import android.util.Log;
 import android.util.SparseArray;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.android.gms.vision.CameraSource;
@@ -38,14 +40,21 @@ public class ScannerActivity extends AppCompatActivity implements IngredientUPCJ
     private String upc;
     private AlertDialog mAlertDialog;
     private AlertDialog.Builder normalDialog;
+    private Button returnButton;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.camera);
 
-
-
+        returnButton = (Button) findViewById(R.id.returnButton);
+        returnButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+                startActivity(new Intent(ScannerActivity.this, IngredientActivity.class));
+            }
+        });
         cameraView = (SurfaceView) findViewById(R.id.surface_view);
         barcodeValue = (TextView) findViewById(R.id.barcode_value);
         barcodeDetector = new BarcodeDetector.Builder(this)
@@ -109,6 +118,7 @@ public class ScannerActivity extends AppCompatActivity implements IngredientUPCJ
     @Override
     public void onDataAvailable(List<Ingredient> data, DownloadStatus status) {
         if (status == DownloadStatus.OK) {
+
             Log.d(TAG, "onDataAvailable: data is" + data);
         } else {
             // download or processing failed
