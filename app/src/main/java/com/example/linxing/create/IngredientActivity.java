@@ -25,6 +25,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 //import android.widget.SearchView;
 /**
@@ -46,7 +47,6 @@ public class IngredientActivity extends AppCompatActivity implements View.OnClic
     private List<Ingredient> mIngredientList;
     private List<Ingredient> realIngredientList;
     private IngredientListViewAdapter adapter;
-    private IngredientListSearchViewAdapter adapterSearch;
     private ArrayAdapterSearchView.SearchAutoComplete mSearchAutoComplete;
     private IngredientListSearchViewAdapter ingredientAdapter;
     private ArrayAdapterSearchView mAutoCompleteTextView;
@@ -108,7 +108,6 @@ public class IngredientActivity extends AppCompatActivity implements View.OnClic
         listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
         listView.setAdapter(adapter);
 
-        adapterSearch =  new IngredientListSearchViewAdapter(this, realIngredientList);
         mIngredientList = new ArrayList<Ingredient>();
         int autoCompleteTextViewID = mSearchView.getResources().getIdentifier("android:id/search_src_text", null, null);
         final AutoCompleteTextView mAutoCompleteTextView = (AutoCompleteTextView) mSearchView.findViewById(autoCompleteTextViewID);
@@ -120,7 +119,8 @@ public class IngredientActivity extends AppCompatActivity implements View.OnClic
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Ingredient ingredient = (Ingredient) parent.getItemAtPosition(position);
-                adapterSearch.loadNewIngredient(ingredient);
+                adapter.loadNewIngredient(ingredient);
+                ingredient.setUuid(UUID.randomUUID().toString());
                 saveIngredient(ingredient);
                 mSearchView.setQuery("",false);
                 Log.d(TAG, "onItemClick: ingre" + realIngredientList);
@@ -195,7 +195,7 @@ public class IngredientActivity extends AppCompatActivity implements View.OnClic
         ingredientJsonData.execute(s);
     }
     private void saveIngredient(Ingredient ingredient) {
-        ingredientRef.push().setValue(ingredient);
+        ingredientRef.child(ingredient.getUuid()).setValue(ingredient);
     }
     private ArrayList<Ingredient> loadIngredient() {
         final ArrayList<Ingredient> ingredientsArrayList = new ArrayList<Ingredient>();

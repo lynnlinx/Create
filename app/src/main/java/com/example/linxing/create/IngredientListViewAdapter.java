@@ -10,6 +10,10 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -23,7 +27,8 @@ class IngredientListViewAdapter extends ArrayAdapter<Ingredient> {
     private static final String TAG = "IngredientListViewAdapt";
     private List<Ingredient> mIngredientList = new ArrayList<>();
     private Context mContext;
-    SideslipListView listViewfinal;
+    private SideslipListView listViewfinal;
+    private FirebaseAuth myAuth;
 
     public IngredientListViewAdapter(Context context, List<Ingredient> ingredientList, SideslipListView listView) {
         super(context, R.layout.ingredient, ingredientList);
@@ -69,6 +74,13 @@ class IngredientListViewAdapter extends ArrayAdapter<Ingredient> {
         viewHolder.txtv_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Ingredient ingredientRemove = mIngredientList.get(pos);
+                myAuth = myAuth.getInstance();
+                FirebaseUser user = myAuth.getCurrentUser();
+                FirebaseDatabase database = FirebaseDatabase.getInstance();
+                DatabaseReference ingredientRef = database.getReference("ingredient/"
+                        + user.getUid() + "/" + ingredientRemove.getUuid());
+                ingredientRef.removeValue();
                 mIngredientList.remove(pos);
                 notifyDataSetChanged();
                 listViewfinal.turnNormal();
