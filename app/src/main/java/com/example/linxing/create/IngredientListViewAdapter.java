@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,14 +21,15 @@ import java.util.List;
 
 class IngredientListViewAdapter extends ArrayAdapter<Ingredient> {
     private static final String TAG = "IngredientListViewAdapt";
-    private List<Ingredient> mIngredientList;
+    private List<Ingredient> mIngredientList = new ArrayList<>();
     private Context mContext;
-    private TextView buttonDelete;
+    SideslipListView listViewfinal;
 
-    public IngredientListViewAdapter(Context context, List<Ingredient> ingredientList) {
+    public IngredientListViewAdapter(Context context, List<Ingredient> ingredientList, SideslipListView listView) {
         super(context, R.layout.ingredient, ingredientList);
         mContext = context;
         mIngredientList = ingredientList;
+        listViewfinal = listView;
     }
 
     public IngredientListViewAdapter(Context context, int resource, List<Ingredient> ingredientList) {
@@ -67,11 +69,9 @@ class IngredientListViewAdapter extends ArrayAdapter<Ingredient> {
         viewHolder.txtv_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-/*                Toast.makeText(MainActivity.this, mDataList.get(pos) + "被删除了",
-                        Toast.LENGTH_SHORT).show();
-                mDataList.remove(pos);
+                mIngredientList.remove(pos);
                 notifyDataSetChanged();
-                mSideslipListView.turnNormal();*/
+                listViewfinal.turnNormal();
             }
         });
 
@@ -80,16 +80,21 @@ class IngredientListViewAdapter extends ArrayAdapter<Ingredient> {
 
     @Override
     public int getCount() {
-        return ((mIngredientList != null) && (mIngredientList.size() != 0) ? mIngredientList.size() : 1);
+        return mIngredientList.size();
     }
 
     @Nullable
     @Override
     public Ingredient getItem(int position) {
-        if (mIngredientList != null && mIngredientList.size() > position) {
+        /*if (mIngredientList != null && mIngredientList.size() > position) {
             return mIngredientList.get(position);
-        }
-        return null;
+        }*/
+        return mIngredientList.get(position);
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
     }
 
     void loadNewData(List<Ingredient> newIngredient) {

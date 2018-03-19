@@ -103,8 +103,8 @@ public class IngredientActivity extends AppCompatActivity implements View.OnClic
 
         //realIngredientList = new ArrayList<Ingredient>();
         realIngredientList = loadIngredient();
-        adapter = new IngredientListViewAdapter(this, realIngredientList);
         final SideslipListView listView = findViewById(R.id.ingredient_list);
+        adapter = new IngredientListViewAdapter(this, realIngredientList, listView);
         listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
         listView.setAdapter(adapter);
 
