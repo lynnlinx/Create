@@ -1,5 +1,8 @@
 package com.example.linxing.create;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -31,11 +34,14 @@ public class ScannerActivity extends AppCompatActivity {
     private CameraSource cameraSource;
     private TextView barcodeValue;
     private SurfaceView cameraView;
+    private String upc;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.camera);
+
+
 
         cameraView = (SurfaceView) findViewById(R.id.surface_view);
         barcodeValue = (TextView) findViewById(R.id.barcode_value);
@@ -91,7 +97,9 @@ public class ScannerActivity extends AppCompatActivity {
             public void receiveDetections(Detector.Detections<Barcode> detections) {
                 final SparseArray<Barcode> barcodes = detections.getDetectedItems();
                 if (barcodes.size() > 0) {
-                    barcodeValue.setText(barcodes.valueAt(0).displayValue);
+                    //barcodeValue.setText(barcodes.valueAt(0).displayValue);
+                    upc = barcodes.valueAt(0).displayValue;
+                    showMultiBtnDialog(upc);
                 }
             }
         });
@@ -104,4 +112,36 @@ public class ScannerActivity extends AppCompatActivity {
         barcodeDetector.release();
     }
 
+
+
+    private void showMultiBtnDialog(String upc){
+        AlertDialog.Builder normalDialog =
+                new AlertDialog.Builder(ScannerActivity.this);
+        //normalDialog.setIcon(R.drawable.icon_dialog);
+        normalDialog.setTitle("UPC detected").setMessage("The UPC for current ingredient is: " + upc);
+        normalDialog.setPositiveButton("Back to ingredient list",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                        startActivity(new Intent(ScannerActivity.this, IngredientActivity.class));
+                    }
+                });
+        normalDialog.setNeutralButton("Rescan",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                        startActivity(new Intent(ScannerActivity.this, ScannerActivity.class));
+                    }
+                });
+        normalDialog.setNegativeButton("Add to list", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // ...To-do
+            }
+        });
+        // 创建实例并显示
+        normalDialog.show();
+    }
 }
