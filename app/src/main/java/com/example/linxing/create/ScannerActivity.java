@@ -21,12 +21,13 @@ import com.google.android.gms.vision.barcode.Barcode;
 import com.google.android.gms.vision.barcode.BarcodeDetector;
 
 import java.io.IOException;
+import java.util.List;
 
 /**
  * Created by linxing on 3/19/18.
  */
 
-public class ScannerActivity extends AppCompatActivity {
+public class ScannerActivity extends AppCompatActivity implements IngredientJsonData.OnDataAvailable {
 
     private static final String TAG = "ScannerActivity";
     private static final int PERMISSION_REQUEST = 1;
@@ -104,6 +105,12 @@ public class ScannerActivity extends AppCompatActivity {
         });
     }
 
+
+    @Override
+    public void onDataAvailable(List<Ingredient> data, DownloadStatus status) {
+
+    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -130,9 +137,6 @@ public class ScannerActivity extends AppCompatActivity {
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        //finish();
-                        //startActivity(new Intent(ScannerActivity.this, ScannerActivity.class));
-
                         try {
                             if (ContextCompat.checkSelfPermission(ScannerActivity.this, android.Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
                                 cameraSource.start(cameraView.getHolder());
@@ -147,7 +151,7 @@ public class ScannerActivity extends AppCompatActivity {
         normalDialog.setNegativeButton("Add to list", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                // ...To-do
+                //loadUPC(upc);
             }
         });
 
@@ -163,6 +167,10 @@ public class ScannerActivity extends AppCompatActivity {
             }
         });
 
+    }
 
+    private void loadUPC(String s) {
+        IngredientJsonData ingredientJsonData = new IngredientJsonData(this, "https://trackapi.nutritionix.com/v2/search/instant", true);
+        ingredientJsonData.execute(s);
     }
 }

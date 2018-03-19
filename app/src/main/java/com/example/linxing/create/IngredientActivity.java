@@ -202,6 +202,9 @@ public class IngredientActivity extends AppCompatActivity implements View.OnClic
         IngredientJsonData ingredientJsonData = new IngredientJsonData(this, "https://trackapi.nutritionix.com/v2/search/instant", true);
         ingredientJsonData.execute(s);
     }
+
+
+
     private void saveIngredient(Ingredient ingredient) {
         ingredientRef.child(ingredient.getUuid()).setValue(ingredient);
     }
