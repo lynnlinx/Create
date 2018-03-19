@@ -22,6 +22,9 @@ class Ingredient {
         this.brand_name = brand_name;
     }
 
+    public Ingredient() {
+
+    }
     public String getFood_name() {
         return food_name;
     }

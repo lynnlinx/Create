@@ -54,11 +54,12 @@ public class IngredientActivity extends AppCompatActivity implements View.OnClic
     FirebaseUser user;
     FirebaseDatabase database;
     DatabaseReference myRef;
+    DatabaseReference ingredientRef;
 
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ingredient);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -78,7 +79,30 @@ public class IngredientActivity extends AppCompatActivity implements View.OnClic
         mSearchView.setIconifiedByDefault(false);
         mSearchView.onActionViewExpanded();
 
-        realIngredientList = new ArrayList<Ingredient>();
+
+        //userinfo
+        myAuth = myAuth.getInstance();
+        user = myAuth.getCurrentUser();
+        database = FirebaseDatabase.getInstance();
+        myRef = database.getReference(("profile/" + user.getUid()));
+        ingredientRef = database.getReference(("ingredient/" + user.getUid()));
+        textUsername = findViewById(R.id.txt_username);
+        ValueEventListener infoListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                userInformation = dataSnapshot.getValue(UserProfile.class);
+                textUsername.setText(userInformation.getUsername_profile());
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        };
+        myRef.addListenerForSingleValueEvent(infoListener);
+
+
+        //realIngredientList = new ArrayList<Ingredient>();
+        realIngredientList = loadIngredient();
         adapter = new IngredientListViewAdapter(this, realIngredientList);
         final SideslipListView listView = findViewById(R.id.ingredient_list);
         listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
@@ -96,30 +120,14 @@ public class IngredientActivity extends AppCompatActivity implements View.OnClic
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Ingredient ingredient = (Ingredient) parent.getItemAtPosition(position);
                 adapter.loadNewIngredient(ingredient);
+                saveIngredient(ingredient);
                 mSearchView.setQuery("",false);
                 Log.d(TAG, "onItemClick: ingre" + realIngredientList);
             }
         });
 
 
-        //userinfo
-        myAuth = myAuth.getInstance();
-        user = myAuth.getCurrentUser();
-        database = FirebaseDatabase.getInstance();
-        myRef = database.getReference(("profile/" + user.getUid()));
-        textUsername = findViewById(R.id.txt_username);
-        ValueEventListener postListener = new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                userInformation = dataSnapshot.getValue(UserProfile.class);
-                textUsername.setText(userInformation.getUsername_profile());
-            }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-            }
-        };
-        myRef.addListenerForSingleValueEvent(postListener);
 
 
         mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -188,7 +196,25 @@ public class IngredientActivity extends AppCompatActivity implements View.OnClic
         IngredientJsonData ingredientJsonData = new IngredientJsonData(this, "https://trackapi.nutritionix.com/v2/search/instant", true);
         ingredientJsonData.execute(s);
     }
+    private void saveIngredient(Ingredient ingredient) {
+        ingredientRef.push().setValue(ingredient);
+    }
+    private ArrayList<Ingredient> loadIngredient() {
+        final ArrayList<Ingredient> ingredientsArrayList = new ArrayList<Ingredient>();
+        ValueEventListener ingredientListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                    Ingredient ingredient = ds.getValue(Ingredient.class);
+                    ingredientsArrayList.add(ingredient);
+                }
+            }
 
-
-
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        };
+        ingredientRef.addListenerForSingleValueEvent(ingredientListener);
+        return ingredientsArrayList;
+    }
 }
