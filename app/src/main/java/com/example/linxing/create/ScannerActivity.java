@@ -98,7 +98,6 @@ public class ScannerActivity extends AppCompatActivity {
             public void receiveDetections(Detector.Detections<Barcode> detections) {
                 final SparseArray<Barcode> barcodes = detections.getDetectedItems();
                 if (barcodes.size() > 0) {
-                    //barcodeValue.setText(barcodes.valueAt(0).displayValue);
                     upc = barcodes.valueAt(0).displayValue;
                     showMultiBtnDialog(upc);
                 }
