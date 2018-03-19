@@ -213,7 +213,7 @@ public class IngredientActivity extends AppCompatActivity implements View.OnClic
             public void onCancelled(DatabaseError databaseError) {
             }
         };
-        ingredientRef.addValueEventListener(ingredientListener);
+        ingredientRef.addListenerForSingleValueEvent(ingredientListener);
         return ingredientsArrayList;
     }
 }
