@@ -27,7 +27,7 @@ import java.util.List;
  * Created by linxing on 3/19/18.
  */
 
-public class ScannerActivity extends AppCompatActivity implements IngredientJsonData.OnDataAvailable {
+public class ScannerActivity extends AppCompatActivity implements IngredientUPCJsonData.OnDataAvailable {
 
     private static final String TAG = "ScannerActivity";
     private static final int PERMISSION_REQUEST = 1;
@@ -99,7 +99,7 @@ public class ScannerActivity extends AppCompatActivity implements IngredientJson
                 final SparseArray<Barcode> barcodes = detections.getDetectedItems();
                 if (barcodes.size() > 0) {
                     upc = barcodes.valueAt(0).displayValue;
-                    showMultiBtnDialog(upc);
+                    showMultiBtnDialog();
                 }
             }
         });
@@ -108,7 +108,12 @@ public class ScannerActivity extends AppCompatActivity implements IngredientJson
 
     @Override
     public void onDataAvailable(List<Ingredient> data, DownloadStatus status) {
-
+        if (status == DownloadStatus.OK) {
+            Log.d(TAG, "onDataAvailable: data is" + data);
+        } else {
+            // download or processing failed
+            Log.e(TAG, "onDataAvailable: failed with status" + status );
+        }
     }
 
     @Override
@@ -120,7 +125,7 @@ public class ScannerActivity extends AppCompatActivity implements IngredientJson
 
 
 
-    private void showMultiBtnDialog(String upc){
+    private void showMultiBtnDialog(){
         normalDialog =
                 new AlertDialog.Builder(ScannerActivity.this);
         //normalDialog.setIcon(R.drawable.icon_dialog);
@@ -151,7 +156,9 @@ public class ScannerActivity extends AppCompatActivity implements IngredientJson
         normalDialog.setNegativeButton("Add to list", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                //loadUPC(upc);
+                loadUPC(upc);
+                finish();
+                startActivity(new Intent(ScannerActivity.this, IngredientActivity.class));
             }
         });
 
@@ -170,7 +177,7 @@ public class ScannerActivity extends AppCompatActivity implements IngredientJson
     }
 
     private void loadUPC(String s) {
-        IngredientJsonData ingredientJsonData = new IngredientJsonData(this, "https://trackapi.nutritionix.com/v2/search/instant", true);
-        ingredientJsonData.execute(s);
+        IngredientUPCJsonData ingredientUPCJsonData = new IngredientUPCJsonData(this, "https://trackapi.nutritionix.com/v2/search/item", true);
+        ingredientUPCJsonData.execute(s);
     }
 }

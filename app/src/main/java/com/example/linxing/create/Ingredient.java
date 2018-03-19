@@ -23,6 +23,14 @@ class Ingredient {
         this.brand_name = brand_name;
     }
 
+    public Ingredient(String food_name, String image, String serving_unit, String nf_calories, String brand_name) {
+        this.food_name = food_name;
+        this.image = image;
+        this.serving_unit = serving_unit;
+        this.nf_calories = nf_calories;
+        this.brand_name = brand_name;
+    }
+
     public Ingredient() {
 
     }
