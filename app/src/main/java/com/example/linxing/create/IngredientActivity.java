@@ -128,12 +128,7 @@ public class IngredientActivity extends AppCompatActivity implements View.OnClic
         });
 
         mScanner = (ImageButton) findViewById(R.id.barcode);
-        mScanner.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setContentView(R.layout.camera);
-            }
-        });
+        mScanner.setOnClickListener(this);
 
 
 
@@ -196,6 +191,10 @@ public class IngredientActivity extends AppCompatActivity implements View.OnClic
         if (v == buttonSetting) {
             finish();
             startActivity(new Intent(this, SettingActivity.class));
+        }
+        if (v == mScanner) {
+            finish();
+            startActivity(new Intent(this, ScannerActivity.class));
         }
     }
 

@@ -27,6 +27,7 @@
         <activity android:name=".IngredientActivity" />
         <activity android:name=".DetailRecipeActivity" />
         <activity android:name=".SettingActivity" />
+        <activity android:name=".ScannerActivity" />
     </application>
 
 </manifest>
