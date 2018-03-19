@@ -35,6 +35,7 @@ public class ScannerActivity extends AppCompatActivity {
     private TextView barcodeValue;
     private SurfaceView cameraView;
     private String upc;
+    private AlertDialog.Builder normalDialog;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -115,7 +116,7 @@ public class ScannerActivity extends AppCompatActivity {
 
 
     private void showMultiBtnDialog(String upc){
-        AlertDialog.Builder normalDialog =
+        normalDialog =
                 new AlertDialog.Builder(ScannerActivity.this);
         //normalDialog.setIcon(R.drawable.icon_dialog);
         normalDialog.setTitle("UPC detected").setMessage("The UPC for current ingredient is: " + upc);
@@ -141,7 +142,19 @@ public class ScannerActivity extends AppCompatActivity {
                 // ...To-do
             }
         });
-        // 创建实例并显示
-        normalDialog.show();
+
+
+        //AlertDialog alertDialog = normalDialog.create();
+        //normalDialog.show();
+
+
+        ScannerActivity.this.runOnUiThread(new Runnable() {
+            public void run() {
+                AlertDialog alertDialog = normalDialog.create();
+                normalDialog.show();
+            }
+        });
+
+
     }
 }
