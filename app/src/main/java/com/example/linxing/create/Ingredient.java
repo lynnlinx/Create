@@ -12,6 +12,7 @@ class Ingredient {
     private String brand_name_item_name;
     private String nf_calories;
     private String brand_name;
+    private String uuid;
 
     public Ingredient(String food_name, String image, String serving_unit, String brand_name_item_name, String nf_calories, String brand_name) {
         this.food_name = food_name;
@@ -22,6 +23,9 @@ class Ingredient {
         this.brand_name = brand_name;
     }
 
+    public Ingredient() {
+
+    }
     public String getFood_name() {
         return food_name;
     }
@@ -46,6 +50,12 @@ class Ingredient {
         return brand_name;
     }
 
+    public void setUuid(String uuid_input) {
+        uuid = uuid_input;
+    }
+    public String getUuid() {
+        return uuid;
+    }
     @Override
     public String toString() {
         return "Ingredient{" +

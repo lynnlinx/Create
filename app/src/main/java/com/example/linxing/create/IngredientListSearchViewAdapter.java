@@ -10,34 +10,27 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by linxing on 3/17/18.
  */
 
-class IngredientListViewAdapter extends ArrayAdapter<Ingredient> {
+class IngredientListSearchViewAdapter extends ArrayAdapter<Ingredient> {
     private static final String TAG = "IngredientListViewAdapt";
-    private List<Ingredient> mIngredientList = new ArrayList<>();
+    private List<Ingredient> mIngredientList;
     private Context mContext;
-    private SideslipListView listViewfinal;
-    private FirebaseAuth myAuth;
+    private TextView buttonDelete;
 
-    public IngredientListViewAdapter(Context context, List<Ingredient> ingredientList, SideslipListView listView) {
+    public IngredientListSearchViewAdapter(Context context, List<Ingredient> ingredientList) {
         super(context, R.layout.ingredient, ingredientList);
         mContext = context;
         mIngredientList = ingredientList;
-        listViewfinal = listView;
     }
 
-    public IngredientListViewAdapter(Context context, int resource, List<Ingredient> ingredientList) {
+    public IngredientListSearchViewAdapter(Context context, int resource, List<Ingredient> ingredientList) {
         super(context, resource, ingredientList);
         mIngredientList = ingredientList;
         mContext = context;
@@ -55,11 +48,11 @@ class IngredientListViewAdapter extends ArrayAdapter<Ingredient> {
             viewHolder.name = (TextView) convertView.findViewById(R.id.title);
             viewHolder.nutrition = (TextView) convertView.findViewById(R.id.info);
             viewHolder.image = (ImageView) convertView.findViewById(R.id.image);
-            viewHolder.txtv_delete = (TextView) convertView.findViewById(R.id.txtv_delete);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
+        final int pos = position;
         if (mIngredientList.size() > 0) {
             Ingredient ingredient = mIngredientList.get(position);
             viewHolder.name.setText(ingredient.getFood_name());
@@ -70,20 +63,14 @@ class IngredientListViewAdapter extends ArrayAdapter<Ingredient> {
                     .placeholder(R.drawable.ic_filter)
                     .into(viewHolder.image);
         }
-        final int pos = position;
-        viewHolder.txtv_delete.setOnClickListener(new View.OnClickListener() {
+
+
+        buttonDelete = (TextView) convertView.findViewById(R.id.txtv_delete);
+        buttonDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Ingredient ingredientRemove = mIngredientList.get(pos);
-                myAuth = myAuth.getInstance();
-                FirebaseUser user = myAuth.getCurrentUser();
-                FirebaseDatabase database = FirebaseDatabase.getInstance();
-                DatabaseReference ingredientRef = database.getReference("ingredient/"
-                        + user.getUid() + "/" + ingredientRemove.getUuid());
-                ingredientRef.removeValue();
                 mIngredientList.remove(pos);
                 notifyDataSetChanged();
-                listViewfinal.turnNormal();
             }
         });
 
@@ -92,21 +79,16 @@ class IngredientListViewAdapter extends ArrayAdapter<Ingredient> {
 
     @Override
     public int getCount() {
-        return mIngredientList.size();
+        return ((mIngredientList != null) && (mIngredientList.size() != 0) ? mIngredientList.size() : 1);
     }
 
     @Nullable
     @Override
     public Ingredient getItem(int position) {
-        /*if (mIngredientList != null && mIngredientList.size() > position) {
+        if (mIngredientList != null && mIngredientList.size() > position) {
             return mIngredientList.get(position);
-        }*/
-        return mIngredientList.get(position);
-    }
-
-    @Override
-    public long getItemId(int position) {
-        return position;
+        }
+        return null;
     }
 
     void loadNewData(List<Ingredient> newIngredient) {
@@ -123,6 +105,5 @@ class IngredientListViewAdapter extends ArrayAdapter<Ingredient> {
         TextView name;
         TextView nutrition;
         ImageView image;
-        TextView txtv_delete;
     }
 }

@@ -28,6 +28,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 //import android.widget.SearchView;
 /**
@@ -39,7 +40,7 @@ public class IngredientActivity extends AppCompatActivity implements View.OnClic
                                         IngredientJsonData.OnDataAvailable {
     private static final int PERMISSION_REQUEST = 1;
     private Button buttonSearch;
-    private TextView buttonDelete;
+    //private TextView buttonDelete;
     private ImageButton buttonLeftMenu;
     private DrawerLayout drawerLayout;
     private Button buttonLogout;
@@ -52,13 +53,14 @@ public class IngredientActivity extends AppCompatActivity implements View.OnClic
     private List<Ingredient> realIngredientList;
     private IngredientListViewAdapter adapter;
     private ArrayAdapterSearchView.SearchAutoComplete mSearchAutoComplete;
-    private IngredientListViewAdapter ingredientAdapter;
+    private IngredientListSearchViewAdapter ingredientAdapter;
     private ArrayAdapterSearchView mAutoCompleteTextView;
     private FirebaseAuth myAuth;
     UserProfile userInformation;
     FirebaseUser user;
     FirebaseDatabase database;
     DatabaseReference myRef;
+    DatabaseReference ingredientRef;
 
     private BarcodeDetector barcodeDetector;
     private CameraSource cameraSource;
@@ -68,7 +70,7 @@ public class IngredientActivity extends AppCompatActivity implements View.OnClic
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ingredient);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -88,9 +90,31 @@ public class IngredientActivity extends AppCompatActivity implements View.OnClic
         mSearchView.setIconifiedByDefault(false);
         mSearchView.onActionViewExpanded();
 
-        realIngredientList = new ArrayList<Ingredient>();
-        adapter = new IngredientListViewAdapter(this, realIngredientList);
+
+        //userinfo
+        myAuth = myAuth.getInstance();
+        user = myAuth.getCurrentUser();
+        database = FirebaseDatabase.getInstance();
+        myRef = database.getReference(("profile/" + user.getUid()));
+        textUsername = findViewById(R.id.txt_username);
+        ValueEventListener infoListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                userInformation = dataSnapshot.getValue(UserProfile.class);
+                textUsername.setText(userInformation.getUsername_profile());
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        };
+        myRef.addListenerForSingleValueEvent(infoListener);
+        ingredientRef = database.getReference(("ingredient/" + user.getUid()));
+
+        //realIngredientList = new ArrayList<Ingredient>();
+        realIngredientList = loadIngredient();
         final SideslipListView listView = findViewById(R.id.ingredient_list);
+        adapter = new IngredientListViewAdapter(this, realIngredientList, listView);
         listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
         listView.setAdapter(adapter);
 
@@ -98,13 +122,15 @@ public class IngredientActivity extends AppCompatActivity implements View.OnClic
         int autoCompleteTextViewID = mSearchView.getResources().getIdentifier("android:id/search_src_text", null, null);
         final AutoCompleteTextView mAutoCompleteTextView = (AutoCompleteTextView) mSearchView.findViewById(autoCompleteTextViewID);
         mAutoCompleteTextView.setThreshold(0);
-        ingredientAdapter = new IngredientListViewAdapter(this, android.R.layout.simple_dropdown_item_1line, mIngredientList);
+        ingredientAdapter = new IngredientListSearchViewAdapter(this, android.R.layout.simple_dropdown_item_1line, mIngredientList);
         mAutoCompleteTextView.setAdapter(ingredientAdapter);
         mAutoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Ingredient ingredient = (Ingredient) parent.getItemAtPosition(position);
                 adapter.loadNewIngredient(ingredient);
+                ingredient.setUuid(UUID.randomUUID().toString());
+                saveIngredient(ingredient);
                 mSearchView.setQuery("",false);
                 Log.d(TAG, "onItemClick: ingre" + realIngredientList);
             }
@@ -177,28 +203,16 @@ public class IngredientActivity extends AppCompatActivity implements View.OnClic
                     barcodeValue.setText(barcodes.valueAt(0).displayValue);
                 }
             }
+
+            @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        cameraSource.release();
+        barcodeDetector.release();
         });
 */
 
 
-        //userinfo
-        myAuth = myAuth.getInstance();
-        user = myAuth.getCurrentUser();
-        database = FirebaseDatabase.getInstance();
-        myRef = database.getReference(("profile/" + user.getUid()));
-        textUsername = findViewById(R.id.txt_username);
-        ValueEventListener postListener = new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                userInformation = dataSnapshot.getValue(UserProfile.class);
-                textUsername.setText(userInformation.getUsername_profile());
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-            }
-        };
-        myRef.addListenerForSingleValueEvent(postListener);
 
 
         mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -267,13 +281,26 @@ public class IngredientActivity extends AppCompatActivity implements View.OnClic
         IngredientJsonData ingredientJsonData = new IngredientJsonData(this, "https://trackapi.nutritionix.com/v2/search/instant", true);
         ingredientJsonData.execute(s);
     }
+    private void saveIngredient(Ingredient ingredient) {
+        ingredientRef.child(ingredient.getUuid()).setValue(ingredient);
+    }
+    private ArrayList<Ingredient> loadIngredient() {
+        final ArrayList<Ingredient> ingredientsArrayList = new ArrayList<Ingredient>();
+        ValueEventListener ingredientListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                    Ingredient ingredient = ds.getValue(Ingredient.class);
+                    ingredientsArrayList.add(ingredient);
+                }
+            }
 
 
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        cameraSource.release();
-        barcodeDetector.release();
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        };
+        ingredientRef.addListenerForSingleValueEvent(ingredientListener);
+        return ingredientsArrayList;
     }
 }
