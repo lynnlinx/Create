@@ -85,7 +85,6 @@ public class IngredientActivity extends AppCompatActivity implements View.OnClic
         user = myAuth.getCurrentUser();
         database = FirebaseDatabase.getInstance();
         myRef = database.getReference(("profile/" + user.getUid()));
-        ingredientRef = database.getReference(("ingredient/" + user.getUid()));
         textUsername = findViewById(R.id.txt_username);
         ValueEventListener infoListener = new ValueEventListener() {
             @Override
@@ -99,7 +98,7 @@ public class IngredientActivity extends AppCompatActivity implements View.OnClic
             }
         };
         myRef.addListenerForSingleValueEvent(infoListener);
-
+        ingredientRef = database.getReference(("ingredient/" + user.getUid()));
 
         //realIngredientList = new ArrayList<Ingredient>();
         realIngredientList = loadIngredient();
@@ -214,7 +213,7 @@ public class IngredientActivity extends AppCompatActivity implements View.OnClic
             public void onCancelled(DatabaseError databaseError) {
             }
         };
-        ingredientRef.addListenerForSingleValueEvent(ingredientListener);
+        ingredientRef.addValueEventListener(ingredientListener);
         return ingredientsArrayList;
     }
 }

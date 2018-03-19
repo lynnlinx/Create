@@ -55,8 +55,8 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
     public void onClick(View v) {
         if(v == buttonSave){
             saveUserInfo();
+            startActivity(new Intent(getApplicationContext(),IngredientActivity.class));
             finish();
-            startActivity(new Intent(getApplicationContext(), IngredientActivity.class));
         }
         if(v == buttonChangePhoto){
         }
