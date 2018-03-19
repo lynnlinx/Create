@@ -6,7 +6,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.SurfaceView;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
@@ -16,8 +15,6 @@ import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
 
-import com.google.android.gms.vision.CameraSource;
-import com.google.android.gms.vision.barcode.BarcodeDetector;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -38,7 +35,7 @@ import java.util.UUID;
 
 public class IngredientActivity extends AppCompatActivity implements View.OnClickListener,
                                         IngredientJsonData.OnDataAvailable {
-    private static final int PERMISSION_REQUEST = 1;
+
     private Button buttonSearch;
     //private TextView buttonDelete;
     private ImageButton buttonLeftMenu;
@@ -61,12 +58,6 @@ public class IngredientActivity extends AppCompatActivity implements View.OnClic
     FirebaseDatabase database;
     DatabaseReference myRef;
     DatabaseReference ingredientRef;
-
-    private BarcodeDetector barcodeDetector;
-    private CameraSource cameraSource;
-    private TextView barcodeValue;
-    private SurfaceView cameraView;
-
 
 
     @Override
@@ -143,75 +134,6 @@ public class IngredientActivity extends AppCompatActivity implements View.OnClic
                 setContentView(R.layout.camera);
             }
         });
-
-
-
-
-/*
-        cameraView = (SurfaceView) findViewById(R.id.surface_view);
-        barcodeValue = (TextView) findViewById(R.id.barcode_value);
-        barcodeDetector = new BarcodeDetector.Builder(this)
-                .setBarcodeFormats(Barcode.ALL_FORMATS)
-                .build();
-        if(!barcodeDetector.isOperational()){
-            return;
-        }
-
-        cameraSource = new CameraSource.Builder(this, barcodeDetector)
-                .setRequestedPreviewSize(1600, 1024)
-                .setAutoFocusEnabled(true) //you should add this feature
-                .build();
-
-
-        cameraView.getHolder().addCallback(new SurfaceHolder.Callback() {
-            @Override
-            public void surfaceCreated(SurfaceHolder holder) {
-                try {
-                    if (ContextCompat.checkSelfPermission(IngredientActivity.this, android.Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
-                        cameraSource.start(cameraView.getHolder());
-                    } else {
-                        ActivityCompat.requestPermissions(IngredientActivity.this, new String[]{android.Manifest.permission.CAMERA}, PERMISSION_REQUEST);
-                    }
-
-
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                }
-            }
-
-            @Override
-            public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-            }
-
-            @Override
-            public void surfaceDestroyed(SurfaceHolder holder) {
-                cameraSource.stop();
-            }
-        });
-
-
-        barcodeDetector.setProcessor(new Detector.Processor<Barcode>() {
-            @Override
-            public void release() {
-
-            }
-
-            @Override
-            public void receiveDetections(Detector.Detections<Barcode> detections) {
-                final SparseArray<Barcode> barcodes = detections.getDetectedItems();
-                if (barcodes.size() > 0) {
-                    barcodeValue.setText(barcodes.valueAt(0).displayValue);
-                }
-            }
-
-            @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        cameraSource.release();
-        barcodeDetector.release();
-        });
-*/
-
 
 
 
