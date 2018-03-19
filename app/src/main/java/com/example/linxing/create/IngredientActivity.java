@@ -35,7 +35,7 @@ import java.util.List;
 public class IngredientActivity extends AppCompatActivity implements View.OnClickListener,
                                         IngredientJsonData.OnDataAvailable {
     private Button buttonSearch;
-    private TextView buttonDelete;
+    //private TextView buttonDelete;
     private ImageButton buttonLeftMenu;
     private DrawerLayout drawerLayout;
     private Button buttonLogout;
@@ -46,6 +46,7 @@ public class IngredientActivity extends AppCompatActivity implements View.OnClic
     private List<Ingredient> mIngredientList;
     private List<Ingredient> realIngredientList;
     private IngredientListViewAdapter adapter;
+    private IngredientListSearchViewAdapter adapterSearch;
     private ArrayAdapterSearchView.SearchAutoComplete mSearchAutoComplete;
     private IngredientListViewAdapter ingredientAdapter;
     private ArrayAdapterSearchView mAutoCompleteTextView;
@@ -107,6 +108,7 @@ public class IngredientActivity extends AppCompatActivity implements View.OnClic
         listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
         listView.setAdapter(adapter);
 
+        adapterSearch =  new IngredientListSearchViewAdapter(this, realIngredientList);
         mIngredientList = new ArrayList<Ingredient>();
         int autoCompleteTextViewID = mSearchView.getResources().getIdentifier("android:id/search_src_text", null, null);
         final AutoCompleteTextView mAutoCompleteTextView = (AutoCompleteTextView) mSearchView.findViewById(autoCompleteTextViewID);
@@ -118,15 +120,12 @@ public class IngredientActivity extends AppCompatActivity implements View.OnClic
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Ingredient ingredient = (Ingredient) parent.getItemAtPosition(position);
-                adapter.loadNewIngredient(ingredient);
+                adapterSearch.loadNewIngredient(ingredient);
                 saveIngredient(ingredient);
                 mSearchView.setQuery("",false);
                 Log.d(TAG, "onItemClick: ingre" + realIngredientList);
             }
         });
-
-
-
 
 
         mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
