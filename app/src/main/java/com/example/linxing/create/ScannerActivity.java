@@ -35,6 +35,7 @@ public class ScannerActivity extends AppCompatActivity {
     private TextView barcodeValue;
     private SurfaceView cameraView;
     private String upc;
+    private AlertDialog mAlertDialog;
     private AlertDialog.Builder normalDialog;
 
     @Override
@@ -70,8 +71,6 @@ public class ScannerActivity extends AppCompatActivity {
                     } else {
                         ActivityCompat.requestPermissions(ScannerActivity.this, new String[]{android.Manifest.permission.CAMERA}, PERMISSION_REQUEST);
                     }
-
-
                 } catch (IOException ex) {
                     ex.printStackTrace();
                 }
@@ -131,8 +130,18 @@ public class ScannerActivity extends AppCompatActivity {
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        finish();
-                        startActivity(new Intent(ScannerActivity.this, ScannerActivity.class));
+                        //finish();
+                        //startActivity(new Intent(ScannerActivity.this, ScannerActivity.class));
+
+                        try {
+                            if (ContextCompat.checkSelfPermission(ScannerActivity.this, android.Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+                                cameraSource.start(cameraView.getHolder());
+                            } else {
+                                ActivityCompat.requestPermissions(ScannerActivity.this, new String[]{android.Manifest.permission.CAMERA}, PERMISSION_REQUEST);
+                            }
+                        } catch (IOException ex) {
+                            ex.printStackTrace();
+                        }
                     }
                 });
         normalDialog.setNegativeButton("Add to list", new DialogInterface.OnClickListener() {
@@ -143,14 +152,14 @@ public class ScannerActivity extends AppCompatActivity {
         });
 
 
-        //AlertDialog alertDialog = normalDialog.create();
-        //normalDialog.show();
-
-
         ScannerActivity.this.runOnUiThread(new Runnable() {
             public void run() {
-                AlertDialog alertDialog = normalDialog.create();
-                normalDialog.show();
+                if (mAlertDialog != null && mAlertDialog.isShowing()) {
+                    mAlertDialog.dismiss();
+                }
+                cameraSource.stop();
+                mAlertDialog = normalDialog.create();
+                mAlertDialog.show();
             }
         });
 
