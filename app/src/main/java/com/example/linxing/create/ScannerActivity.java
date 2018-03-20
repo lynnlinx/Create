@@ -19,9 +19,14 @@ import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;
 import com.google.android.gms.vision.barcode.Barcode;
 import com.google.android.gms.vision.barcode.BarcodeDetector;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Created by linxing on 3/19/18.
@@ -38,9 +43,15 @@ public class ScannerActivity extends AppCompatActivity implements IngredientUPCJ
     private String upc;
     private AlertDialog mAlertDialog;
     private AlertDialog.Builder normalDialog;
+    DatabaseReference ingredientRef;
+    private FirebaseAuth myAuth;
+    FirebaseUser user;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        myAuth = myAuth.getInstance();
+        user = myAuth.getCurrentUser();
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.camera);
 
@@ -109,6 +120,12 @@ public class ScannerActivity extends AppCompatActivity implements IngredientUPCJ
     @Override
     public void onDataAvailable(List<Ingredient> data, DownloadStatus status) {
         if (status == DownloadStatus.OK) {
+            if (data.size() != 0) {
+                Ingredient ingredient = data.get(0);
+                ingredient.setUuid(UUID.randomUUID().toString());
+                ingredientRef = FirebaseDatabase.getInstance().getReference(("ingredient/" + user.getUid()));
+                ingredientRef.child(ingredient.getUuid()).setValue(ingredient);
+            }
             Log.d(TAG, "onDataAvailable: data is" + data);
         } else {
             // download or processing failed

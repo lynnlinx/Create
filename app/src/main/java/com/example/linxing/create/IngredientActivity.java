@@ -47,7 +47,7 @@ public class IngredientActivity extends AppCompatActivity implements View.OnClic
     private ImageButton mScanner;
     private static final String TAG = "IngredientActivity";
     private List<Ingredient> mIngredientList;
-    private List<Ingredient> realIngredientList;
+    private List<Ingredient> realIngredientList = new ArrayList<>();
     private IngredientListViewAdapter adapter;
     private ArrayAdapterSearchView.SearchAutoComplete mSearchAutoComplete;
     private IngredientListSearchViewAdapter ingredientAdapter;
@@ -58,7 +58,6 @@ public class IngredientActivity extends AppCompatActivity implements View.OnClic
     FirebaseDatabase database;
     DatabaseReference myRef;
     DatabaseReference ingredientRef;
-
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -103,7 +102,7 @@ public class IngredientActivity extends AppCompatActivity implements View.OnClic
         ingredientRef = database.getReference(("ingredient/" + user.getUid()));
 
         //realIngredientList = new ArrayList<Ingredient>();
-        realIngredientList = loadIngredient();
+        loadIngredient();
         final SideslipListView listView = findViewById(R.id.ingredient_list);
         adapter = new IngredientListViewAdapter(this, realIngredientList, listView);
         listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
@@ -119,7 +118,7 @@ public class IngredientActivity extends AppCompatActivity implements View.OnClic
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Ingredient ingredient = (Ingredient) parent.getItemAtPosition(position);
-                adapter.loadNewIngredient(ingredient);
+                //adapter.loadNewIngredient(ingredient);
                 ingredient.setUuid(UUID.randomUUID().toString());
                 saveIngredient(ingredient);
                 mSearchView.setQuery("",false);
@@ -208,14 +207,14 @@ public class IngredientActivity extends AppCompatActivity implements View.OnClic
     private void saveIngredient(Ingredient ingredient) {
         ingredientRef.child(ingredient.getUuid()).setValue(ingredient);
     }
-    private ArrayList<Ingredient> loadIngredient() {
-        final ArrayList<Ingredient> ingredientsArrayList = new ArrayList<Ingredient>();
+    private void loadIngredient() {
         ValueEventListener ingredientListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                realIngredientList.clear();
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
                     Ingredient ingredient = ds.getValue(Ingredient.class);
-                    ingredientsArrayList.add(ingredient);
+                    realIngredientList.add(ingredient);
                 }
             }
 
@@ -224,7 +223,7 @@ public class IngredientActivity extends AppCompatActivity implements View.OnClic
             public void onCancelled(DatabaseError databaseError) {
             }
         };
-        ingredientRef.addListenerForSingleValueEvent(ingredientListener);
-        return ingredientsArrayList;
+        ingredientRef.addValueEventListener(ingredientListener);
+        return;
     }
 }
