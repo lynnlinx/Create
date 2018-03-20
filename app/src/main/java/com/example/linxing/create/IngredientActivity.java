@@ -118,7 +118,7 @@ public class IngredientActivity extends AppCompatActivity implements View.OnClic
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Ingredient ingredient = (Ingredient) parent.getItemAtPosition(position);
-                //adapter.loadNewIngredient(ingredient);
+                adapter.loadNewIngredient(ingredient);
                 ingredient.setUuid(UUID.randomUUID().toString());
                 saveIngredient(ingredient);
                 mSearchView.setQuery("",false);
