@@ -78,7 +78,7 @@ public class IngredientActivity extends AppCompatActivity implements View.OnClic
 
         mSearchView = (SearchView) findViewById(R.id.searchView);
         mSearchView.setIconifiedByDefault(false);
-        mSearchView.onActionViewExpanded();
+        //mSearchView.onActionViewExpanded();
 
 
         //userinfo
@@ -216,6 +216,7 @@ public class IngredientActivity extends AppCompatActivity implements View.OnClic
                     Ingredient ingredient = ds.getValue(Ingredient.class);
                     realIngredientList.add(ingredient);
                 }
+                adapter.notifyDataSetChanged();
             }
 
 
