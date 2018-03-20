@@ -53,6 +53,7 @@ public class IngredientActivity extends AppCompatActivity implements View.OnClic
     private IngredientListSearchViewAdapter ingredientAdapter;
     private ArrayAdapterSearchView mAutoCompleteTextView;
     private FirebaseAuth myAuth;
+    private SideslipListView mListView;
     UserProfile userInformation;
     FirebaseUser user;
     FirebaseDatabase database;
@@ -103,10 +104,12 @@ public class IngredientActivity extends AppCompatActivity implements View.OnClic
 
         //realIngredientList = new ArrayList<Ingredient>();
         loadIngredient();
-        final SideslipListView listView = findViewById(R.id.ingredient_list);
-        adapter = new IngredientListViewAdapter(this, realIngredientList, listView);
-        listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
-        listView.setAdapter(adapter);
+        mListView = findViewById(R.id.ingredient_list);
+        Log.d(TAG, "onCreate: list is whata" + realIngredientList.size());
+        adapter = new IngredientListViewAdapter(this, realIngredientList, mListView);
+        mListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+        mListView.setAdapter(adapter);
+
 
         mIngredientList = new ArrayList<Ingredient>();
         int autoCompleteTextViewID = mSearchView.getResources().getIdentifier("android:id/search_src_text", null, null);
@@ -114,6 +117,7 @@ public class IngredientActivity extends AppCompatActivity implements View.OnClic
         mAutoCompleteTextView.setThreshold(0);
         ingredientAdapter = new IngredientListSearchViewAdapter(this, android.R.layout.simple_dropdown_item_1line, mIngredientList);
         mAutoCompleteTextView.setAdapter(ingredientAdapter);
+
         mAutoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
