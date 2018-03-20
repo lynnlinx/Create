@@ -220,6 +220,7 @@ public class IngredientActivity extends AppCompatActivity implements View.OnClic
                     Ingredient ingredient = ds.getValue(Ingredient.class);
                     realIngredientList.add(ingredient);
                 }
+                adapter.notifyDataSetChanged();
             }
 
 
