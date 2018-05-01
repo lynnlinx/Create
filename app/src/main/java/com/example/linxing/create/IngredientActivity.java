@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -22,6 +23,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,6 +58,7 @@ public class IngredientActivity extends AppCompatActivity implements View.OnClic
     private ArrayAdapterSearchView mAutoCompleteTextView;
     private FirebaseAuth myAuth;
     private SideslipListView mListView;
+    private ListView IngredientListView;
     UserProfile userInformation;
     FirebaseUser user;
     FirebaseDatabase database;
@@ -75,7 +80,21 @@ public class IngredientActivity extends AppCompatActivity implements View.OnClic
         buttonSetting.setOnClickListener(this);
 
         buttonSearch = (Button) findViewById(R.id.btn_search_recipe);
-        buttonSearch.setOnClickListener(this);
+        buttonSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                SelectedUserID=Integer.parseInt(s.user_id);
+//                LoadTweets(0,SearchType.OnePerson);
+//                txtnamefollowers.setText(s.first_name);
+                Intent intent = new Intent(IngredientActivity.this, RecipelistActivity.class);
+
+                String url="https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes" +
+                        "/findByIngredients?fillIngredients=false&ingredients=apples%2Cflour%2Csugar" +
+                        "&limitLicense=false&number=5&ranking=1";
+                new  MyAsyncTaskgetRecipe().execute(url);
+                startActivity(intent);
+            }
+        });
 
         mSearchView = (SearchView) findViewById(R.id.searchView);
         mSearchView.setIconifiedByDefault(false);
@@ -133,7 +152,22 @@ public class IngredientActivity extends AppCompatActivity implements View.OnClic
         mScanner = (ImageButton) findViewById(R.id.barcode);
         mScanner.setOnClickListener(this);
 
+      //  ArrayAdapter<Ingredient> ListAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1,mIngredientList);
+      //  IngredientListView.setAdapter(ListAdapter);
+     //   IngredientListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            //@Override
+         //   public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
+                //transfer data to next page
+              //  try {
+                    //JSONObject ingrediant = mIngredientList.get(i).getFood_name();
+
+               // } catch (JSONException e) {
+                //    e.printStackTrace();
+                //}
+
+//            }
+//        });
 
         mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
 
@@ -180,6 +214,8 @@ public class IngredientActivity extends AppCompatActivity implements View.OnClic
     @Override
     public void onClick(View v) {
         if (v == buttonSearch) {
+
+
             finish();
             startActivity(new Intent(this, RecipelistActivity.class));
         }
