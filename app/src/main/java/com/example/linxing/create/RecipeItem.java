@@ -11,15 +11,24 @@ public class RecipeItem {
     private int missedIngredientCount;
     private String image;
     private String imageType;
+    private int calories;
+    private String protein;
+    private String fat;
+    private String carbs;
 
 
-    public RecipeItem(int id, String title, int usedIngredientCount, int missedIngredientCount, String image, String imageType) {
+    public RecipeItem(int id, String title, int usedIngredientCount, int missedIngredientCount, String image,
+                      String imageType, int calories, String protein, String fat, String carbs) {
         this.id = id;
         this.title = title;
         this.usedIngredientCount = usedIngredientCount;
         this.missedIngredientCount = missedIngredientCount;
         this.image = image;
         this.imageType = imageType;
+        this.calories = calories;
+        this.protein = protein;
+        this.fat = fat;
+        this.carbs = carbs;
     }
 
 
@@ -45,8 +54,25 @@ public class RecipeItem {
     public int getUsedIngredientCount() {
         return usedIngredientCount;
     }
+
     public int getMissedIngredientCount() {
         return missedIngredientCount;
+    }
+
+    public int getCalories() {
+        return calories;
+    }
+
+    public String getProtein() {
+        return protein;
+    }
+
+    public String getFat() {
+        return fat;
+    }
+
+    public String getCarbs() {
+        return carbs;
     }
 
     @Override
@@ -58,6 +84,10 @@ public class RecipeItem {
                 ", title='" + title + '\'' +
                 ", usedIngredientCount='" + usedIngredientCount + '\'' +
                 ", missedIngredientCount='" + missedIngredientCount + '\'' +
+                ", calories='" + calories + '\'' +
+                ", protein='" + protein + '\'' +
+                ", fat='" + fat + '\'' +
+                ", carbs='" + carbs + '\'' +
                 '}';
     }
 }

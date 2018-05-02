@@ -36,7 +36,7 @@ public class RecipelistActivity extends AppCompatActivity implements RecipeJsonD
 
         StringBuilder result = new StringBuilder();
         for (String s: ingredients) {
-            result.append(s).append(" ");
+            result.append(s).append(",");
         }
 
         Log.d(TAG, "onCreate: isssssss: " + result.toString());
@@ -105,7 +105,7 @@ public class RecipelistActivity extends AppCompatActivity implements RecipeJsonD
 
 
     private void loadData(String s) {
-        RecipeJsonData recipeJsonData = new RecipeJsonData(this, "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/findByIngredients", true);
+        RecipeJsonData recipeJsonData = new RecipeJsonData(this, "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/searchComplex", true);
         recipeJsonData.execute(s);
     }
 

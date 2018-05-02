@@ -190,7 +190,7 @@ public class IngredientActivity extends AppCompatActivity implements View.OnClic
 
             for (int i = 0; i < len; i++) {
                 String tmp = realIngredientList.get(i).getFood_name();
-                tmp = tmp.replaceAll("[^\\p{L}\\p{Nd}]+", " ");
+                tmp = tmp.replaceAll("[^\\p{L}\\p{Nd}]+", ",");
                 ingredientName[i] = tmp;
             }
 

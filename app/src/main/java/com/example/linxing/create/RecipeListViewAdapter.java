@@ -55,6 +55,12 @@ public class RecipeListViewAdapter extends ArrayAdapter<RecipeItem> {
         if (mRecipeItems.size() > 0) {
             RecipeItem recipeItem = mRecipeItems.get(position);
             viewHolder.name.setText(recipeItem.getTitle());
+            StringBuilder sb = new StringBuilder();
+            sb.append("Calories: ").append(recipeItem.getCalories()).append(", ")
+                    .append("Protein: ").append(recipeItem.getProtein()).append(", ")
+                    .append("Fat: ").append(recipeItem.getFat()).append(", ")
+                    .append("Carbs: ").append(recipeItem.getCarbs());
+            viewHolder.nutrition.setText(sb.toString());
             Picasso.with(mContext).load(recipeItem.getImage())
                     .error(R.drawable.ic_filter)
                     .placeholder(R.drawable.ic_filter)

@@ -46,7 +46,11 @@ public class RecipeJsonData extends AsyncTask<String, Void, List<RecipeItem>> im
     private String createUri(String searchCriteria, boolean matchAll) {
         Log.d(TAG, "createUri: starts");
         return Uri.parse(mBaseURL).buildUpon()
-                .appendQueryParameter("ingredients", searchCriteria)
+                .appendQueryParameter("offset", "0")
+                .appendQueryParameter("number", "10")
+                .appendQueryParameter("limitLicense", "false")
+                .appendQueryParameter("includeIngredients", searchCriteria)
+                .appendQueryParameter("minCarbs", "0")
                 .build().toString();
     }
 
@@ -58,8 +62,9 @@ public class RecipeJsonData extends AsyncTask<String, Void, List<RecipeItem>> im
         if (status == RecipeDownloadStatus.OK) {
             mRecipeItems = new ArrayList<>();
             try {
+                JSONObject jsonObject =  new JSONObject(data);
                 Log.d(TAG, "onDownloadComplete: " + data);
-                JSONArray itemsArray = new JSONArray(data);
+                JSONArray itemsArray = jsonObject.getJSONArray("results");
                 Log.d(TAG, "onDownloadComplete: item is:"+ itemsArray);
 
                 for (int i = 0; i < itemsArray.length(); i++) {
@@ -71,6 +76,10 @@ public class RecipeJsonData extends AsyncTask<String, Void, List<RecipeItem>> im
                     String imageType = jsonRecipe.getString("imageType");
                     int usedIngredientCount = jsonRecipe.getInt("usedIngredientCount");
                     int missedIngredientCount = jsonRecipe.getInt("missedIngredientCount");
+                    int calories = jsonRecipe.getInt("calories");
+                    String protein = jsonRecipe.getString("protein");
+                    String fat = jsonRecipe.getString("fat");
+                    String carbs = jsonRecipe.getString("carbs");
 
                     /*
                     int readyInMinutes = jsonRecipe.getInt("readyInMinutes");
@@ -89,7 +98,7 @@ public class RecipeJsonData extends AsyncTask<String, Void, List<RecipeItem>> im
                         recipeItem = new RecipeItem(id, title, readyInMinutes, servings, imageURL);
                     }
                     */
-                    RecipeItem recipeItem = new RecipeItem(id, title, usedIngredientCount, missedIngredientCount, imageURL, imageType);
+                    RecipeItem recipeItem = new RecipeItem(id, title, usedIngredientCount, missedIngredientCount, imageURL, imageType, calories, protein, fat, carbs);
                     mRecipeItems.add(recipeItem);
 
                     Log.d(TAG, "onDownloadComplete" + recipeItem.toString());
