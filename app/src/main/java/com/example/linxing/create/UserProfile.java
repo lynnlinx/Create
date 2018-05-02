@@ -8,13 +8,16 @@ public class UserProfile {
     private String username_profile;
     private String age_profile;
     private String weight_profile;
+    private String gender_profile;
+
     public UserProfile() {
 
     }
-    public UserProfile(String username, String age, String weight) {
+    public UserProfile(String username, String age, String weight, String gender) {
         this.username_profile = username;
         this.age_profile = age;
         this.weight_profile = weight;
+        this.gender_profile = gender;
     }
     public UserProfile(String username) {
         this.username_profile = username;
@@ -28,6 +31,9 @@ public class UserProfile {
     public void setWeight_profile(String height) {
         this.weight_profile = height;
     }
+    public void setGender(String gender) {
+        this.gender_profile = gender;
+    }
     public String getAge_profile() {
         return age_profile;
     }
@@ -36,5 +42,8 @@ public class UserProfile {
     }
     public String getUsername_profile() {
         return username_profile;
+    }
+    public String getGender_profile() {
+        return gender_profile;
     }
 }
