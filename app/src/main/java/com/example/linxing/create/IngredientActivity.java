@@ -24,8 +24,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
-import java.util.UUID;
+import java.util.Set;
 
 //import android.widget.SearchView;
 /**
@@ -49,6 +50,7 @@ public class IngredientActivity extends AppCompatActivity implements View.OnClic
     private static final String TAG = "IngredientActivity";
     private List<Ingredient> mIngredientList;
     private List<Ingredient> realIngredientList = new ArrayList<>();
+    private Set<String> ingredientSet = new HashSet<String>();
     private IngredientListViewAdapter adapter;
     private ArrayAdapterSearchView.SearchAutoComplete mSearchAutoComplete;
     private IngredientListSearchViewAdapter ingredientAdapter;
@@ -110,7 +112,7 @@ public class IngredientActivity extends AppCompatActivity implements View.OnClic
         loadIngredient();
         mListView = findViewById(R.id.ingredient_list);
         Log.d(TAG, "onCreate: list is whata" + realIngredientList.size());
-        adapter = new IngredientListViewAdapter(this, realIngredientList, mListView);
+        adapter = new IngredientListViewAdapter(this, realIngredientList, mListView, ingredientSet);
         mListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
         mListView.setAdapter(adapter);
 
@@ -127,7 +129,6 @@ public class IngredientActivity extends AppCompatActivity implements View.OnClic
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Ingredient ingredient = (Ingredient) parent.getItemAtPosition(position);
                 adapter.loadNewIngredient(ingredient);
-                ingredient.setUuid(UUID.randomUUID().toString());
                 saveIngredient(ingredient);
                 mSearchView.setQuery("",false);
                 Log.d(TAG, "onItemClick: ingre" + realIngredientList);
@@ -233,16 +234,22 @@ public class IngredientActivity extends AppCompatActivity implements View.OnClic
 
 
     private void saveIngredient(Ingredient ingredient) {
-        ingredientRef.child(ingredient.getUuid()).setValue(ingredient);
+            ingredientRef.child(ingredient.getNix_item_id()).setValue(ingredient);
     }
     private void loadIngredient() {
         ValueEventListener ingredientListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 realIngredientList.clear();
+                ingredientSet.clear();
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
                     Ingredient ingredient = ds.getValue(Ingredient.class);
-                    realIngredientList.add(ingredient);
+                    if (ingredientSet.contains(ingredient.getNix_item_id())) {
+
+                    } else {
+                        realIngredientList.add(ingredient);
+                        ingredientSet.add(ingredient.getNix_item_id());
+                    }
                 }
                 adapter.notifyDataSetChanged();
             }

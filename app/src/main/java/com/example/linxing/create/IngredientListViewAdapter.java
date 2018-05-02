@@ -18,6 +18,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by linxing on 3/17/18.
@@ -29,11 +30,13 @@ class IngredientListViewAdapter extends ArrayAdapter<Ingredient> {
     private Context mContext;
     private SideslipListView listViewfinal;
     private FirebaseAuth myAuth;
+    private Set<String> ingredientSet;
 
-    public IngredientListViewAdapter(Context context, List<Ingredient> ingredientList, SideslipListView listView) {
+    public IngredientListViewAdapter(Context context, List<Ingredient> ingredientList, SideslipListView listView, Set<String> set) {
         super(context, R.layout.ingredient, ingredientList);
         mContext = context;
         mIngredientList = ingredientList;
+        ingredientSet = set;
         listViewfinal = listView;
     }
 
@@ -79,9 +82,10 @@ class IngredientListViewAdapter extends ArrayAdapter<Ingredient> {
                 FirebaseUser user = myAuth.getCurrentUser();
                 FirebaseDatabase database = FirebaseDatabase.getInstance();
                 DatabaseReference ingredientRef = database.getReference("ingredient/"
-                        + user.getUid() + "/" + ingredientRemove.getUuid());
+                        + user.getUid() + "/" + ingredientRemove.getNix_item_id());
                 ingredientRef.removeValue();
                 mIngredientList.remove(pos);
+                ingredientSet.remove(ingredientRemove.getNix_item_id());
                 notifyDataSetChanged();
                 listViewfinal.turnNormal();
             }
@@ -115,7 +119,12 @@ class IngredientListViewAdapter extends ArrayAdapter<Ingredient> {
     }
 
     void loadNewIngredient(Ingredient newIngredient) {
-        mIngredientList.add(newIngredient);
+        if (ingredientSet.contains(newIngredient.getNix_item_id())) {
+
+        } else {
+            mIngredientList.add(newIngredient);
+            ingredientSet.add(newIngredient.getNix_item_id());
+        }
         notifyDataSetChanged();
     }
 

@@ -12,7 +12,6 @@ class Ingredient {
     private String brand_name_item_name;
     private String nf_calories;
     private String brand_name;
-    private String uuid;
     private String nix_item_id;
 
     public Ingredient(String food_name, String image, String serving_unit, String brand_name_item_name, String nf_calories, String brand_name, String nix_item_id) {
@@ -61,17 +60,14 @@ class Ingredient {
         return brand_name;
     }
 
-    public void setUuid(String uuid_input) {
-        uuid = uuid_input;
-    }
-
-    public String getUuid() {
-        return uuid;
+    public void setNix_item_id(String id) {
+        nix_item_id = id;
     }
 
     public String getNix_item_id() {
         return nix_item_id;
     }
+
     @Override
     public String toString() {
         return "Ingredient{" +
