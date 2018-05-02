@@ -42,6 +42,7 @@ public class IngredientActivity extends AppCompatActivity implements View.OnClic
     private DrawerLayout drawerLayout;
     private Button buttonLogout;
     private Button buttonSetting;
+    private Button buttonMarket;
     private SearchView mSearchView;
     private TextView textUsername;
     private ImageButton mScanner;
@@ -73,6 +74,9 @@ public class IngredientActivity extends AppCompatActivity implements View.OnClic
 
         buttonSetting = (Button) findViewById(R.id.btn_setting);
         buttonSetting.setOnClickListener(this);
+
+        buttonMarket = (Button) findViewById(R.id.btn_market);
+        buttonMarket.setOnClickListener(this);
 
         buttonSearch = (Button) findViewById(R.id.btn_search_recipe);
         buttonSearch.setOnClickListener(this);
@@ -194,6 +198,10 @@ public class IngredientActivity extends AppCompatActivity implements View.OnClic
         if (v == buttonSetting) {
             finish();
             startActivity(new Intent(this, SettingActivity.class));
+        }
+        if (v == buttonMarket) {
+            finish();
+            startActivity(new Intent(this, MarketActivity.class));
         }
         if (v == mScanner) {
             finish();
