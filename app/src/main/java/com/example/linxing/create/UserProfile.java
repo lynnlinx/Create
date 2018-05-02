@@ -31,7 +31,7 @@ public class UserProfile {
     public void setWeight_profile(String height) {
         this.weight_profile = height;
     }
-    public void setGender(String gender) {
+    public void setGender_profile(String gender) {
         this.gender_profile = gender;
     }
     public String getAge_profile() {
