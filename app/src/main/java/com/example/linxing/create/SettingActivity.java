@@ -26,6 +26,7 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
     private EditText editTextUsername;
     private Spinner spinnerAge;
     private Spinner spinnerWeight;
+    private Spinner spinnerGender;
     private FirebaseAuth myAuth;
     UserProfile userInformation;
     FirebaseUser user;
@@ -40,6 +41,7 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
         editTextUsername = (EditText) findViewById(R.id.txt_username);
         spinnerAge = (Spinner) findViewById(R.id.spinner_age);
         spinnerWeight = (Spinner) findViewById(R.id.spinner_weight);
+        spinnerGender = (Spinner) findViewById(R.id.spinner_gender);
         buttonChangePhoto = (Button) findViewById(R.id.change_photo);
         buttonSave = (Button) findViewById(R.id.btn_save_info);
         buttonChangePhoto.setOnClickListener(this);
@@ -77,14 +79,18 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
         myRef.addListenerForSingleValueEvent(postListener);
         spinnerAge.setSelection(2, true);
         spinnerWeight.setSelection(2, true);
+        spinnerGender.setSelection(2, true);
+
     }
     private void saveUserInfo(){
         String username = editTextUsername.getText().toString().trim();
         String age = spinnerAge.getSelectedItem().toString();
         String weight = spinnerWeight.getSelectedItem().toString();
+        String gender = spinnerGender.getSelectedItem().toString();
         userInformation.setUsername_profile(username);
         userInformation.setAge_profile(age);
         userInformation.setWeight_profile(weight);
+        userInformation.setGender_profile(gender);
 
         //userInformation;
 

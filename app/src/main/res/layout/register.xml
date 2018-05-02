@@ -95,6 +95,18 @@
             android:spinnerMode="dialog"
             android:entries="@array/weight"/>
 
+        <Spinner
+            android:id="@+id/spinner_gender"
+            android:layout_width="338dp"
+            android:layout_height="42dp"
+            android:layout_gravity="center"
+            android:layout_margin="8dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:prompt="@string/gender"
+            android:spinnerMode="dialog"
+            android:entries="@array/gender"/>
+
 
         <Button
             android:id="@+id/btn_register"
