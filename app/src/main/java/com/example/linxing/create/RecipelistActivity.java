@@ -4,33 +4,45 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 
-public class RecipelistActivity extends AppCompatActivity {
+public class RecipelistActivity extends AppCompatActivity implements RecipeJsonData.OnDataAvailable {
 
     private static final String TAG = "IngredientActivity";
-    private List<Map<String, Object>> listnewsData;
 
-
+    private List<RecipeItem> recipeList = new ArrayList<>();
+    private ListView mListView;
+    private Toolbar mToolbar;
+    private RecipeListViewAdapter adapter;
+    private String[] ingredients;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.recipe_list);
+        mListView = findViewById(R.id.recilist);
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
+        Bundle b = getIntent().getExtras();
+        ingredients = b.getStringArray("ingredientName");
 
-        ListView recilist = (ListView)findViewById(R.id.recilist);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        listnewsData = getData();
+        adapter = new RecipeListViewAdapter(this, recipeList, mListView);
+        mListView.setAdapter(adapter);
 
+        StringBuilder result = new StringBuilder();
+        for (String s: ingredients) {
+            result.append(s).append(" ");
+        }
+
+        Log.d(TAG, "onCreate: isssssss: " + result.toString());
+        loadData(result.toString());
+
+        /*
         SimpleAdapter myadapter = new SimpleAdapter(this, listnewsData,
                 R.layout.recipe_list_item,
                 new String[] { "title", "info_nutrition", "image", "info_ingredient" },
@@ -49,13 +61,13 @@ public class RecipelistActivity extends AppCompatActivity {
                 return view;
             }
         };
+        */
 
-        recilist.setAdapter(myadapter);
-
+        // set return button
         if(getSupportActionBar() != null){
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     startActivity(new Intent(getApplicationContext(),IngredientActivity.class));
@@ -66,50 +78,25 @@ public class RecipelistActivity extends AppCompatActivity {
     }
 
 
-
-
-        private List<Map<String, Object>> getData() {
-            List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
-
-            Map<String, Object> map;
-
-            map = new HashMap<String, Object>();
-            map.put("title", "Chicken Spaghetti");
-            map.put("info_nutrition", "Protein:37g    Carb:20g    Fat:24g");
-            map.put("image", R.drawable.spaghetti);
-            map.put("info_ingredient", "Cheese, chicken...");
-            list.add(map);
-
-            map = new HashMap<String, Object>();
-            map.put("title", "Chicken Casseroles");
-            map.put("info_nutrition", "Protein:41g    Carb:23g    Fat:30g");
-            map.put("image", R.drawable.casseroles);
-            map.put("info_ingredient", "Cheese, chicken...");
-            list.add(map);
-
-            map = new HashMap<String, Object>();
-            map.put("title", "Creamy Quinoa");
-            map.put("info_nutrition", "Protein:36g    Carb:21g    Fat:39g");
-            map.put("image", R.drawable.quinoa);
-            map.put("info_ingredient", "Cheese, chicken...");
-            list.add(map);
-
-            map = new HashMap<String, Object>();
-            map.put("title", "Lasagne");
-            map.put("info_nutrition", "Protein:36g    Carb:20g    Fat:55g");
-            map.put("image", R.drawable.lasagne);
-            map.put("info_ingredient", "Cheese, chicken...");
-            list.add(map);
-
-            map = new HashMap<String, Object>();
-            map.put("title", "Enchilada");
-            map.put("info_nutrition", "Protein:28g    Carb:32g    Fat:42g");
-            map.put("image", R.drawable.enchilada);
-            map.put("info_ingredient", "Cheese, chicken...");
-            list.add(map);
-
-            return list;
+    @Override
+    public void onDataAvailable(List<RecipeItem> data, RecipeDownloadStatus status) {
+        if (status == RecipeDownloadStatus.OK) {
+            adapter.loadNewData(data);
+            Log.d(TAG, "onDataAvailable: data is" + data);
+        } else {
+            // download or processing failed
+            Log.e(TAG, "onDataAvailable: failed with status" + status );
         }
+    }
+
+
+
+    private void loadData(String s) {
+        RecipeJsonData recipeJsonData = new RecipeJsonData(this, "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/findByIngredients", true);
+        recipeJsonData.execute(s);
+    }
+
+
 
     private View getViewByPosition(int pos, ListView listView) {
         final int firstListItemPosition = listView.getFirstVisiblePosition();

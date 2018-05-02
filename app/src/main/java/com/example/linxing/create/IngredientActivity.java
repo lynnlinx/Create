@@ -180,8 +180,24 @@ public class IngredientActivity extends AppCompatActivity implements View.OnClic
     @Override
     public void onClick(View v) {
         if (v == buttonSearch) {
+            // tranfer ingredient names to recipe page
+            int len = realIngredientList.size();
+            String[] ingredientName = new String[len];
+
+            for (int i = 0; i < len; i++) {
+                String tmp = realIngredientList.get(i).getFood_name();
+                tmp = tmp.replaceAll("[^\\p{L}\\p{Nd}]+", " ");
+                ingredientName[i] = tmp;
+            }
+
+            Bundle bundle = new Bundle();
+            bundle.putStringArray("ingredientName", ingredientName);
+            Intent intent = new Intent();
+            intent.setClass(this, RecipelistActivity.class);
+            intent.putExtras(bundle);
+            Log.d(TAG, "onClick: ingredient length is: " + ingredientName.length);
             finish();
-            startActivity(new Intent(this, RecipelistActivity.class));
+            startActivity(intent);
         }
         if (v == buttonLeftMenu) {
             drawerLayout.openDrawer(Gravity.LEFT);

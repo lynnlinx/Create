@@ -9,6 +9,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -18,6 +19,8 @@ android {
         buildTypes.each {
             it.buildConfigField 'String', 'NUTRITIONIX_API_KEY', YourApiKey
             it.buildConfigField 'String', 'NUTRITIONIX_API_ID', YourApiID
+            it.buildConfigField 'String', 'SPOONACULAR_API_KEY', RecipeApiKey
+            it.buildConfigField 'String', 'SPOONACULAR_API_ID', RecipeApiID
         }
     }
 
