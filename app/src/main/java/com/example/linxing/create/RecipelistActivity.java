@@ -41,7 +41,7 @@ public class RecipelistActivity extends AppCompatActivity {
         ListView recilist = (ListView)findViewById(R.id.recilist);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        //listnewsData = getData();
+        listnewsData = getData();
 
         SimpleAdapter myadapter = new SimpleAdapter(this, listnewsData,
                 R.layout.recipe_list_item,
