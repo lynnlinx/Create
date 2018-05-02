@@ -46,6 +46,7 @@ public class IngredientActivity extends AppCompatActivity implements View.OnClic
     private DrawerLayout drawerLayout;
     private Button buttonLogout;
     private Button buttonSetting;
+    private Button buttonMarket;
     private SearchView mSearchView;
     private TextView textUsername;
     private ImageButton mScanner;
@@ -78,6 +79,9 @@ public class IngredientActivity extends AppCompatActivity implements View.OnClic
 
         buttonSetting = (Button) findViewById(R.id.btn_setting);
         buttonSetting.setOnClickListener(this);
+
+        buttonMarket = (Button) findViewById(R.id.btn_market);
+        buttonMarket.setOnClickListener(this);
 
         buttonSearch = (Button) findViewById(R.id.btn_search_recipe);
         buttonSearch.setOnClickListener(new View.OnClickListener() {
@@ -215,10 +219,24 @@ public class IngredientActivity extends AppCompatActivity implements View.OnClic
     @Override
     public void onClick(View v) {
         if (v == buttonSearch) {
+            // tranfer ingredient names to recipe page
+            int len = realIngredientList.size();
+            String[] ingredientName = new String[len];
 
+            for (int i = 0; i < len; i++) {
+                String tmp = realIngredientList.get(i).getFood_name();
+                tmp = tmp.replaceAll("[^\\p{L}\\p{Nd}]+", ",");
+                ingredientName[i] = tmp;
+            }
 
+            Bundle bundle = new Bundle();
+            bundle.putStringArray("ingredientName", ingredientName);
+            Intent intent = new Intent();
+            intent.setClass(this, RecipelistActivity.class);
+            intent.putExtras(bundle);
+            Log.d(TAG, "onClick: ingredient length is: " + ingredientName.length);
             finish();
-            startActivity(new Intent(this, RecipelistActivity.class));
+            startActivity(intent);
         }
         if (v == buttonLeftMenu) {
             drawerLayout.openDrawer(Gravity.LEFT);
@@ -231,6 +249,10 @@ public class IngredientActivity extends AppCompatActivity implements View.OnClic
         if (v == buttonSetting) {
             finish();
             startActivity(new Intent(this, SettingActivity.class));
+        }
+        if (v == buttonMarket) {
+            finish();
+            startActivity(new Intent(this, MarketActivity.class));
         }
         if (v == mScanner) {
             finish();
