@@ -5,6 +5,9 @@
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
     <string name="setting">Settings</string>
+    <string name="market">Find What To Eat!</string>
+    <string name="magazines">Top Magazines</string>
+    <string name="courses">Become a Cooking Master!</string>
     <string name="pay_his">Payment History</string>
     <string name="logout">Log Out</string>
     <string name="search_recipe">Search Recipe</string>
