@@ -68,9 +68,9 @@ public class RecipeDetailItem {
     public String toString() {
         StringBuffer sb = new StringBuffer();
         for (RecipeIngredient r : RecipeIngredients) {
-            sb.append(r.getIngreName()).append("\n")
+            sb.append(r.getIngreName()).append("  ")
                     .append(r.getCount()).append(" ")
-                    .append(r.getUnit());
+                    .append(r.getUnit()).append("\n");
         }
         return "RecipeIngredients: \n"  + sb.toString() +
                 "\n Instructions: \n" + instructions;
