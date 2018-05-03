@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -22,12 +23,24 @@ import java.util.List;
 
 public class DetailRecipeActivity extends AppCompatActivity implements RecipeDetailData.OnDataAvailable {
     private static final String TAG = "DetailRecipeActivity";
-    private List<String> recipeList = new ArrayList<>();
+
+    private List<String> ingreList = new ArrayList<>();
+    private List<String> instruclist = new ArrayList<>();
     private ListView mListView;
+    private ListView instruction_view;
     private ImageView mImageView;
     private TextView mTextView;
+    private TextView nutrientsView;
+    private TextView otherView;
     private ArrayAdapter adapter;
+    private ArrayAdapter ingre_adapter;
     private String[] ingredients;
+    private StringBuilder instructions = new StringBuilder();
+    private String protein;
+    private String fat;
+    private String carbs;
+    private int recipe_calories;
+
     private double dailyCalories;
     private int id;
 
@@ -39,20 +52,31 @@ public class DetailRecipeActivity extends AppCompatActivity implements RecipeDet
         if (b != null) {
             ingredients = b.getStringArray("ingredientName");
             dailyCalories = b.getDouble("calories");
+            protein = b.getString("protein");
+            fat = b.getString("fat");
+            carbs = b.getString("carbs");
+            recipe_calories = b.getInt("recipe_calories");
         }
 
         mListView = findViewById(R.id.detail_listview);
+        instruction_view = findViewById(R.id.instructions_listview);
         mImageView = findViewById(R.id.recipe_image);
         mTextView = findViewById(R.id.recipe_name);
+        nutrientsView = findViewById(R.id.nutrients);
+        otherView = findViewById(R.id.others);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(toolbar);
 
 //        adapter = new DetailRecipeAdapter(this,recipeList,mListView);
 //        mListView.setAdapter(adapter);
-        adapter = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,recipeList);
+        adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,ingreList);
         mListView.setAdapter(adapter);
-        id = b.getInt("id"); //???
+
+        ingre_adapter = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,instruclist);
+        instruction_view.setAdapter(ingre_adapter);
+
+        id = b.getInt("id");
 
         Log.d(TAG, "DetailRecipe onCreate: is: " + id);
         loadData(""+id);
@@ -90,7 +114,14 @@ public class DetailRecipeActivity extends AppCompatActivity implements RecipeDet
                     .into(mImageView);
 
             mTextView.setText(data.get(0).getTitle());
-            recipeList.add(data.get(0).toString());
+            String nutrientString = "Calories: "+recipe_calories+"  Protein: "+protein+"  Carbs: "+carbs;
+            nutrientsView.setText(nutrientString);
+            String otherString = "Servings: "+data.get(0).getServings()+"           Time: "+data.get(0).getMinutes()+" minutes";
+            otherView.setText(otherString);
+            String string = data.get(0).toString();
+            int index = string.indexOf("instructions:");
+            ingreList.add(string.substring(0,index));
+            instruclist.add(string.substring(index+13));
             adapter.notifyDataSetChanged();
         } else {
             // download or processing failed
