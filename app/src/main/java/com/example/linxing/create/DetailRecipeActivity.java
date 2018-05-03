@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -18,9 +19,10 @@ import java.util.List;
 
 public class DetailRecipeActivity extends AppCompatActivity implements RecipeDetailData.OnDataAvailable {
     private static final String TAG = "DetailRecipeActivity";
-    private List<RecipeDetailItem> recipeList = new ArrayList<>();
+    private List<String> instructions = new ArrayList<>();
+    private List<String> ingredients = new ArrayList<>();
     private ListView mListView;
-    private ArrayAdapter adapter;
+    private ArrayAdapter<String> adapter;
     private int id;
 
     @Override
@@ -34,7 +36,7 @@ public class DetailRecipeActivity extends AppCompatActivity implements RecipeDet
 
 //        adapter = new DetailRecipeAdapter(this,recipeList,mListView);
 //        mListView.setAdapter(adapter);
-        adapter = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,recipeList);
+        adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,instructions);
         mListView.setAdapter(adapter);
         Bundle b = getIntent().getExtras();
         id = b.getInt("id"); //???
@@ -59,8 +61,20 @@ public class DetailRecipeActivity extends AppCompatActivity implements RecipeDet
     public void onDataAvailable(List<RecipeDetailItem> data, RecipeDownloadStatus status) {
         if (status == RecipeDownloadStatus.OK) {
             //adapter.loadNewData(data);
+            RecipeDetailItem unhandled = data.get(0);
+            ArrayList<String> steps = unhandled.getInstructions();
+            for(int i=0;i<steps.size();i++) {
+                String step_string = steps.get(i);
+                String combine = i+1+". "+step_string+"\n";
+                instructions.add(combine);
+            }
 
-            recipeList = data;
+            ArrayList<RecipeIngredient> ingre = unhandled.getRecipeIngredients();
+            String ingre_string = ingre.toString();
+
+            Log.d(TAG, "onDataAvailable: instructions are" + instructions);
+            ingredients.add(ingre_string);
+            adapter.notifyDataSetChanged();
             Log.d(TAG, "onDataAvailable: data is" + data);
         } else {
             // download or processing failed
