@@ -112,7 +112,7 @@ public class IngredientActivity extends AppCompatActivity implements View.OnClic
         loadIngredient();
         mListView = findViewById(R.id.ingredient_list);
         Log.d(TAG, "onCreate: list is whata" + realIngredientList.size());
-        adapter = new IngredientListViewAdapter(this, realIngredientList, mListView, ingredientSet);
+        adapter = new IngredientListViewAdapter(this, realIngredientList, mListView, ingredientSet, IngredientActivity.this);
         mListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
         mListView.setAdapter(adapter);
 
