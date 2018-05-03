@@ -8,6 +8,14 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,6 +29,13 @@ public class RecipelistActivity extends AppCompatActivity implements RecipeJsonD
     private Toolbar mToolbar;
     private RecipeListViewAdapter adapter;
     private String[] ingredients;
+    private FirebaseAuth myAuth;
+    private FirebaseUser user;
+    private FirebaseDatabase database;
+    private DatabaseReference myRef;
+    private UserProfile userInformation;
+    private int dailyCalories;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,8 +46,16 @@ public class RecipelistActivity extends AppCompatActivity implements RecipeJsonD
         Bundle b = getIntent().getExtras();
         ingredients = b.getStringArray("ingredientName");
 
-        adapter = new RecipeListViewAdapter(this, recipeList, mListView);
+        getDefault();
+
+        adapter = new RecipeListViewAdapter(this, recipeList, mListView, dailyCalories);
         mListView.setAdapter(adapter);
+
+        myAuth = myAuth.getInstance();
+        user = myAuth.getCurrentUser();
+        database = FirebaseDatabase.getInstance();
+        myRef = database.getReference(("profile/" + user.getUid()));
+
 
         StringBuilder result = new StringBuilder();
         for (String s: ingredients) {
@@ -107,6 +130,23 @@ public class RecipelistActivity extends AppCompatActivity implements RecipeJsonD
     private void loadData(String s) {
         RecipeJsonData recipeJsonData = new RecipeJsonData(this, "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/searchComplex", true);
         recipeJsonData.execute(s);
+    }
+
+
+    private void getDefault() {
+        ValueEventListener postListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                userInformation = dataSnapshot.getValue(UserProfile.class);
+                dailyCalories = GetDailyNutrition.getCalorie(userInformation);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        };
+        myRef.addListenerForSingleValueEvent(postListener);
+
     }
 
 }
