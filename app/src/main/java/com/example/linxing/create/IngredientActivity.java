@@ -114,7 +114,6 @@ public class IngredientActivity extends AppCompatActivity implements View.OnClic
         //realIngredientList = new ArrayList<Ingredient>();
         loadIngredient();
         mListView = findViewById(R.id.ingredient_list);
-        Log.d(TAG, "onCreate: list is whata" + realIngredientList.size());
         adapter = new IngredientListViewAdapter(this, realIngredientList, mListView, ingredientSet, IngredientActivity.this);
         mListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
         mListView.setAdapter(adapter);
@@ -134,7 +133,6 @@ public class IngredientActivity extends AppCompatActivity implements View.OnClic
                 adapter.loadNewIngredient(ingredient);
                 saveIngredient(ingredient);
                 mSearchView.setQuery("",false);
-                Log.d(TAG, "onItemClick: ingre" + realIngredientList);
             }
         });
 
@@ -189,13 +187,28 @@ public class IngredientActivity extends AppCompatActivity implements View.OnClic
     public void onClick(View v) {
         if (v == buttonSearch) {
             // tranfer ingredient names to recipe page
+            List<Ingredient> bubbleList;
+            String[] ingredientName;
             int len = realIngredientList.size();
-            String[] ingredientName = new String[len];
-
-            for (int i = 0; i < len; i++) {
-                String tmp = realIngredientList.get(i).getFood_name();
-                tmp = tmp.replaceAll("[^\\p{L}\\p{Nd}]+", ",");
-                ingredientName[i] = tmp;
+            if (mListView.getCheckedItemCount() != 0) {
+                bubbleList = new ArrayList<Ingredient>();
+                ingredientName = new String[mListView.getCheckedItemCount()];
+                int index = 0;
+                for (int i = 0; i < len; i++) {
+                    if (mListView.isItemChecked(i)) {
+                        String tmp = realIngredientList.get(i).getFood_name();
+                        tmp = tmp.replaceAll("[^\\p{L}\\p{Nd}]+", ",");
+                        ingredientName[index] = tmp;
+                        index++;
+                    }
+                }
+            } else {
+                ingredientName = new String[len];
+                for (int i = 0; i < len; i++) {
+                    String tmp = realIngredientList.get(i).getFood_name();
+                    tmp = tmp.replaceAll("[^\\p{L}\\p{Nd}]+", ",");
+                    ingredientName[i] = tmp;
+                }
             }
 
             while (dailyCalories < 0) {
