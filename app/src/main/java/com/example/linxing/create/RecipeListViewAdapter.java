@@ -113,5 +113,8 @@ public class RecipeListViewAdapter extends ArrayAdapter<RecipeItem> {
         ImageView image;
         TextView calorie;
     }
+    public List<RecipeItem> getmRecipeList() {
+        return mRecipeItems;
+    }
 
 }
