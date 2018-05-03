@@ -52,8 +52,10 @@ public class RecipelistActivity extends AppCompatActivity implements RecipeJsonD
         setSupportActionBar(mToolbar);
         Bundle b = getIntent().getExtras();
         spinnerSort = findViewById(R.id.sort);
-        ingredients = b.getStringArray("ingredientName");
-        dailyCalories = b.getDouble("calories");
+        if (b != null) {
+            ingredients = b.getStringArray("ingredientName");
+            dailyCalories = b.getDouble("calories");
+        }
 
         adapter = new RecipeListViewAdapter(this, recipeList, mListView, dailyCalories);
         mListView.setAdapter(adapter);
@@ -134,6 +136,8 @@ public class RecipelistActivity extends AppCompatActivity implements RecipeJsonD
                 int id = recipe.getID();
                 Bundle bundle = new Bundle();
                 bundle.putInt("id",id);
+                bundle.putStringArray("ingredientName", ingredients);
+                bundle.putDouble("calories", dailyCalories);
                 Intent intent = new Intent();
                 intent.setClass(RecipelistActivity.this, DetailRecipeActivity.class);
                 intent.putExtras(bundle);
