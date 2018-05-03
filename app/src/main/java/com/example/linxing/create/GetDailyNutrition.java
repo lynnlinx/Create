@@ -1,11 +1,14 @@
 package com.example.linxing.create;
 
+import android.util.Log;
+
 /**
  * Created by linxing on 5/2/18.
  */
 
 public class GetDailyNutrition {
-    public static int getCalorie(UserProfile profile) {
+    private static final String TAG = "GetDailyNutrition";
+    public static double getCalorie(UserProfile profile) {
         double calorie = 0;
         int ageNum = 40;
         boolean genderNum = false;
@@ -63,6 +66,10 @@ public class GetDailyNutrition {
                 break;
         }
 
-        return (int)calorie;
+        Log.d(TAG, "getCalorie: age is: " + ageNum);
+        Log.d(TAG, "getCalorie: weight is: " + weightNum);
+        Log.d(TAG, "getCalorie: gender is: " + genderNum);
+        Log.d(TAG, "getCalorie: calorie is: " + calorie);
+        return calorie;
     }
 }
