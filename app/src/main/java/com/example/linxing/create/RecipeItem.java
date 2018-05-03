@@ -31,7 +31,6 @@ public class RecipeItem {
         this.carbs = carbs;
     }
 
-
     public RecipeItem() {
 
     }

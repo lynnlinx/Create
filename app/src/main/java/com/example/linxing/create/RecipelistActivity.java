@@ -6,7 +6,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
+
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -75,7 +79,27 @@ public class RecipelistActivity extends AppCompatActivity implements RecipeJsonD
             });
         }
 
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                int id = recipeList.get(i).getID();
+                Bundle bundle = new Bundle();
+                bundle.putInt("id",id);
+                Intent intent = new Intent();
+                intent.setClass(RecipelistActivity.this, DetailRecipeActivity.class);
+                intent.putExtras(bundle);
+
+                Log.d(TAG, "onClick: ingredient id is: " + id);
+                finish();
+                startActivity(intent);
+
+            }
+        });
+
     }
+
+
 
 
 

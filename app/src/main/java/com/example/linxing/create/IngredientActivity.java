@@ -97,7 +97,7 @@ public class IngredientActivity extends AppCompatActivity implements View.OnClic
 //                        "&limitLicense=false&number=5&ranking=1";
 //                new  MyAsyncTaskgetRecipe().execute(url);
                 //startActivity(intent);
-                loadRecipe();
+               // loadRecipe();
             }
         });
 
@@ -264,14 +264,6 @@ public class IngredientActivity extends AppCompatActivity implements View.OnClic
         IngredientJsonData ingredientJsonData = new IngredientJsonData(this, "https://trackapi.nutritionix.com/v2/search/instant", true);
         ingredientJsonData.execute(s);
     }
-
-    private void loadRecipe(String s) {
-        RecipeJsonData recipeJsonData = new RecipeJsonData(this, "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes" +
-                "/findByIngredients?fillIngredients=false&ingredients=apples%2Cflour%2Csugar" +
-                "&limitLicense=false&number=5&ranking=1",true);
-        recipeJsonData.excute(s);
-    }
-
 
 
     private void saveIngredient(Ingredient ingredient) {

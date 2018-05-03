@@ -86,16 +86,6 @@
                         android:layout_marginLeft="20dp"
                         android:textColor="@color/black"
                         />
-                    <Button
-                        android:text="@string/buy"
-                        android:layout_width="100sp"
-                        android:layout_height="45sp"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginBottom="5dp"
-                        android:background="@color/colorPrimary"
-                        android:textColor="@color/white"
-                        android:textSize="20sp"/>
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="30sp"
