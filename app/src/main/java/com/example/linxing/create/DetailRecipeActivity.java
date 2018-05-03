@@ -106,8 +106,8 @@ public class DetailRecipeActivity extends AppCompatActivity implements RecipeDet
 
     public void onDataAvailable(List<RecipeDetailItem> data, RecipeDownloadStatus status) {
         if (status == RecipeDownloadStatus.OK) {
-            Log.d(TAG, "onDataAvailable: data is" + instructions);
-
+            //adapter.loadNewData(data);
+            Log.d(TAG, "onDataAvailable: nooooooooo: "+ data.get(0));
             Picasso.with(mImageView.getContext()).load(data.get(0).getImage())
                     .error(R.drawable.ic_filter)
                     .placeholder(R.drawable.ic_filter)
