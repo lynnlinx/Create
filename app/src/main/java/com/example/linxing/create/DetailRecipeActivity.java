@@ -7,7 +7,11 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -19,17 +23,30 @@ import java.util.List;
 
 public class DetailRecipeActivity extends AppCompatActivity implements RecipeDetailData.OnDataAvailable {
     private static final String TAG = "DetailRecipeActivity";
-    private List<String> instructions = new ArrayList<>();
-    private List<String> ingredients = new ArrayList<>();
+
+    private List<String> recipeList = new ArrayList<>();
     private ListView mListView;
-    private ArrayAdapter<String> adapter;
+    private ImageView mImageView;
+    private TextView mTextView;
+    private ArrayAdapter adapter;
+    private String[] ingredients;
+    
+    private double dailyCalories;
     private int id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.detailrecipe);
+        Bundle b = getIntent().getExtras();
+        if (b != null) {
+            ingredients = b.getStringArray("ingredientName");
+            dailyCalories = b.getDouble("calories");
+        }
+
         mListView = findViewById(R.id.detail_listview);
+        mImageView = findViewById(R.id.recipe_image);
+        mTextView = findViewById(R.id.recipe_name);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(toolbar);
@@ -38,7 +55,6 @@ public class DetailRecipeActivity extends AppCompatActivity implements RecipeDet
 //        mListView.setAdapter(adapter);
         adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,instructions);
         mListView.setAdapter(adapter);
-        Bundle b = getIntent().getExtras();
         id = b.getInt("id"); //???
 
         Log.d(TAG, "DetailRecipe onCreate: is: " + id);
@@ -52,7 +68,16 @@ public class DetailRecipeActivity extends AppCompatActivity implements RecipeDet
             toolbar.setNavigationOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    startActivity(new Intent(getApplicationContext(),RecipelistActivity.class));
+                    Bundle bundle = new Bundle();
+                    bundle.putStringArray("ingredientName", ingredients);
+                    bundle.putDouble("calories", dailyCalories);
+                    Intent intent = new Intent();
+                    intent.setClass(DetailRecipeActivity.this, RecipelistActivity.class);
+                    intent.putExtras(bundle);
+                    finish();
+                    startActivity(intent);
+
+                    //startActivity(new Intent(getApplicationContext(),RecipelistActivity.class));
                 }
             });
         }
@@ -76,6 +101,15 @@ public class DetailRecipeActivity extends AppCompatActivity implements RecipeDet
             ingredients.add(ingre_string);
             adapter.notifyDataSetChanged();
             Log.d(TAG, "onDataAvailable: data is" + data);
+
+            Picasso.with(mImageView.getContext()).load(data.get(0).getImage())
+                    .error(R.drawable.ic_filter)
+                    .placeholder(R.drawable.ic_filter)
+                    .into(mImageView);
+
+            mTextView.setText(data.get(0).getTitle());
+            recipeList.add(data.get(0).toString());
+            adapter.notifyDataSetChanged();
         } else {
             // download or processing failed
             Log.e(TAG, "onDataAvailable: failed with status" + status );
