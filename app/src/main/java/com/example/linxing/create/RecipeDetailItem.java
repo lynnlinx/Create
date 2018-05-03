@@ -66,7 +66,13 @@ public class RecipeDetailItem {
 
     @Override
     public String toString() {
-        return "RecipeIngredients: \n" + RecipeIngredients +
+        StringBuffer sb = new StringBuffer();
+        for (RecipeIngredient r : RecipeIngredients) {
+            sb.append(r.getIngreName()).append("\n")
+                    .append(r.getCount()).append(" ")
+                    .append(r.getUnit());
+        }
+        return "RecipeIngredients: \n"  + sb.toString() +
                 "\n Instructions: \n" + instructions;
     }
 }
