@@ -122,8 +122,9 @@ public class RecipelistActivity extends AppCompatActivity implements RecipeJsonD
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                RecipeItem recipe = (RecipeItem) adapterView.getItemAtPosition(i);
 
-                int id = recipeList.get(i).getID();
+                int id = recipe.getID();
                 Bundle bundle = new Bundle();
                 bundle.putInt("id",id);
                 Intent intent = new Intent();
@@ -138,8 +139,6 @@ public class RecipelistActivity extends AppCompatActivity implements RecipeJsonD
         });
 
     }
-
-
 
 
 

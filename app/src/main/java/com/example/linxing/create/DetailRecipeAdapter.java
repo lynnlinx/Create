@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -33,7 +34,7 @@ public class DetailRecipeAdapter extends ArrayAdapter<RecipeDetailItem> {
     }
     @Override
     public View getView (int position, View convertView, ViewGroup parent) {
-        //View view = super.getView(position, convertView, parent);
+        View view = super.getView(position, convertView, parent);
         Log.d(TAG, "getView: position" + position);
 
         DetailRecipeAdapter.ViewHolder viewHolder;
@@ -41,7 +42,7 @@ public class DetailRecipeAdapter extends ArrayAdapter<RecipeDetailItem> {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.detailrecipe, parent, false);
             viewHolder = new DetailRecipeAdapter.ViewHolder();
             viewHolder.name = (TextView) convertView.findViewById(R.id.recipe_name);
-            viewHolder.ingredients = (TextView) convertView.findViewById(R.id.recipe_ingridients);
+            //viewHolder.ingredients = (TextView) convertView.findViewById(R.id.recipe_ingridients);
             viewHolder.image = (ImageView) convertView.findViewById(R.id.recipe_image);
             convertView.setTag(viewHolder);
         } else {
@@ -50,7 +51,7 @@ public class DetailRecipeAdapter extends ArrayAdapter<RecipeDetailItem> {
 
         if (mRecipeItem.size() > 0) {
             RecipeDetailItem recipeItem = mRecipeItem.get(position);
-            viewHolder.name.setText(recipeItem .getTitle());
+            //viewHolder.name.setText(recipeItem .getTitle());
 
             ArrayList<RecipeIngredient> ingredients = recipeItem .getRecipeIngredients();
             StringBuilder ingre_sb = new StringBuilder();

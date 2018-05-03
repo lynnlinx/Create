@@ -19,94 +19,42 @@
                     android:background="@color/colorPrimary"
                     android:theme="@style/Toolbar.MyStyle">
                 </android.support.v7.widget.Toolbar>
+
                 <ScrollView
+                    android:id="@+id/scrollview"
                     android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    >
+                    android:layout_height="fill_parent">
+
                     <LinearLayout
-                        android:orientation="vertical"
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
-                        >
-                    <ImageView
-                        android:id="@+id/recipe_image"
-                        android:layout_width="match_parent"
-                        android:layout_height="257dp"
-                        android:layout_gravity="center"
-                        android:layout_margin="10dp"
-                        android:layout_marginBottom="50dp"
-                        android:background="@drawable/enchilada" />
-                    <TextView
-                        android:id="@+id/recipe_name"
-                        android:layout_width="match_parent"
-                        android:layout_height="100dp"
-                        android:text="Enchilada"
-                        android:textSize="30sp"
-                        android:gravity="center"
-                        android:textStyle="bold"
-                        android:textColor="@color/black"
-                        />
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="30sp"
-                        android:text="Nutrition"
-                        android:textSize="20sp"
-                        android:gravity="left"
-                        android:textStyle="bold"
-                        android:layout_marginLeft="20dp"
-                        android:textColor="@color/black"
-                        />
-                    <TextView
-                        android:id="@+id/recipe_nutrition"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Protein:1g    Carb:3g    Fat:100g"
-                        android:textSize="20sp"
-                        android:gravity="left"
-                        android:layout_marginLeft="20dp"
-                        android:textColor="@color/black"
-                        />
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="30sp"
-                        android:text="Ingridients"
-                        android:textSize="20sp"
-                        android:gravity="left"
-                        android:textStyle="bold"
-                        android:layout_marginLeft="20dp"
-                        android:textColor="@color/black"
-                        />
-                    <TextView
-                        android:id="@+id/recipe_ingridients"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Egg:1     Chicken Breast:100g"
-                        android:textSize="20sp"
-                        android:gravity="left"
-                        android:layout_marginLeft="20dp"
-                        android:textColor="@color/black"
-                        />
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="30sp"
-                        android:text="How To Cook"
-                        android:textSize="20sp"
-                        android:gravity="left"
-                        android:textStyle="bold"
-                        android:layout_marginLeft="20dp"
-                        android:textColor="@color/black"
-                        />
-                    <TextView
-                        android:id="@+id/recipe_detail"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="1st stp"
-                        android:textSize="20sp"
-                        android:gravity="left"
-                        android:layout_marginLeft="20dp"
-                        android:textColor="@color/black"
-                        android:layout_marginBottom="50dp"
-                        />
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/recipe_image"
+                            android:layout_width="match_parent"
+                            android:layout_height="257dp"
+                            android:layout_gravity="center"
+                            android:layout_margin="10dp"
+                            android:layout_marginBottom="50dp"
+                            android:background="@drawable/enchilada" />
+
+                        <TextView
+                            android:id="@+id/recipe_name"
+                            android:layout_width="match_parent"
+                            android:layout_height="100dp"
+                            android:gravity="center"
+                            android:text="Enchilada"
+                            android:textColor="@color/black"
+                            android:textSize="30sp"
+                            android:textStyle="bold" />
+
+                        <ListView
+                            xmlns:android="http://schemas.android.com/apk/res/android"
+                            android:id="@+id/detail_listview"
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent">
+                        </ListView>
                     </LinearLayout>
                 </ScrollView>
             </LinearLayout>

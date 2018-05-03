@@ -6,7 +6,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.ScrollView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,18 +21,21 @@ public class DetailRecipeActivity extends AppCompatActivity implements RecipeDet
     private static final String TAG = "DetailRecipeActivity";
     private List<RecipeDetailItem> recipeList = new ArrayList<>();
     private ListView mListView;
-    private DetailRecipeAdapter adapter;
+    private ArrayAdapter adapter;
     private int id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.detailrecipe);
+        mListView = findViewById(R.id.detail_listview);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(toolbar);
 
-        adapter = new DetailRecipeAdapter(this,recipeList,mListView);
+//        adapter = new DetailRecipeAdapter(this,recipeList,mListView);
+//        mListView.setAdapter(adapter);
+        adapter = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,recipeList);
         mListView.setAdapter(adapter);
         Bundle b = getIntent().getExtras();
         id = b.getInt("id"); //???
@@ -61,6 +66,7 @@ public class DetailRecipeActivity extends AppCompatActivity implements RecipeDet
             Log.e(TAG, "onDataAvailable: failed with status" + status );
         }
     }
+
 
 
     private void loadData(String s) {
