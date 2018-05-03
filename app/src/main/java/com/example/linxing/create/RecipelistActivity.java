@@ -6,7 +6,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Spinner;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,14 +24,17 @@ public class RecipelistActivity extends AppCompatActivity implements RecipeJsonD
     private RecipeListViewAdapter adapter;
     private String[] ingredients;
     private double dailyCalories;
+    private Spinner spinnerFilter;
+    private StringBuilder result;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.recipe_list);
-        mListView = findViewById(R.id.recilist);
+        mListView = (ListView) findViewById(R.id.recilist);
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        spinnerFilter = (Spinner) findViewById(R.id.filter);
         setSupportActionBar(mToolbar);
         Bundle b = getIntent().getExtras();
         ingredients = b.getStringArray("ingredientName");
@@ -39,7 +44,7 @@ public class RecipelistActivity extends AppCompatActivity implements RecipeJsonD
         adapter = new RecipeListViewAdapter(this, recipeList, mListView, dailyCalories);
         mListView.setAdapter(adapter);
 
-        StringBuilder result = new StringBuilder();
+        result = new StringBuilder();
         for (String s: ingredients) {
             result.append(s).append(",");
         }
@@ -47,26 +52,6 @@ public class RecipelistActivity extends AppCompatActivity implements RecipeJsonD
         Log.d(TAG, "onCreate: isssssss: " + result.toString());
         loadData(result.toString());
 
-        /*
-        SimpleAdapter myadapter = new SimpleAdapter(this, listnewsData,
-                R.layout.recipe_list_item,
-                new String[] { "title", "info_nutrition", "image", "info_ingredient" },
-                new int[] { R.id.title, R.id.info_nutrition, R.id.image, R.id.info_ingredient}) {
-
-            @Override
-            public View getView (int position, View convertView, ViewGroup parent) {
-                View view = super.getView(position, convertView, parent);
-                view.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        finish();
-                        startActivity(new Intent(RecipelistActivity.this, DetailRecipeActivity.class));
-                    }
-                });
-                return view;
-            }
-        };
-        */
 
         // set return button
         if(getSupportActionBar() != null){
@@ -80,6 +65,31 @@ public class RecipelistActivity extends AppCompatActivity implements RecipeJsonD
                 }
             });
         }
+
+        spinnerFilter.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                switch (position) {
+                    case 1:
+                        loadData(result.toString(), "american");
+                        break;
+                    case 2:
+                        loadData(result.toString(), "chinese");
+                        break;
+                    case 3:
+                        loadData(result.toString(), "korean");
+                        break;
+                    default:
+                        loadData(result.toString());
+                }
+                adapter.notifyDataSetChanged();
+            }
+        });
 
     }
 
@@ -109,7 +119,7 @@ public class RecipelistActivity extends AppCompatActivity implements RecipeJsonD
     }
 
 
-    private void loadData(String s) {
+    private void loadData(String... s) {
         RecipeJsonData recipeJsonData = new RecipeJsonData(this, "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/searchComplex", true);
         recipeJsonData.execute(s);
     }
