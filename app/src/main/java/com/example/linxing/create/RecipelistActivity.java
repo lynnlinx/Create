@@ -37,6 +37,10 @@ public class RecipelistActivity extends AppCompatActivity implements RecipeJsonD
     private Spinner spinnerSort;
     private Comparators myComparator;
     private double dailyCalories;
+    private String protein;
+    private String fat;
+    private String carbs;
+    private int recipe_calories;
     private Spinner spinnerFilter;
     private StringBuilder result;
 
@@ -55,6 +59,8 @@ public class RecipelistActivity extends AppCompatActivity implements RecipeJsonD
         if (b != null) {
             ingredients = b.getStringArray("ingredientName");
             dailyCalories = b.getDouble("calories");
+
+
         }
 
         adapter = new RecipeListViewAdapter(this, recipeList, mListView, dailyCalories);
@@ -134,10 +140,18 @@ public class RecipelistActivity extends AppCompatActivity implements RecipeJsonD
                 RecipeItem recipe = (RecipeItem) adapterView.getItemAtPosition(i);
 
                 int id = recipe.getID();
+                protein = recipe.getProtein();
+                fat = recipe.getFat();
+                carbs = recipe.getCarbs();
+                recipe_calories = recipe.getCalories();
                 Bundle bundle = new Bundle();
                 bundle.putInt("id",id);
                 bundle.putStringArray("ingredientName", ingredients);
                 bundle.putDouble("calories", dailyCalories);
+                bundle.putInt("recipe_calories",recipe_calories);
+                bundle.putString("protein",protein);
+                bundle.putString("fat",fat);
+                bundle.putString("carbs",carbs);
                 Intent intent = new Intent();
                 intent.setClass(RecipelistActivity.this, DetailRecipeActivity.class);
                 intent.putExtras(bundle);

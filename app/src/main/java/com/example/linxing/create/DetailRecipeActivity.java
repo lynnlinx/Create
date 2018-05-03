@@ -24,13 +24,23 @@ import java.util.List;
 public class DetailRecipeActivity extends AppCompatActivity implements RecipeDetailData.OnDataAvailable {
     private static final String TAG = "DetailRecipeActivity";
 
-    private List<String> recipeList = new ArrayList<>();
+    private List<String> ingreList = new ArrayList<>();
+    private List<String> instruclist = new ArrayList<>();
     private ListView mListView;
+    private ListView instruction_view;
     private ImageView mImageView;
     private TextView mTextView;
+    private TextView nutrientsView;
+    private TextView otherView;
     private ArrayAdapter adapter;
+    private ArrayAdapter ingre_adapter;
     private String[] ingredients;
-    
+    private StringBuilder instructions = new StringBuilder();
+    private String protein;
+    private String fat;
+    private String carbs;
+    private int recipe_calories;
+
     private double dailyCalories;
     private int id;
 
@@ -42,20 +52,31 @@ public class DetailRecipeActivity extends AppCompatActivity implements RecipeDet
         if (b != null) {
             ingredients = b.getStringArray("ingredientName");
             dailyCalories = b.getDouble("calories");
+            protein = b.getString("protein");
+            fat = b.getString("fat");
+            carbs = b.getString("carbs");
+            recipe_calories = b.getInt("recipe_calories");
         }
 
         mListView = findViewById(R.id.detail_listview);
+        instruction_view = findViewById(R.id.instructions_listview);
         mImageView = findViewById(R.id.recipe_image);
         mTextView = findViewById(R.id.recipe_name);
+        nutrientsView = findViewById(R.id.nutrients);
+        otherView = findViewById(R.id.others);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(toolbar);
 
 //        adapter = new DetailRecipeAdapter(this,recipeList,mListView);
 //        mListView.setAdapter(adapter);
-        adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,instructions);
+        adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,ingreList);
         mListView.setAdapter(adapter);
-        id = b.getInt("id"); //???
+
+        ingre_adapter = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,instruclist);
+        instruction_view.setAdapter(ingre_adapter);
+
+        id = b.getInt("id");
 
         Log.d(TAG, "DetailRecipe onCreate: is: " + id);
         loadData(""+id);
@@ -85,22 +106,7 @@ public class DetailRecipeActivity extends AppCompatActivity implements RecipeDet
 
     public void onDataAvailable(List<RecipeDetailItem> data, RecipeDownloadStatus status) {
         if (status == RecipeDownloadStatus.OK) {
-            //adapter.loadNewData(data);
-            RecipeDetailItem unhandled = data.get(0);
-            ArrayList<String> steps = unhandled.getInstructions();
-            for(int i=0;i<steps.size();i++) {
-                String step_string = steps.get(i);
-                String combine = i+1+". "+step_string+"\n";
-                instructions.add(combine);
-            }
-
-            ArrayList<RecipeIngredient> ingre = unhandled.getRecipeIngredients();
-            String ingre_string = ingre.toString();
-
-            Log.d(TAG, "onDataAvailable: instructions are" + instructions);
-            ingredients.add(ingre_string);
-            adapter.notifyDataSetChanged();
-            Log.d(TAG, "onDataAvailable: data is" + data);
+            Log.d(TAG, "onDataAvailable: data is" + instructions);
 
             Picasso.with(mImageView.getContext()).load(data.get(0).getImage())
                     .error(R.drawable.ic_filter)
@@ -108,7 +114,14 @@ public class DetailRecipeActivity extends AppCompatActivity implements RecipeDet
                     .into(mImageView);
 
             mTextView.setText(data.get(0).getTitle());
-            recipeList.add(data.get(0).toString());
+            String nutrientString = "Calories: "+recipe_calories+"  Protein: "+protein+"  Carbs: "+carbs;
+            nutrientsView.setText(nutrientString);
+            String otherString = "Servings: "+data.get(0).getServings()+"           Time: "+data.get(0).getMinutes()+" minutes";
+            otherView.setText(otherString);
+            String string = data.get(0).toString();
+            int index = string.indexOf("instructions:");
+            ingreList.add(string.substring(0,index));
+            instruclist.add(string.substring(index+13));
             adapter.notifyDataSetChanged();
         } else {
             // download or processing failed

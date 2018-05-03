@@ -43,9 +43,35 @@
                             android:layout_width="match_parent"
                             android:layout_height="100dp"
                             android:gravity="center"
-                            android:text="Enchilada"
                             android:textColor="@color/black"
                             android:textSize="30sp"
+                            android:textStyle="bold" />
+                        <TextView
+                            android:id="@+id/nutrients"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:paddingLeft="10dp"
+                            android:textColor="@color/wallet_holo_blue_light"
+                            android:textStyle="bold|italic"
+                            android:textSize="20sp" />
+
+                        <TextView
+                            android:id="@+id/others"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:paddingLeft="10dp"
+                            android:textColor="@color/black"
+                            android:textSize="20sp" />
+
+                        <TextView
+                            android:id="@+id/ingredients"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:text="Ingredients"
+                            android:paddingRight="240dp"
+                            android:textColor="@color/black"
+                            android:textSize="20sp"
                             android:textStyle="bold" />
 
                         <ListView
@@ -54,6 +80,25 @@
                             android:layout_width="fill_parent"
                             android:layout_height="fill_parent">
                         </ListView>
+
+                        <TextView
+                            android:id="@+id/instructions"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:text="Instructions"
+                            android:paddingRight="240dp"
+                            android:textColor="@color/black"
+                            android:textSize="20sp"
+                            android:textStyle="bold" />
+
+                        <ListView
+                            xmlns:android="http://schemas.android.com/apk/res/android"
+                            android:id="@+id/instructions_listview"
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent">
+                        </ListView>
+
                     </LinearLayout>
                 </ScrollView>
             </LinearLayout>
