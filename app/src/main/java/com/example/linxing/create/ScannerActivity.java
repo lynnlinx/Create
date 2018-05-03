@@ -16,6 +16,7 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;
@@ -128,10 +129,15 @@ public class ScannerActivity extends AppCompatActivity implements IngredientUPCJ
     @Override
     public void onDataAvailable(List<Ingredient> data, DownloadStatus status) {
         if (status == DownloadStatus.OK) {
-            if (data.size() != 0) {
+            Log.d(TAG, "onDataAvailable: data is BBBBBFFFFFFFFore" + data);
+            if (data != null && data.size() != 0) {
                 final Ingredient ingredient = data.get(0);
                 ingredientRef = FirebaseDatabase.getInstance().getReference(("ingredient/" + user.getUid()));
                 ingredientRef.child(ingredient.getNix_item_id()).setValue(ingredient);
+            } else {
+                Toast.makeText(this, "Ingredient doesn't exist", Toast.LENGTH_SHORT).show();
+                finish();
+                startActivity(new Intent(ScannerActivity.this, IngredientActivity.class));
             }
             Log.d(TAG, "onDataAvailable: data is" + data);
         } else {

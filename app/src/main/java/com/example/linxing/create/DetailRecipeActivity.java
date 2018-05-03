@@ -8,7 +8,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.ScrollView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,8 +59,8 @@ public class DetailRecipeActivity extends AppCompatActivity implements RecipeDet
     public void onDataAvailable(List<RecipeDetailItem> data, RecipeDownloadStatus status) {
         if (status == RecipeDownloadStatus.OK) {
             //adapter.loadNewData(data);
-            recipeList = data;
 
+            recipeList = data;
             Log.d(TAG, "onDataAvailable: data is" + data);
         } else {
             // download or processing failed

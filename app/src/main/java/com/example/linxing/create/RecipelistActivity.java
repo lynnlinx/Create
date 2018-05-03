@@ -55,7 +55,6 @@ public class RecipelistActivity extends AppCompatActivity implements RecipeJsonD
         ingredients = b.getStringArray("ingredientName");
         dailyCalories = b.getDouble("calories");
 
-        Log.d(TAG, "onCreate: cccccccc " + dailyCalories);
         adapter = new RecipeListViewAdapter(this, recipeList, mListView, dailyCalories);
         mListView.setAdapter(adapter);
         result = new StringBuilder();
@@ -100,7 +99,7 @@ public class RecipelistActivity extends AppCompatActivity implements RecipeJsonD
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
-        
+
 
         spinnerFilter.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
