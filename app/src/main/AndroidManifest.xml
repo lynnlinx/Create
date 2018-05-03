@@ -29,6 +29,7 @@
         <activity android:name=".SettingActivity" />
         <activity android:name=".ScannerActivity" />
         <activity android:name=".MarketActivity" />
+        <activity android:name=".ShoppingListActivity" />
     </application>
 
 </manifest>

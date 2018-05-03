@@ -144,7 +144,8 @@ public class DetailRecipeActivity extends AppCompatActivity implements RecipeDet
     @Override
     public void onClick(View v) {
         if (v== buttonList) {
-            Toast.makeText(this, "Be coming soon", Toast.LENGTH_SHORT).show();
+            finish();
+            startActivity(new Intent(this, ShoppingListActivity.class));
         }
         if (v== buttonRemove) {
             Toast.makeText(this, "Be coming soon", Toast.LENGTH_SHORT).show();
