@@ -59,7 +59,9 @@ public class DetailRecipeActivity extends AppCompatActivity implements RecipeDet
 
     public void onDataAvailable(List<RecipeDetailItem> data, RecipeDownloadStatus status) {
         if (status == RecipeDownloadStatus.OK) {
-            adapter.loadNewData(data);
+            //adapter.loadNewData(data);
+            recipeList = data;
+
             Log.d(TAG, "onDataAvailable: data is" + data);
         } else {
             // download or processing failed
