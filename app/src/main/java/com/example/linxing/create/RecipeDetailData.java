@@ -41,9 +41,8 @@ public class RecipeDetailData extends AsyncTask<String, Void, List<RecipeDetailI
         Log.d(TAG, "createUri: starts");
         String tmp =  Uri.parse(mBaseURL).buildUpon()
                 .appendEncodedPath(searchCriteria)
-                .appendEncodedPath("information") //????
+                .appendEncodedPath("information")
                 .build().toString();
-        Log.d(TAG, "createUri: aaaaaaaaaaa" + tmp);
         return tmp;
     }
 
@@ -54,7 +53,6 @@ public class RecipeDetailData extends AsyncTask<String, Void, List<RecipeDetailI
         if (status == RecipeDownloadStatus.OK) {
             mRecipeItems = new ArrayList<>();
             try {
-                Log.d(TAG, "onDownloadComplete: what????" + data);
                 JSONObject jsonObject =  new JSONObject(data);
                 Log.d(TAG, "onDownloadComplete: ????????" + data);
                 //JSONArray itemsArray = jsonObject.getJSONArray("results");

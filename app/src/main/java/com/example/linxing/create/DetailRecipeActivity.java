@@ -7,7 +7,11 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,8 +22,10 @@ import java.util.List;
 
 public class DetailRecipeActivity extends AppCompatActivity implements RecipeDetailData.OnDataAvailable {
     private static final String TAG = "DetailRecipeActivity";
-    private List<RecipeDetailItem> recipeList = new ArrayList<>();
+    private List<String> recipeList = new ArrayList<>();
     private ListView mListView;
+    private ImageView mImageView;
+    private TextView mTextView;
     private ArrayAdapter adapter;
     private int id;
 
@@ -28,6 +34,8 @@ public class DetailRecipeActivity extends AppCompatActivity implements RecipeDet
         super.onCreate(savedInstanceState);
         setContentView(R.layout.detailrecipe);
         mListView = findViewById(R.id.detail_listview);
+        mImageView = findViewById(R.id.recipe_image);
+        mTextView = findViewById(R.id.recipe_name);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(toolbar);
@@ -59,7 +67,14 @@ public class DetailRecipeActivity extends AppCompatActivity implements RecipeDet
     public void onDataAvailable(List<RecipeDetailItem> data, RecipeDownloadStatus status) {
         if (status == RecipeDownloadStatus.OK) {
             //adapter.loadNewData(data);
-            Log.d(TAG, "onDataAvailable: data is" + data);
+            Log.d(TAG, "onDataAvailable: nooooooooo: "+ data.get(0).toString());
+            Picasso.with(mImageView.getContext()).load(data.get(0).getImage())
+                    .error(R.drawable.ic_filter)
+                    .placeholder(R.drawable.ic_filter);
+
+            mTextView.setText(data.get(0).getTitle());
+            recipeList.add(data.get(0).toString());
+            adapter.notifyDataSetChanged();
         } else {
             // download or processing failed
             Log.e(TAG, "onDataAvailable: failed with status" + status );

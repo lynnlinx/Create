@@ -66,16 +66,7 @@ public class RecipeDetailItem {
 
     @Override
     public String toString() {
-        return "RecipeDetailItem{" +
-                "title='" + title + '\'' +
-                ", dishType='" + dishType + '\'' +
-                ", diet='" + diet + '\'' +
-                ", image='" + image + '\'' +
-                ", imageType='" + imageType + '\'' +
-                ", minutes=" + minutes +
-                ", servings=" + servings +
-                ", RecipeIngredients=" + RecipeIngredients +
-                ", instructions=" + instructions +
-                '}';
+        return "RecipeIngredients: \n" + RecipeIngredients +
+                "\n Instructions: \n" + instructions;
     }
 }
