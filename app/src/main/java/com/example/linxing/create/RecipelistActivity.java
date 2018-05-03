@@ -46,16 +46,14 @@ public class RecipelistActivity extends AppCompatActivity implements RecipeJsonD
         Bundle b = getIntent().getExtras();
         ingredients = b.getStringArray("ingredientName");
 
-        getDefault();
-
-        adapter = new RecipeListViewAdapter(this, recipeList, mListView, dailyCalories);
-        mListView.setAdapter(adapter);
-
         myAuth = myAuth.getInstance();
         user = myAuth.getCurrentUser();
         database = FirebaseDatabase.getInstance();
         myRef = database.getReference(("profile/" + user.getUid()));
+        getDefault();
 
+        adapter = new RecipeListViewAdapter(this, recipeList, mListView, dailyCalories);
+        mListView.setAdapter(adapter);
 
         StringBuilder result = new StringBuilder();
         for (String s: ingredients) {
