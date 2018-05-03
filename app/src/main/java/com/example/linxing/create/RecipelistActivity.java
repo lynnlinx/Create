@@ -6,7 +6,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Spinner;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -17,6 +19,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -35,15 +38,19 @@ public class RecipelistActivity extends AppCompatActivity implements RecipeJsonD
     private DatabaseReference myRef;
     private UserProfile userInformation;
     private int dailyCalories;
+    private Spinner spinnerSort;
+    private Comparators myComparator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.recipe_list);
+        myComparator = new Comparators();
         mListView = findViewById(R.id.recilist);
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
         Bundle b = getIntent().getExtras();
+        spinnerSort = findViewById(R.id.sort);
         ingredients = b.getStringArray("ingredientName");
 
         myAuth = myAuth.getInstance();
@@ -54,7 +61,18 @@ public class RecipelistActivity extends AppCompatActivity implements RecipeJsonD
 
         adapter = new RecipeListViewAdapter(this, recipeList, mListView, dailyCalories);
         mListView.setAdapter(adapter);
-
+        spinnerSort.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (position == 2) {
+                    Collections.sort(recipeList, myComparator.new CaloriesComparator());
+                    adapter.notifyDataSetChanged();
+                }
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
         StringBuilder result = new StringBuilder();
         for (String s: ingredients) {
             result.append(s).append(",");

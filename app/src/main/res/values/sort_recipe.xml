@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="sort_nutrition">
-        <item>by protein</item>
-        <item>by carb</item>
-        <item>by calorie</item>
+    <string-array name="sort">
+        <item>by ingredients used</item>
+        <item>by ingredients missed</item>
+        <item>by calories</item>
     </string-array>
     <string-array name="sort_cuisine">
         <item>American</item>
