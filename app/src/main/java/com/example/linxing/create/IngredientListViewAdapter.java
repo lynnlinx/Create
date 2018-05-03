@@ -1,5 +1,6 @@
 package com.example.linxing.create;
 
+import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -9,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -31,19 +33,23 @@ class IngredientListViewAdapter extends ArrayAdapter<Ingredient> {
     private SideslipListView listViewfinal;
     private FirebaseAuth myAuth;
     private Set<String> ingredientSet;
+    private Activity IngredientActivity;
 
-    public IngredientListViewAdapter(Context context, List<Ingredient> ingredientList, SideslipListView listView, Set<String> set) {
+    public IngredientListViewAdapter(Context context, List<Ingredient> ingredientList, SideslipListView listView, Set<String> set, Activity IngredientActivity) {
         super(context, R.layout.ingredient, ingredientList);
         mContext = context;
         mIngredientList = ingredientList;
         ingredientSet = set;
         listViewfinal = listView;
+        this.IngredientActivity = IngredientActivity;
+        Log.d(TAG, "IngredientListViewAdapter context: "+ mContext.toString());
     }
 
     public IngredientListViewAdapter(Context context, int resource, List<Ingredient> ingredientList) {
         super(context, resource, ingredientList);
         mIngredientList = ingredientList;
         mContext = context;
+        Log.d(TAG, "IngredientListViewAdapter context: "+ mContext);
     }
 
     @Override
@@ -125,6 +131,7 @@ class IngredientListViewAdapter extends ArrayAdapter<Ingredient> {
             mIngredientList.add(newIngredient);
             ingredientSet.add(newIngredient.getNix_item_id());
         }
+        Toast.makeText(IngredientActivity, "Item added!", Toast.LENGTH_SHORT).show();
         notifyDataSetChanged();
     }
 
