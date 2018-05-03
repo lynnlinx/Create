@@ -101,10 +101,10 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
                     case "Age: below 20":
                         spinnerAge.setSelection(0, true);
                         break;
-                    case "Age: 20 to 40":
+                    case "Age: 20 to 50":
                         spinnerAge.setSelection(1,true);
                         break;
-                    case "Age: over 40":
+                    case "Age: over 50":
                         spinnerAge.setSelection(2,true);
                         break;
                     default:
