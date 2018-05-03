@@ -1,25 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="sort_nutrition">
-        <item>by protein</item>
-        <item>by carb</item>
-        <item>by calorie</item>
+    <string-array name="sort">
+        <item>by ingredients used</item>
+        <item>by ingredients missed</item>
+        <item>by calories</item>
     </string-array>
-    <string-array name="sort_cuision">
+    <string-array name="sort_cuisine">
         <item>American</item>
         <item>Chinese</item>
         <item>Korean</item>
     </string-array>
     <string-array name="age">
-        <item>below 20</item>
-        <item>20 to 40</item>
-        <item>over 40</item>
-        <item>don't want to say</item>
+        <item>Age: below 20</item>
+        <item>Age: 20 to 50</item>
+        <item>Age: over 50</item>
+        <item>N/A</item>
     </string-array>
     <string-array name="weight">
-        <item>50</item>
-        <item>60</item>
-        <item>70</item>
-        <item>don't want to say</item>
+        <item>Weight: below 50 kg/110lbs</item>
+        <item>Weight: 50 to 70 kg/110lbs to 154lbs</item>
+        <item>Weight: Over 70kg/154lbs</item>
+        <item>N/A</item>
+    </string-array>
+    <string-array name="gender">
+        <item>Male</item>
+        <item>Female</item>
+        <item>N/A</item>
     </string-array>
 </resources>

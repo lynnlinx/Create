@@ -28,8 +28,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
-import java.util.UUID;
+import java.util.Set;
 
 //import android.widget.SearchView;
 /**
@@ -53,18 +54,19 @@ public class IngredientActivity extends AppCompatActivity implements View.OnClic
     private static final String TAG = "IngredientActivity";
     private List<Ingredient> mIngredientList;
     private List<Ingredient> realIngredientList = new ArrayList<>();
+    private Set<String> ingredientSet = new HashSet<String>();
     private IngredientListViewAdapter adapter;
     private ArrayAdapterSearchView.SearchAutoComplete mSearchAutoComplete;
     private IngredientListSearchViewAdapter ingredientAdapter;
     private ArrayAdapterSearchView mAutoCompleteTextView;
     private FirebaseAuth myAuth;
     private SideslipListView mListView;
-    private ListView IngredientListView;
-    UserProfile userInformation;
-    FirebaseUser user;
-    FirebaseDatabase database;
-    DatabaseReference myRef;
-    DatabaseReference ingredientRef;
+    private UserProfile userInformation;
+    private FirebaseUser user;
+    private FirebaseDatabase database;
+    private DatabaseReference myRef;
+    private DatabaseReference ingredientRef;
+    private double dailyCalories = 0;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -117,6 +119,8 @@ public class IngredientActivity extends AppCompatActivity implements View.OnClic
             public void onDataChange(DataSnapshot dataSnapshot) {
                 userInformation = dataSnapshot.getValue(UserProfile.class);
                 textUsername.setText(userInformation.getUsername_profile());
+                dailyCalories = GetDailyNutrition.getCalorie(userInformation);
+                Log.d(TAG, "onDataChange: after default" + dailyCalories);
             }
 
             @Override
@@ -130,7 +134,7 @@ public class IngredientActivity extends AppCompatActivity implements View.OnClic
         loadIngredient();
         mListView = findViewById(R.id.ingredient_list);
         Log.d(TAG, "onCreate: list is whata" + realIngredientList.size());
-        adapter = new IngredientListViewAdapter(this, realIngredientList, mListView);
+        adapter = new IngredientListViewAdapter(this, realIngredientList, mListView, ingredientSet, IngredientActivity.this);
         mListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
         mListView.setAdapter(adapter);
 
@@ -147,7 +151,6 @@ public class IngredientActivity extends AppCompatActivity implements View.OnClic
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Ingredient ingredient = (Ingredient) parent.getItemAtPosition(position);
                 adapter.loadNewIngredient(ingredient);
-                ingredient.setUuid(UUID.randomUUID().toString());
                 saveIngredient(ingredient);
                 mSearchView.setQuery("",false);
                 Log.d(TAG, "onItemClick: ingre" + realIngredientList);
@@ -229,8 +232,14 @@ public class IngredientActivity extends AppCompatActivity implements View.OnClic
                 ingredientName[i] = tmp;
             }
 
+            while (dailyCalories < 0) {
+                Log.d(TAG, "onClick: bundle calorie" + dailyCalories);
+            }
+            Log.d(TAG, "onClick: bundle calorie" + dailyCalories);
+
             Bundle bundle = new Bundle();
             bundle.putStringArray("ingredientName", ingredientName);
+            bundle.putDouble("calories", dailyCalories);
             Intent intent = new Intent();
             intent.setClass(this, RecipelistActivity.class);
             intent.putExtras(bundle);
@@ -267,16 +276,22 @@ public class IngredientActivity extends AppCompatActivity implements View.OnClic
 
 
     private void saveIngredient(Ingredient ingredient) {
-        ingredientRef.child(ingredient.getUuid()).setValue(ingredient);
+            ingredientRef.child(ingredient.getNix_item_id()).setValue(ingredient);
     }
     private void loadIngredient() {
         ValueEventListener ingredientListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 realIngredientList.clear();
+                ingredientSet.clear();
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
                     Ingredient ingredient = ds.getValue(Ingredient.class);
-                    realIngredientList.add(ingredient);
+                    if (ingredientSet.contains(ingredient.getNix_item_id())) {
+
+                    } else {
+                        realIngredientList.add(ingredient);
+                        ingredientSet.add(ingredient.getNix_item_id());
+                    }
                 }
                 adapter.notifyDataSetChanged();
             }
@@ -289,4 +304,5 @@ public class IngredientActivity extends AppCompatActivity implements View.OnClic
         ingredientRef.addValueEventListener(ingredientListener);
         return;
     }
+
 }

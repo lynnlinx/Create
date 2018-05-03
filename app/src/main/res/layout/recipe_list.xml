@@ -42,12 +42,13 @@
                 <Spinner
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:entries="@array/sort_nutrition">
+                    android:entries="@array/sort"
+                    android:id="@+id/sort">
                 </Spinner>
                 <Spinner
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:entries="@array/sort_cuision">
+                    android:entries="@array/sort_cuisine">
                 </Spinner>
             </LinearLayout>
 

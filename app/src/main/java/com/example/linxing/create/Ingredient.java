@@ -12,23 +12,25 @@ class Ingredient {
     private String brand_name_item_name;
     private String nf_calories;
     private String brand_name;
-    private String uuid;
+    private String nix_item_id;
 
-    public Ingredient(String food_name, String image, String serving_unit, String brand_name_item_name, String nf_calories, String brand_name) {
+    public Ingredient(String food_name, String image, String serving_unit, String brand_name_item_name, String nf_calories, String brand_name, String nix_item_id) {
         this.food_name = food_name;
         this.image = image;
         this.serving_unit = serving_unit;
         this.brand_name_item_name = brand_name_item_name;
         this.nf_calories = nf_calories;
         this.brand_name = brand_name;
+        this.nix_item_id = nix_item_id;
     }
 
-    public Ingredient(String food_name, String image, String serving_unit, String nf_calories, String brand_name) {
+    public Ingredient(String food_name, String image, String serving_unit, String nf_calories, String brand_name, String nix_item_id) {
         this.food_name = food_name;
         this.image = image;
         this.serving_unit = serving_unit;
         this.nf_calories = nf_calories;
         this.brand_name = brand_name;
+        this.nix_item_id = nix_item_id;
     }
 
     public Ingredient() {
@@ -58,12 +60,14 @@ class Ingredient {
         return brand_name;
     }
 
-    public void setUuid(String uuid_input) {
-        uuid = uuid_input;
+    public void setNix_item_id(String id) {
+        nix_item_id = id;
     }
-    public String getUuid() {
-        return uuid;
+
+    public String getNix_item_id() {
+        return nix_item_id;
     }
+
     @Override
     public String toString() {
         return "Ingredient{" +
@@ -73,6 +77,7 @@ class Ingredient {
                 ", brand_name_item_name='" + brand_name_item_name + '\'' +
                 ", nf_calories='" + nf_calories + '\'' +
                 ", brand_name='" + brand_name + '\'' +
+                ", nix_item_id='" + nix_item_id + '\'' +
                 '}';
     }
 }

@@ -8,35 +8,75 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Spinner;
 
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import com.google.firebase.auth.*;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 
 public class RecipelistActivity extends AppCompatActivity implements RecipeJsonData.OnDataAvailable {
 
-    private static final String TAG = "IngredientActivity";
+    private static final String TAG = "RecipelistActivity";
 
     private List<RecipeItem> recipeList = new ArrayList<>();
     private ListView mListView;
     private Toolbar mToolbar;
     private RecipeListViewAdapter adapter;
     private String[] ingredients;
+    private FirebaseAuth myAuth;
+    private FirebaseUser user;
+    private FirebaseDatabase database;
+    private DatabaseReference myRef;
+    private UserProfile userInformation;
+    private Spinner spinnerSort;
+    private Comparators myComparator;
+    private double dailyCalories;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.recipe_list);
+        myComparator = new Comparators();
         mListView = findViewById(R.id.recilist);
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
         Bundle b = getIntent().getExtras();
+        spinnerSort = findViewById(R.id.sort);
         ingredients = b.getStringArray("ingredientName");
+        dailyCalories = b.getDouble("calories");
 
-        adapter = new RecipeListViewAdapter(this, recipeList, mListView);
+        Log.d(TAG, "onCreate: cccccccc " + dailyCalories);
+        adapter = new RecipeListViewAdapter(this, recipeList, mListView, dailyCalories);
         mListView.setAdapter(adapter);
-
+        spinnerSort.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                recipeList = adapter.getmRecipeList();
+                switch (position) {
+                    case 0:
+                        Collections.sort(recipeList, myComparator.new UsedIngredientComparator());
+                        break;
+                    case 1:
+                        Collections.sort(recipeList, myComparator.new MissedIngredientComparator());
+                        break;
+                    case 2:
+                        Collections.sort(recipeList, myComparator.new CaloriesComparator());
+                        break;
+                    default:;
+                }
+                adapter.notifyDataSetChanged();
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
         StringBuilder result = new StringBuilder();
         for (String s: ingredients) {
             result.append(s).append(",");

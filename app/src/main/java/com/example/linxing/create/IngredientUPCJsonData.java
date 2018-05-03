@@ -71,10 +71,11 @@ class IngredientUPCJsonData extends AsyncTask<String, Void, List<Ingredient>> im
                     String serving_unit = jsonIngredient.getString("serving_unit");
                     String nf_calories = jsonIngredient.getString("nf_calories");
                     String brand_name = jsonIngredient.getString("brand_name");
+                    String nix_item_id = jsonIngredient.getString("nix_item_id");
 
                     //String link = imageUrl.replaceFirst("_m.", "_b.");
 
-                    Ingredient ingredientObject = new Ingredient(food_name, imageUrl, serving_unit, nf_calories, brand_name);
+                    Ingredient ingredientObject = new Ingredient(food_name, imageUrl, serving_unit, nf_calories, brand_name, nix_item_id);
                     mIngredient.add(ingredientObject);
 
                     Log.d(TAG, "onDownloadComplete" + ingredientObject.toString());

@@ -32,6 +32,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private TextView login;
     private Spinner spinnerAge;
     private Spinner spinnerWeight;
+    private Spinner spinnerGender;
     //Test Tag
     private static final String TAG = "RegisterActivity";
 
@@ -53,7 +54,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         editTextConfirmPassword  = (EditText) findViewById(R.id.txt_confirm_password);
         spinnerAge = (Spinner) findViewById(R.id.spinner_age);
         spinnerWeight = (Spinner) findViewById(R.id.spinner_weight);
-
+        spinnerGender = (Spinner) findViewById(R.id.spinner_gender);
         login = (TextView) findViewById(R.id.btn_login);
         login.setOnClickListener(this);
         buttonRegister.setOnClickListener(this);
@@ -137,10 +138,12 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         String username = editTextUsername.getText().toString().trim();
         String age = spinnerAge.getSelectedItem().toString();
         String weight = spinnerWeight.getSelectedItem().toString();
+        String gender = spinnerGender.getSelectedItem().toString();
         // To complete
         UserProfile userInformation = new UserProfile(username);
         userInformation.setAge_profile(age);
         userInformation.setWeight_profile(weight);
+        userInformation.setGender_profile(gender);
         FirebaseUser user = myAuth.getCurrentUser();
 
         // set other infomation

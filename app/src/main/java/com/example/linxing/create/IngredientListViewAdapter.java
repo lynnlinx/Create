@@ -1,5 +1,6 @@
 package com.example.linxing.create;
 
+import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -9,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -18,6 +20,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by linxing on 3/17/18.
@@ -29,18 +32,24 @@ class IngredientListViewAdapter extends ArrayAdapter<Ingredient> {
     private Context mContext;
     private SideslipListView listViewfinal;
     private FirebaseAuth myAuth;
+    private Set<String> ingredientSet;
+    private Activity IngredientActivity;
 
-    public IngredientListViewAdapter(Context context, List<Ingredient> ingredientList, SideslipListView listView) {
+    public IngredientListViewAdapter(Context context, List<Ingredient> ingredientList, SideslipListView listView, Set<String> set, Activity IngredientActivity) {
         super(context, R.layout.ingredient, ingredientList);
         mContext = context;
         mIngredientList = ingredientList;
+        ingredientSet = set;
         listViewfinal = listView;
+        this.IngredientActivity = IngredientActivity;
+        Log.d(TAG, "IngredientListViewAdapter context: "+ mContext.toString());
     }
 
     public IngredientListViewAdapter(Context context, int resource, List<Ingredient> ingredientList) {
         super(context, resource, ingredientList);
         mIngredientList = ingredientList;
         mContext = context;
+        Log.d(TAG, "IngredientListViewAdapter context: "+ mContext);
     }
 
     @Override
@@ -63,7 +72,9 @@ class IngredientListViewAdapter extends ArrayAdapter<Ingredient> {
         if (mIngredientList.size() > 0) {
             Ingredient ingredient = mIngredientList.get(position);
             viewHolder.name.setText(ingredient.getFood_name());
-            viewHolder.nutrition.setText(ingredient.getNf_calories());
+            StringBuilder sb = new StringBuilder();
+            sb.append("Calories: ").append(ingredient.getNf_calories());
+            viewHolder.nutrition.setText(sb.toString());
             //viewHolder.image.setImageResource(ingredient.getImage());
             Picasso.with(mContext).load(ingredient.getImage())
                     .error(R.drawable.ic_filter)
@@ -79,9 +90,10 @@ class IngredientListViewAdapter extends ArrayAdapter<Ingredient> {
                 FirebaseUser user = myAuth.getCurrentUser();
                 FirebaseDatabase database = FirebaseDatabase.getInstance();
                 DatabaseReference ingredientRef = database.getReference("ingredient/"
-                        + user.getUid() + "/" + ingredientRemove.getUuid());
+                        + user.getUid() + "/" + ingredientRemove.getNix_item_id());
                 ingredientRef.removeValue();
                 mIngredientList.remove(pos);
+                ingredientSet.remove(ingredientRemove.getNix_item_id());
                 notifyDataSetChanged();
                 listViewfinal.turnNormal();
             }
@@ -115,7 +127,13 @@ class IngredientListViewAdapter extends ArrayAdapter<Ingredient> {
     }
 
     void loadNewIngredient(Ingredient newIngredient) {
-        mIngredientList.add(newIngredient);
+        if (ingredientSet.contains(newIngredient.getNix_item_id())) {
+
+        } else {
+            mIngredientList.add(newIngredient);
+            ingredientSet.add(newIngredient.getNix_item_id());
+        }
+        Toast.makeText(IngredientActivity, "Item added!", Toast.LENGTH_SHORT).show();
         notifyDataSetChanged();
     }
 
