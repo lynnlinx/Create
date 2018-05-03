@@ -129,15 +129,12 @@ public class ScannerActivity extends AppCompatActivity implements IngredientUPCJ
     @Override
     public void onDataAvailable(List<Ingredient> data, DownloadStatus status) {
         if (status == DownloadStatus.OK) {
-            Log.d(TAG, "onDataAvailable: data is BBBBBFFFFFFFFore" + data);
-            if (data != null && data.size() != 0) {
+            if (data !=null && data.size() != 0) {
                 final Ingredient ingredient = data.get(0);
                 ingredientRef = FirebaseDatabase.getInstance().getReference(("ingredient/" + user.getUid()));
                 ingredientRef.child(ingredient.getNix_item_id()).setValue(ingredient);
             } else {
-                Toast.makeText(this, "Ingredient doesn't exist", Toast.LENGTH_SHORT).show();
-                finish();
-                startActivity(new Intent(ScannerActivity.this, IngredientActivity.class));
+                Toast.makeText(this, "No Info in database", Toast.LENGTH_SHORT).show();
             }
             Log.d(TAG, "onDataAvailable: data is" + data);
         } else {
@@ -209,5 +206,27 @@ public class ScannerActivity extends AppCompatActivity implements IngredientUPCJ
     private void loadUPC(String s) {
         IngredientUPCJsonData ingredientUPCJsonData = new IngredientUPCJsonData(this, "https://trackapi.nutritionix.com/v2/search/item", true);
         ingredientUPCJsonData.execute(s);
+    }
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        if (grantResults.length > 0
+                && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            try {
+                if (ContextCompat.checkSelfPermission(ScannerActivity.this, android.Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+                    cameraSource.start(cameraView.getHolder());
+                } else {
+                    ActivityCompat.requestPermissions(ScannerActivity.this, new String[]{android.Manifest.permission.CAMERA}, PERMISSION_REQUEST);
+                }
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        } else {
+            finish();
+            startActivity(new Intent(ScannerActivity.this, IngredientActivity.class));        }
+        return;
+    }
+    public void refresh() {
+        onCreate(null);
     }
 }
