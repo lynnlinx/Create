@@ -33,6 +33,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private Spinner spinnerAge;
     private Spinner spinnerWeight;
     private Spinner spinnerGender;
+    private TextView buttonSecurity;
+
     //Test Tag
     private static final String TAG = "RegisterActivity";
 
@@ -58,6 +60,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         login = (TextView) findViewById(R.id.btn_login);
         login.setOnClickListener(this);
         buttonRegister.setOnClickListener(this);
+        buttonSecurity = (TextView) findViewById(R.id.btn_security);
+        buttonSecurity.setOnClickListener(this);
     }
 
     @Override
@@ -68,6 +72,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         if (v == login) {
             finish();
             startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+        }
+        if (v== buttonSecurity) {
+            Toast.makeText(this, "Be coming soon", Toast.LENGTH_SHORT).show();
         }
     }
 

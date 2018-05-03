@@ -48,13 +48,21 @@
             android:hint="Password"
             android:password="true"
             android:singleLine="true" />
-
+        <TextView
+            android:id="@+id/btn_security"
+            android:layout_width="wrap_content"
+            android:layout_height="23dp"
+            android:layout_gravity="center"
+            android:text="Privacy and Security"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent" />
         <Button
             android:id="@+id/btn_login"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginBottom="15dp"
+            android:layout_marginTop="20dp"
             android:background="#448AFF"
             android:text="Login"
             android:textColor="#fff"

@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -24,6 +25,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private FirebaseAuth myAuth;
     private Button buttonSignin;
     private Button buttonRegister;
+    private TextView buttonSecurity;
     private EditText editTextEmail;
     private EditText editTextPassword;
     private static final String TAG = "LoginActivity";
@@ -41,6 +43,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         editTextPassword = (EditText) findViewById(R.id.txt_password);
         buttonSignin = (Button) findViewById(R.id.btn_login);
         buttonRegister = (Button) findViewById(R.id.btn_register);
+        buttonSecurity = (TextView) findViewById(R.id.btn_security);
+        buttonSecurity.setOnClickListener(this);
 
         buttonSignin.setOnClickListener(this);
         buttonRegister.setOnClickListener(this);
@@ -53,6 +57,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         if(v == buttonRegister){
             finish();
             startActivity(new Intent(this, RegisterActivity.class));
+        }
+        if (v== buttonSecurity) {
+            Toast.makeText(this, "Be coming soon", Toast.LENGTH_SHORT).show();
         }
     }
 
