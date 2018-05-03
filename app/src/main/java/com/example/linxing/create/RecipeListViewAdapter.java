@@ -27,12 +27,14 @@ public class RecipeListViewAdapter extends ArrayAdapter<RecipeItem> {
     private Context mContext;
     private ListView mListView;
     private FirebaseAuth myAuth;
+    private int dailyCalories;
 
-    public RecipeListViewAdapter(Context context, List<RecipeItem> recipeItems, ListView listView) {
+    public RecipeListViewAdapter(Context context, List<RecipeItem> recipeItems, ListView listView, int dailyCalories) {
         super(context, R.layout.recipe_list, recipeItems);
         mContext = context;
         mRecipeItems = recipeItems;
         mListView = listView;
+        this.dailyCalories = dailyCalories;
     }
 
 
@@ -48,6 +50,7 @@ public class RecipeListViewAdapter extends ArrayAdapter<RecipeItem> {
             viewHolder.name = (TextView) convertView.findViewById(R.id.title);
             viewHolder.nutrition = (TextView) convertView.findViewById(R.id.info_nutrition);
             viewHolder.image = (ImageView) convertView.findViewById(R.id.image);
+            viewHolder.calorie = (TextView) convertView.findViewById(R.id.info_ingredient);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (RecipeListViewAdapter.ViewHolder) convertView.getTag();
@@ -61,6 +64,9 @@ public class RecipeListViewAdapter extends ArrayAdapter<RecipeItem> {
                     .append("Fat: ").append(recipeItem.getFat()).append(", ")
                     .append("Carbs: ").append(recipeItem.getCarbs());
             viewHolder.nutrition.setText(sb.toString());
+            StringBuilder tmp = new StringBuilder();
+            tmp.append("Consuming").append(String.valueOf(dailyCalories)).append("% of daily calories.");
+            viewHolder.calorie.setText(tmp.toString());
             Picasso.with(mContext).load(recipeItem.getImage())
                     .error(R.drawable.ic_filter)
                     .placeholder(R.drawable.ic_filter)
@@ -120,5 +126,7 @@ public class RecipeListViewAdapter extends ArrayAdapter<RecipeItem> {
         TextView name;
         TextView nutrition;
         ImageView image;
+        TextView calorie;
     }
+
 }

@@ -12,8 +12,8 @@
     </string-array>
     <string-array name="age">
         <item>Age: below 20</item>
-        <item>Age: 20 to 40</item>
-        <item>Age: over 40</item>
+        <item>Age: 20 to 50</item>
+        <item>Age: over 50</item>
         <item>N/A</item>
     </string-array>
     <string-array name="weight">
