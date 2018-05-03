@@ -10,12 +10,14 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Spinner;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import com.google.firebase.auth.*;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 
 public class RecipelistActivity extends AppCompatActivity implements RecipeJsonData.OnDataAvailable {
@@ -53,7 +55,6 @@ public class RecipelistActivity extends AppCompatActivity implements RecipeJsonD
         ingredients = b.getStringArray("ingredientName");
         dailyCalories = b.getDouble("calories");
 
-        Log.d(TAG, "onCreate: cccccccc " + dailyCalories);
         adapter = new RecipeListViewAdapter(this, recipeList, mListView, dailyCalories);
         mListView.setAdapter(adapter);
         result = new StringBuilder();
@@ -100,7 +101,7 @@ public class RecipelistActivity extends AppCompatActivity implements RecipeJsonD
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
-        
+
 
         spinnerFilter.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
