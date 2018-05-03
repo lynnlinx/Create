@@ -69,7 +69,6 @@ public class RecipelistActivity extends AppCompatActivity implements RecipeJsonD
         // set return button
         if(getSupportActionBar() != null){
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setIcon(R.drawable.ic_barcode);
 
             mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
                 @Override
@@ -78,7 +77,6 @@ public class RecipelistActivity extends AppCompatActivity implements RecipeJsonD
                 }
             });
         }
-
         spinnerSort.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -106,9 +104,8 @@ public class RecipelistActivity extends AppCompatActivity implements RecipeJsonD
         spinnerFilter.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
             }
-
+        // set return button
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 switch (position) {
@@ -126,6 +123,7 @@ public class RecipelistActivity extends AppCompatActivity implements RecipeJsonD
                 }
                 adapter.notifyDataSetChanged();
             }
+
         });
 
     }
