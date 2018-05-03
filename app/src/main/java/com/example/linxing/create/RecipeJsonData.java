@@ -47,7 +47,7 @@ public class RecipeJsonData extends AsyncTask<String, Void, List<RecipeItem>> im
         Log.d(TAG, "createUri: starts");
         return Uri.parse(mBaseURL).buildUpon()
                 .appendQueryParameter("offset", "0")
-                .appendQueryParameter("number", "10")
+                .appendQueryParameter("number", "20")
                 .appendQueryParameter("limitLicense", "false")
                 .appendQueryParameter("includeIngredients", searchCriteria)
                 .appendQueryParameter("minCarbs", "0")
@@ -58,7 +58,7 @@ public class RecipeJsonData extends AsyncTask<String, Void, List<RecipeItem>> im
         Log.d(TAG, "createFilterUri: starts");
         return Uri.parse(mBaseURL).buildUpon()
                 .appendQueryParameter("offset", "0")
-                .appendQueryParameter("number", "10")
+                .appendQueryParameter("number", "20")
                 .appendQueryParameter("limitLicense", "false")
                 .appendQueryParameter("includeIngredients", searchCriteria)
                 .appendQueryParameter("minCarbs", "0")
