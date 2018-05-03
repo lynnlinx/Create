@@ -54,6 +54,18 @@ public class RecipeJsonData extends AsyncTask<String, Void, List<RecipeItem>> im
                 .build().toString();
     }
 
+    private String createFilterUri(String searchCriteria, String category, boolean matchAll) {
+        Log.d(TAG, "createFilterUri: starts");
+        return Uri.parse(mBaseURL).buildUpon()
+                .appendQueryParameter("offset", "0")
+                .appendQueryParameter("number", "10")
+                .appendQueryParameter("limitLicense", "false")
+                .appendQueryParameter("includeIngredients", searchCriteria)
+                .appendQueryParameter("minCarbs", "0")
+                .appendQueryParameter("cuisine", category)
+                .build().toString();
+    }
+
 
     @Override
     public void onDownloadComplete(String data, RecipeDownloadStatus status) {
@@ -81,23 +93,6 @@ public class RecipeJsonData extends AsyncTask<String, Void, List<RecipeItem>> im
                     String fat = jsonRecipe.getString("fat");
                     String carbs = jsonRecipe.getString("carbs");
 
-                    /*
-                    int readyInMinutes = jsonRecipe.getInt("readyInMinutes");
-                    int servings = jsonRecipe.getInt("servings");
-                    //String image = jsonRecipe.getString("image");
-
-                    JSONArray imageCotent = jsonRecipe.getJSONArray("imageUrls");
-                    //String image = imageCotent.getString(0);
-
-                    RecipeItem recipeItem = null;
-                    if (imageCotent == null || imageCotent.length() == 0) {
-                        Log.d(TAG, "onDownloadComplete: images is null");
-                        recipeItem = new RecipeItem(id, title, readyInMinutes, servings);
-                    } else {
-                        String imageURL = getImageURL(id);
-                        recipeItem = new RecipeItem(id, title, readyInMinutes, servings, imageURL);
-                    }
-                    */
                     RecipeItem recipeItem = new RecipeItem(id, title, usedIngredientCount, missedIngredientCount, imageURL, imageType, calories, protein, fat, carbs);
                     mRecipeItems.add(recipeItem);
 
@@ -130,7 +125,12 @@ public class RecipeJsonData extends AsyncTask<String, Void, List<RecipeItem>> im
     @Override
     protected List<RecipeItem> doInBackground(String... params) {
         Log.d(TAG, "doInBackground: starts");
-        String destinationUri = createUri(params[0], mMatchAll);
+        String destinationUri = "";
+        if (params.length == 1) {
+            destinationUri = createUri(params[0], mMatchAll);
+        } else if (params.length == 2) {
+            destinationUri = createFilterUri(params[0], params[1], mMatchAll);
+        }
 
         GetRecipeRawData getRecipeRawData = new GetRecipeRawData(this);
         getRecipeRawData.runInSameThread(destinationUri);

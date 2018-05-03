@@ -37,6 +37,8 @@ public class RecipelistActivity extends AppCompatActivity implements RecipeJsonD
     private Spinner spinnerSort;
     private Comparators myComparator;
     private double dailyCalories;
+    private Spinner spinnerFilter;
+    private StringBuilder result;
 
 
     @Override
@@ -46,6 +48,7 @@ public class RecipelistActivity extends AppCompatActivity implements RecipeJsonD
         myComparator = new Comparators();
         mListView = findViewById(R.id.recilist);
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        spinnerFilter = (Spinner) findViewById(R.id.filter);
         setSupportActionBar(mToolbar);
         Bundle b = getIntent().getExtras();
         spinnerSort = findViewById(R.id.sort);
@@ -55,6 +58,26 @@ public class RecipelistActivity extends AppCompatActivity implements RecipeJsonD
         Log.d(TAG, "onCreate: cccccccc " + dailyCalories);
         adapter = new RecipeListViewAdapter(this, recipeList, mListView, dailyCalories);
         mListView.setAdapter(adapter);
+        result = new StringBuilder();
+        for (String s: ingredients) {
+            result.append(s).append(",");
+        }
+
+        Log.d(TAG, "onCreate: isssssss: " + result.toString());
+        loadData(result.toString());
+
+
+        // set return button
+        if(getSupportActionBar() != null){
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+            mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(getApplicationContext(),IngredientActivity.class));
+                }
+            });
+        }
         spinnerSort.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -77,46 +100,32 @@ public class RecipelistActivity extends AppCompatActivity implements RecipeJsonD
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
-        StringBuilder result = new StringBuilder();
-        for (String s: ingredients) {
-            result.append(s).append(",");
-        }
+        
 
-        Log.d(TAG, "onCreate: isssssss: " + result.toString());
-        loadData(result.toString());
-
-        /*
-        SimpleAdapter myadapter = new SimpleAdapter(this, listnewsData,
-                R.layout.recipe_list_item,
-                new String[] { "title", "info_nutrition", "image", "info_ingredient" },
-                new int[] { R.id.title, R.id.info_nutrition, R.id.image, R.id.info_ingredient}) {
-
+        spinnerFilter.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public View getView (int position, View convertView, ViewGroup parent) {
-                View view = super.getView(position, convertView, parent);
-                view.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        finish();
-                        startActivity(new Intent(RecipelistActivity.this, DetailRecipeActivity.class));
-                    }
-                });
-                return view;
+            public void onNothingSelected(AdapterView<?> parent) {
             }
-        };
-        */
-
         // set return button
-        if(getSupportActionBar() != null){
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-            mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    startActivity(new Intent(getApplicationContext(),IngredientActivity.class));
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                switch (position) {
+                    case 1:
+                        loadData(result.toString(), "american");
+                        break;
+                    case 2:
+                        loadData(result.toString(), "chinese");
+                        break;
+                    case 3:
+                        loadData(result.toString(), "korean");
+                        break;
+                    default:
+                        loadData(result.toString());
                 }
-            });
-        }
+                adapter.notifyDataSetChanged();
+            }
+
+        });
 
     }
 
@@ -146,7 +155,7 @@ public class RecipelistActivity extends AppCompatActivity implements RecipeJsonD
     }
 
 
-    private void loadData(String s) {
+    private void loadData(String... s) {
         RecipeJsonData recipeJsonData = new RecipeJsonData(this, "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/searchComplex", true);
         recipeJsonData.execute(s);
     }
