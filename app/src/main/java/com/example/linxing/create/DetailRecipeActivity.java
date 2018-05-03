@@ -10,18 +10,18 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
  * Created by jiana on 2018/2/27.
  */
 
-public class DetailRecipeActivity extends AppCompatActivity implements RecipeDetailData.OnDataAvailable {
+public class DetailRecipeActivity extends AppCompatActivity implements RecipeDetailData.OnDataAvailable,  View.OnClickListener{
     private static final String TAG = "DetailRecipeActivity";
 
     private List<String> ingreList = new ArrayList<>();
@@ -40,6 +40,9 @@ public class DetailRecipeActivity extends AppCompatActivity implements RecipeDet
     private String fat;
     private String carbs;
     private int recipe_calories;
+    private TextView buttonRemove;
+    private TextView buttonList;
+
 
     private double dailyCalories;
     private int id;
@@ -57,7 +60,10 @@ public class DetailRecipeActivity extends AppCompatActivity implements RecipeDet
             carbs = b.getString("carbs");
             recipe_calories = b.getInt("recipe_calories");
         }
-
+        buttonList = (TextView) findViewById(R.id.btn_shoppinglist);
+        buttonList.setOnClickListener(this);
+        buttonRemove = (TextView) findViewById(R.id.btn_remove);
+        buttonRemove.setOnClickListener(this);
         mListView = findViewById(R.id.detail_listview);
         instruction_view = findViewById(R.id.instructions_listview);
         mImageView = findViewById(R.id.recipe_image);
@@ -134,5 +140,14 @@ public class DetailRecipeActivity extends AppCompatActivity implements RecipeDet
     private void loadData(String s) {
         RecipeDetailData recipeDetailData = new RecipeDetailData(this, "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes", true);
         recipeDetailData.execute(s);
+    }
+    @Override
+    public void onClick(View v) {
+        if (v== buttonList) {
+            Toast.makeText(this, "Be coming soon", Toast.LENGTH_SHORT).show();
+        }
+        if (v== buttonRemove) {
+            Toast.makeText(this, "Be coming soon", Toast.LENGTH_SHORT).show();
+        }
     }
 }

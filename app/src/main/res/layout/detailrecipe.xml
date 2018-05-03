@@ -50,7 +50,7 @@
                             android:id="@+id/nutrients"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:paddingLeft="10dp"
+                            android:paddingLeft="15dp"
                             android:textColor="@color/wallet_holo_blue_light"
                             android:textStyle="bold|italic"
                             android:textSize="20sp" />
@@ -59,7 +59,7 @@
                             android:id="@+id/others"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:paddingLeft="10dp"
+                            android:paddingLeft="15dp"
                             android:textColor="@color/black"
                             android:textSize="20sp" />
 
@@ -67,27 +67,42 @@
                             android:id="@+id/ingredients"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:gravity="center"
+                            android:gravity="left"
                             android:text="Ingredients"
-                            android:paddingRight="240dp"
+                            android:layout_marginLeft="10dp"
                             android:textColor="@color/black"
                             android:textSize="20sp"
                             android:textStyle="bold" />
+                        <TextView
+                            android:id="@+id/btn_shoppinglist"
+                            android:layout_width="wrap_content"
+                            android:layout_height="23dp"
+                            android:layout_gravity="left"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginBottom="20dp"
+                            android:text="Get a shopping list"/>
 
                         <ListView
                             xmlns:android="http://schemas.android.com/apk/res/android"
                             android:id="@+id/detail_listview"
                             android:layout_width="fill_parent"
-                            android:layout_height="fill_parent">
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp">
                         </ListView>
-
+                        <TextView
+                            android:id="@+id/btn_remove"
+                            android:layout_width="wrap_content"
+                            android:layout_height="23dp"
+                            android:layout_gravity="left"
+                            android:layout_marginLeft="20dp"
+                            android:text="Remove all the ingredients in your fridge?"/>
                         <TextView
                             android:id="@+id/instructions"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:gravity="center"
+                            android:gravity="left"
                             android:text="Instructions"
-                            android:paddingRight="240dp"
+                            android:layout_marginLeft="10dp"
                             android:textColor="@color/black"
                             android:textSize="20sp"
                             android:textStyle="bold" />
