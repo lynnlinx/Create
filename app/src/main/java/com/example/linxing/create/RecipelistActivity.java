@@ -55,7 +55,6 @@ public class RecipelistActivity extends AppCompatActivity implements RecipeJsonD
         ingredients = b.getStringArray("ingredientName");
         dailyCalories = b.getDouble("calories");
 
-        Log.d(TAG, "onCreate: cccccccc " + dailyCalories);
         adapter = new RecipeListViewAdapter(this, recipeList, mListView, dailyCalories);
         mListView.setAdapter(adapter);
         result = new StringBuilder();
@@ -100,7 +99,7 @@ public class RecipelistActivity extends AppCompatActivity implements RecipeJsonD
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
-        
+
 
         spinnerFilter.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -127,7 +126,27 @@ public class RecipelistActivity extends AppCompatActivity implements RecipeJsonD
 
         });
 
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                RecipeItem recipe = (RecipeItem) adapterView.getItemAtPosition(i);
+
+                int id = recipe.getID();
+                Bundle bundle = new Bundle();
+                bundle.putInt("id",id);
+                Intent intent = new Intent();
+                intent.setClass(RecipelistActivity.this, DetailRecipeActivity.class);
+                intent.putExtras(bundle);
+
+                Log.d(TAG, "onClick: ingredient id is: " + id);
+                finish();
+                startActivity(intent);
+
+            }
+        });
+
     }
+
 
 
     private View getViewByPosition(int pos, ListView listView) {
@@ -141,7 +160,6 @@ public class RecipelistActivity extends AppCompatActivity implements RecipeJsonD
             return listView.getChildAt(childIndex);
         }
     }
-
 
     @Override
     public void onDataAvailable(List<RecipeItem> data, RecipeDownloadStatus status) {
@@ -159,5 +177,4 @@ public class RecipelistActivity extends AppCompatActivity implements RecipeJsonD
         RecipeJsonData recipeJsonData = new RecipeJsonData(this, "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/searchComplex", true);
         recipeJsonData.execute(s);
     }
-
 }

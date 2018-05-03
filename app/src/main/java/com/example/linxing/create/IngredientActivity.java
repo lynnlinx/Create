@@ -35,7 +35,7 @@ import java.util.Set;
  */
 
 public class IngredientActivity extends AppCompatActivity implements View.OnClickListener,
-                                        IngredientJsonData.OnDataAvailable {
+        IngredientJsonData.OnDataAvailable {
 
     private Button buttonSearch;
     //private TextView buttonDelete;
@@ -256,7 +256,7 @@ public class IngredientActivity extends AppCompatActivity implements View.OnClic
 
 
     private void saveIngredient(Ingredient ingredient) {
-            ingredientRef.child(ingredient.getNix_item_id()).setValue(ingredient);
+        ingredientRef.child(ingredient.getNix_item_id()).setValue(ingredient);
     }
     private void loadIngredient() {
         ValueEventListener ingredientListener = new ValueEventListener() {
