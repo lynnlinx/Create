@@ -11,7 +11,7 @@ public class Comparators {
     public class CaloriesComparator implements Comparator<RecipeItem> {
         @Override
         public int compare(RecipeItem item1, RecipeItem item2) {
-            return item1.getCalories() - item2.getCalories();
+            return item2.getCalories() - item1.getCalories();
         }
     }
     public class UsedIngredientComparator implements Comparator<RecipeItem> {

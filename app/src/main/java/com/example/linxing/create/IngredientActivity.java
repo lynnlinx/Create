@@ -57,11 +57,12 @@ public class IngredientActivity extends AppCompatActivity implements View.OnClic
     private ArrayAdapterSearchView mAutoCompleteTextView;
     private FirebaseAuth myAuth;
     private SideslipListView mListView;
-    UserProfile userInformation;
-    FirebaseUser user;
-    FirebaseDatabase database;
-    DatabaseReference myRef;
-    DatabaseReference ingredientRef;
+    private UserProfile userInformation;
+    private FirebaseUser user;
+    private FirebaseDatabase database;
+    private DatabaseReference myRef;
+    private DatabaseReference ingredientRef;
+    private double dailyCalories = 0;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -99,6 +100,8 @@ public class IngredientActivity extends AppCompatActivity implements View.OnClic
             public void onDataChange(DataSnapshot dataSnapshot) {
                 userInformation = dataSnapshot.getValue(UserProfile.class);
                 textUsername.setText(userInformation.getUsername_profile());
+                dailyCalories = GetDailyNutrition.getCalorie(userInformation);
+                Log.d(TAG, "onDataChange: after default" + dailyCalories);
             }
 
             @Override
@@ -195,8 +198,14 @@ public class IngredientActivity extends AppCompatActivity implements View.OnClic
                 ingredientName[i] = tmp;
             }
 
+            while (dailyCalories < 0) {
+                Log.d(TAG, "onClick: bundle calorie" + dailyCalories);
+            }
+            Log.d(TAG, "onClick: bundle calorie" + dailyCalories);
+
             Bundle bundle = new Bundle();
             bundle.putStringArray("ingredientName", ingredientName);
+            bundle.putDouble("calories", dailyCalories);
             Intent intent = new Intent();
             intent.setClass(this, RecipelistActivity.class);
             intent.putExtras(bundle);
@@ -262,4 +271,5 @@ public class IngredientActivity extends AppCompatActivity implements View.OnClic
         ingredientRef.addValueEventListener(ingredientListener);
         return;
     }
+
 }

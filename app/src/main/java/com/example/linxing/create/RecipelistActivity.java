@@ -10,22 +10,17 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Spinner;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import com.google.firebase.auth.*;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 
 public class RecipelistActivity extends AppCompatActivity implements RecipeJsonData.OnDataAvailable {
 
-    private static final String TAG = "IngredientActivity";
+    private static final String TAG = "RecipelistActivity";
 
     private List<RecipeItem> recipeList = new ArrayList<>();
     private ListView mListView;
@@ -37,9 +32,10 @@ public class RecipelistActivity extends AppCompatActivity implements RecipeJsonD
     private FirebaseDatabase database;
     private DatabaseReference myRef;
     private UserProfile userInformation;
-    private int dailyCalories;
     private Spinner spinnerSort;
     private Comparators myComparator;
+    private double dailyCalories;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,22 +48,28 @@ public class RecipelistActivity extends AppCompatActivity implements RecipeJsonD
         Bundle b = getIntent().getExtras();
         spinnerSort = findViewById(R.id.sort);
         ingredients = b.getStringArray("ingredientName");
+        dailyCalories = b.getDouble("calories");
 
-        myAuth = myAuth.getInstance();
-        user = myAuth.getCurrentUser();
-        database = FirebaseDatabase.getInstance();
-        myRef = database.getReference(("profile/" + user.getUid()));
-        getDefault();
-
+        Log.d(TAG, "onCreate: cccccccc " + dailyCalories);
         adapter = new RecipeListViewAdapter(this, recipeList, mListView, dailyCalories);
         mListView.setAdapter(adapter);
         spinnerSort.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (position == 2) {
-                    Collections.sort(recipeList, myComparator.new CaloriesComparator());
-                    adapter.notifyDataSetChanged();
+                recipeList = adapter.getmRecipeList();
+                switch (position) {
+                    case 0:
+                        Collections.sort(recipeList, myComparator.new UsedIngredientComparator());
+                        break;
+                    case 1:
+                        Collections.sort(recipeList, myComparator.new MissedIngredientComparator());
+                        break;
+                    case 2:
+                        Collections.sort(recipeList, myComparator.new CaloriesComparator());
+                        break;
+                    default:;
                 }
+                adapter.notifyDataSetChanged();
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
@@ -146,23 +148,6 @@ public class RecipelistActivity extends AppCompatActivity implements RecipeJsonD
     private void loadData(String s) {
         RecipeJsonData recipeJsonData = new RecipeJsonData(this, "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/searchComplex", true);
         recipeJsonData.execute(s);
-    }
-
-
-    private void getDefault() {
-        ValueEventListener postListener = new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                userInformation = dataSnapshot.getValue(UserProfile.class);
-                dailyCalories = GetDailyNutrition.getCalorie(userInformation);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-            }
-        };
-        myRef.addListenerForSingleValueEvent(postListener);
-
     }
 
 }

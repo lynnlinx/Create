@@ -72,7 +72,9 @@ class IngredientListViewAdapter extends ArrayAdapter<Ingredient> {
         if (mIngredientList.size() > 0) {
             Ingredient ingredient = mIngredientList.get(position);
             viewHolder.name.setText(ingredient.getFood_name());
-            viewHolder.nutrition.setText(ingredient.getNf_calories());
+            StringBuilder sb = new StringBuilder();
+            sb.append("Calories: ").append(ingredient.getNf_calories());
+            viewHolder.nutrition.setText(sb.toString());
             //viewHolder.image.setImageResource(ingredient.getImage());
             Picasso.with(mContext).load(ingredient.getImage())
                     .error(R.drawable.ic_filter)

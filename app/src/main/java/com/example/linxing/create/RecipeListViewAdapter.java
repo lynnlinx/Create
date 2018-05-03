@@ -27,14 +27,15 @@ public class RecipeListViewAdapter extends ArrayAdapter<RecipeItem> {
     private Context mContext;
     private ListView mListView;
     private FirebaseAuth myAuth;
-    private int dailyCalories;
+    private double dailyCalories;
 
-    public RecipeListViewAdapter(Context context, List<RecipeItem> recipeItems, ListView listView, int dailyCalories) {
+    public RecipeListViewAdapter(Context context, List<RecipeItem> recipeItems, ListView listView, double dailyCalories) {
         super(context, R.layout.recipe_list, recipeItems);
         mContext = context;
         mRecipeItems = recipeItems;
         mListView = listView;
         this.dailyCalories = dailyCalories;
+        Log.d(TAG, "RecipeListViewAdapter: " + dailyCalories);
     }
 
 
@@ -65,31 +66,15 @@ public class RecipeListViewAdapter extends ArrayAdapter<RecipeItem> {
                     .append("Carbs: ").append(recipeItem.getCarbs());
             viewHolder.nutrition.setText(sb.toString());
             StringBuilder tmp = new StringBuilder();
-            tmp.append("Consuming").append(String.valueOf(dailyCalories)).append("% of daily calories.");
+            int calorie = recipeItem.getCalories();
+            double percent = ((double)calorie/dailyCalories) * 100.0;
+            tmp.append("Consuming ").append(String.valueOf((int)percent)).append("% of daily calories.");
             viewHolder.calorie.setText(tmp.toString());
             Picasso.with(mContext).load(recipeItem.getImage())
                     .error(R.drawable.ic_filter)
                     .placeholder(R.drawable.ic_filter)
                     .into(viewHolder.image);
         }
-        final int pos = position;
-        /*
-        viewHolder.txtv_delete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Ingredient ingredientRemove = mIngredientList.get(pos);
-                myAuth = myAuth.getInstance();
-                FirebaseUser user = myAuth.getCurrentUser();
-                FirebaseDatabase database = FirebaseDatabase.getInstance();
-                DatabaseReference ingredientRef = database.getReference("ingredient/"
-                        + user.getUid() + "/" + ingredientRemove.getUuid());
-                ingredientRef.removeValue();
-                mIngredientList.remove(pos);
-                notifyDataSetChanged();
-                mListView.turnNormal();
-            }
-        });
-        */
         return convertView;
     }
 
@@ -127,6 +112,9 @@ public class RecipeListViewAdapter extends ArrayAdapter<RecipeItem> {
         TextView nutrition;
         ImageView image;
         TextView calorie;
+    }
+    public List<RecipeItem> getmRecipeList() {
+        return mRecipeItems;
     }
 
 }
