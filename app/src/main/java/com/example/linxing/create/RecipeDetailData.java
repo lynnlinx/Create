@@ -81,6 +81,7 @@ public class RecipeDetailData extends AsyncTask<String, Void, List<RecipeDetailI
                     String eachStep = step.getString("step");
                     steps.add(eachStep);
                 }
+                Log.d("in RecipeDetail Data",""+steps);
 
                 for(int i=0;i<ingredients.length();i++) {
                     JSONObject eachIngre = ingredients.getJSONObject(i);

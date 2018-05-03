@@ -66,13 +66,26 @@ public class RecipeDetailItem {
 
     @Override
     public String toString() {
+
+//        return "RecipeDetailItem: " +
+//                ", RecipeIngredients=" + RecipeIngredients +
+//                ", instructions=" + instructions +
+//                '}';
+
         StringBuffer sb = new StringBuffer();
         for (RecipeIngredient r : RecipeIngredients) {
-            sb.append(r.getIngreName()).append("  ")
+            sb.append(r.getIngreName()).append(": ")
                     .append(r.getCount()).append(" ")
                     .append(r.getUnit()).append("\n");
         }
-        return "RecipeIngredients: \n"  + sb.toString() +
-                "\n Instructions: \n" + instructions;
+        StringBuffer sb2 = new StringBuffer();
+        for(int i=0;i<instructions.size();i++) {
+            String step_string = instructions.get(i);
+            String combine = i+1+". "+step_string+"\n";
+            sb2.append(combine);
+        }
+
+        return sb.toString() +
+                "instructions:"+sb2.toString();
     }
 }
