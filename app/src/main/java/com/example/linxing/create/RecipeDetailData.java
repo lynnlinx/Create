@@ -71,8 +71,14 @@ public class RecipeDetailData extends AsyncTask<String, Void, List<RecipeDetailI
                 String diet = jsonObject.getString("diets");
                 JSONArray instructions = jsonObject.getJSONArray("analyzedInstructions");
                 JSONArray ingredients = jsonObject.getJSONArray("extendedIngredients");
-                JSONObject instructionOpen = instructions.getJSONObject(0);
-                JSONArray instructionSteps = instructionOpen.getJSONArray("steps");
+                JSONObject instructionOpen = new JSONObject();
+                JSONArray instructionSteps = new JSONArray();
+                if (instructions != null && instructions.length() > 0) {
+                    instructionOpen = instructions.getJSONObject(0);
+                }
+                if (instructionOpen != null && instructionOpen.length() > 0) {
+                    instructionSteps = instructionOpen.getJSONArray("steps");
+                }
                 ArrayList<String> steps= new ArrayList<>();
                 ArrayList<RecipeIngredient> recipe_ingre = new ArrayList<>();
 
