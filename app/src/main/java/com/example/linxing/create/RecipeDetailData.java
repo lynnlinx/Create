@@ -8,7 +8,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,10 +39,12 @@ public class RecipeDetailData extends AsyncTask<String, Void, List<RecipeDetailI
 
     private String createUri(String searchCriteria, boolean matchAll) {
         Log.d(TAG, "createUri: starts");
-        return Uri.parse(mBaseURL).buildUpon()
-                .appendQueryParameter("id", searchCriteria)
-                .appendQueryParameter("information","information")    //????
+        String tmp =  Uri.parse(mBaseURL).buildUpon()
+                .appendEncodedPath(searchCriteria)
+                .appendEncodedPath("information") //????
                 .build().toString();
+        Log.d(TAG, "createUri: aaaaaaaaaaa" + tmp);
+        return tmp;
     }
 
     @Override
@@ -53,8 +54,9 @@ public class RecipeDetailData extends AsyncTask<String, Void, List<RecipeDetailI
         if (status == RecipeDownloadStatus.OK) {
             mRecipeItems = new ArrayList<>();
             try {
+                Log.d(TAG, "onDownloadComplete: what????" + data);
                 JSONObject jsonObject =  new JSONObject(data);
-                Log.d(TAG, "onDownloadComplete: " + data);
+                Log.d(TAG, "onDownloadComplete: ????????" + data);
                 //JSONArray itemsArray = jsonObject.getJSONArray("results");
                 //Log.d(TAG, "onDownloadComplete: item is:"+ itemsArray);
 
