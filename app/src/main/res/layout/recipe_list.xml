@@ -41,14 +41,15 @@
                 android:orientation="horizontal">
                 <Spinner
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="40dp"
                     android:entries="@array/sort"
                     android:id="@+id/sort">
                 </Spinner>
                 <Spinner
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:entries="@array/sort_cuisine">
+                    android:layout_height="40dp"
+                    android:entries="@array/sort_cuisine"
+                    android:id="@+id/filter">
                 </Spinner>
             </LinearLayout>
 

@@ -10,9 +10,6 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-/**
- * Created by jiana on 2018/2/28.
- */
 
 public class SideslipListView extends ListView {
     private static final String TAG = "SideslipListView";
@@ -193,6 +190,6 @@ public class SideslipListView extends ListView {
      * @return
      */
     public boolean isAllowItemClick() {
-        return isAllowItemClick;
+        return true;
     }
 }
