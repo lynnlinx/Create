@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,6 +23,8 @@ import com.google.firebase.database.ValueEventListener;
  */
 
 public class SettingActivity extends AppCompatActivity implements View.OnClickListener{
+    private static final String TAG = "SettingActivity";
+
     private Button buttonSave;
     private Button buttonChangePhoto;
     private EditText editTextUsername;
@@ -33,7 +36,6 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
     private FirebaseUser user;
     private FirebaseDatabase database;
     private DatabaseReference myRef;
-    private static final String TAG = "SettingActivity";
     private Toolbar toolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,22 +72,27 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
     public void onClick(View v) {
         if(v == buttonSave){
             saveUserInfo();
-            startActivity(new Intent(getApplicationContext(),SettingActivity.class));
-            finish();
+            //startActivity(new Intent(getApplicationContext(),SettingActivity.class));
+            //finish();
         }
         if(v == buttonChangePhoto){
         }
     }
 
     private void setDefault() {
+        /*
         spinnerAge.setSelection(2, true);
         spinnerWeight.setSelection(2, true);
         spinnerGender.setSelection(2, true);
+        */
         ValueEventListener postListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 userInformation = dataSnapshot.getValue(UserProfile.class);
                 editTextUsername.setText(userInformation.getUsername_profile());
+                Log.d(TAG, "onDataChange: gender is" + userInformation.getGender_profile());
+                Log.d(TAG, "onDataChange: age is: " + userInformation.getAge_profile());
+                Log.d(TAG, "onDataChange: age is: " + userInformation.getWeight_profile());
                 switch (userInformation.getGender_profile()) {
                     case "Male":
                         spinnerGender.setSelection(0, true);
@@ -111,7 +118,7 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
                         spinnerAge.setSelection(3,true);
 
                 }
-                switch (userInformation.getAge_profile()) {
+                switch (userInformation.getWeight_profile()) {
                     case "Weight: below 50 kg/110lbs":
                         spinnerWeight.setSelection(0, true);
                         break;

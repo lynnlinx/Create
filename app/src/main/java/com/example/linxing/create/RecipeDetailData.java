@@ -55,12 +55,6 @@ public class RecipeDetailData extends AsyncTask<String, Void, List<RecipeDetailI
             try {
                 JSONObject jsonObject =  new JSONObject(data);
                 Log.d(TAG, "onDownloadComplete: ????????" + data);
-                //JSONArray itemsArray = jsonObject.getJSONArray("results");
-                //Log.d(TAG, "onDownloadComplete: item is:"+ itemsArray);
-
-                //for (int i = 0; i < itemsArray.length(); i++) {
-                    //JSONObject jsonRecipe = itemsArray.getJSONObject(i);
-
 
                 String title = jsonObject.getString("title");
                 String imageURL = jsonObject.getString("image");
