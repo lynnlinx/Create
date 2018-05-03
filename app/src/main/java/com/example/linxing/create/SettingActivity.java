@@ -3,6 +3,7 @@ package com.example.linxing.create;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -65,11 +66,27 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     private void setDefault() {
+        spinnerAge.setSelection(2, true);
+        spinnerWeight.setSelection(2, true);
+        spinnerGender.setSelection(2, true);
         ValueEventListener postListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 userInformation = dataSnapshot.getValue(UserProfile.class);
                 editTextUsername.setText(userInformation.getUsername_profile());
+                switch (userInformation.getGender_profile()) {
+                    case "Male":
+                        spinnerGender.setSelection(0, true);
+                        break;
+                    case "Female":
+                        spinnerGender.setSelection(1,true);
+                        break;
+                    default:
+                        spinnerGender.setSelection(2,true);
+
+                }
+                spinnerAge.setSelection(2, true);
+                spinnerWeight.setSelection(2, true);
             }
 
             @Override
@@ -77,10 +94,6 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
             }
         };
         myRef.addListenerForSingleValueEvent(postListener);
-        spinnerAge.setSelection(2, true);
-        spinnerWeight.setSelection(2, true);
-        spinnerGender.setSelection(2, true);
-
     }
     private void saveUserInfo(){
         String username = editTextUsername.getText().toString().trim();
